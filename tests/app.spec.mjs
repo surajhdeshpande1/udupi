@@ -181,6 +181,44 @@ test('each day shows its highlights under the title', async ({ page }) => {
   await expect(page.locator('.heading .hl li')).toHaveCount(5);
 });
 
+test('every stop from Wednesday to Friday has its own picture, and the sky follows the time', async ({ page }) => {
+  await page.goto(at('2026-10-07T09:50', 'days'));
+  for (const day of ['wed', 'thu', 'fri']) {
+    await page.click('.dbtn[data-day=' + day + ']');
+    for (const v of ['A', 'B']) {
+      const plan = page.locator('.planseg [data-v=' + v + ']');
+      if (await plan.count()) { await plan.click(); await page.waitForTimeout(150); } else if (v === 'B') continue;
+      const missing = await page.evaluate(() => [...document.querySelectorAll('.tl .row:not(.info)')].filter(r => !r.querySelector('.vg-thumb[data-vg]')).map(r => r.id));
+      expect(missing, day + ' plan ' + v).toEqual([]);
+    }
+  }
+  await page.click('.dbtn[data-day=wed]');
+  await expect(page.locator('#r-we7 .vg-thumb')).toHaveClass(/ph-morning/);
+  await expect(page.locator('#r-we22 .vg-thumb')).toHaveClass(/ph-golden/);
+  await expect(page.locator('#r-we40 .vg-thumb')).toHaveClass(/ph-night/);
+});
+
+test('the Now card and every stop sheet open on a picture', async ({ page }) => {
+  await page.goto(at('2026-10-08T11:40'));
+  await expect(page.locator('article.now .vg-card[data-vg=parasail]')).toHaveCount(1);
+  await openStop(page, 'th18');
+  await expect(page.locator('#sheetBody .vg-hero[data-vg=kayak]')).toBeVisible();
+});
+
+test('switching tabs glides the pill and never widens the page', async ({ page }) => {
+  await page.goto(at('2026-10-08T11:40'));
+  let widest = 0;
+  for (const tab of ['sos', 'kit', 'today', 'days']) {
+    await page.click('.nav [data-tab=' + tab + ']');
+    for (let i = 0; i < 8; i++) { await page.waitForTimeout(60); widest = Math.max(widest, await page.evaluate(() => innerWidth)); }
+    await expect(page.locator('.nav [data-tab=' + tab + ']')).toHaveAttribute('aria-current', 'page');
+  }
+  expect(widest).toBe(390);
+  const [pill, icon] = await page.evaluate(() => [document.querySelector('.nav-pill').getBoundingClientRect().left, document.querySelector('.nav [aria-current=page] .ic').getBoundingClientRect().left]);
+  expect(Math.abs(pill - icon)).toBeLessThan(1.5);
+  await expect(page.locator('#main')).toHaveClass(/in/);
+});
+
 test('Days: the arched tiles switch the day', async ({ page }) => {
   await page.goto(at('2026-10-07T09:50'));
   await page.click('.nav [data-tab=days]');

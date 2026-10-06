@@ -204,3 +204,63 @@ article.now::after{content:"";position:absolute;left:0;right:0;top:12px;height:1
 .jr-note{display:block;width:100%;min-height:46px;margin-top:12px;padding:0 14px;border:1px solid var(--line-2);border-radius:14px;background:var(--wall);font:500 15px/1.3 var(--f-body);color:var(--ink)}
 .jr-note::placeholder{color:var(--ink-3)}
 .jr-meta{display:flex;justify-content:space-between;gap:10px;margin-top:8px;font-size:12px;color:var(--ink-3)}
+
+/* ---------- stop pictures: Kaavi vignettes whose sky follows the stop's time ---------- */
+.vg{--vg-sky:#F6EBDD;--vg-sky2:#FBF6EE;--vg-ink:var(--lat);--vg-soft:var(--lat-soft);--vg-paper:var(--paper);--vg-sea:#D3E6E1;--vg-sand:#F3E3C6;--vg-road:#E9E1D3;--vg-floor:#EFE5D6;--vg-roof:#E8AE92;--vg-leaf:#D5E5CC;--vg-win:#DCEBE7;--vg-wall:#F8F1E5;--vg-auto:#F3D27A;--vg-sun:var(--gold);
+  position:relative;display:block;overflow:hidden;background:linear-gradient(180deg,var(--vg-sky),var(--vg-sky2) 72%);isolation:isolate}
+.vg::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 1px rgba(166,58,34,.2);pointer-events:none}
+.vg.ph-dawn{--vg-sky:#F4CDB6;--vg-sky2:#FBEDE1;--vg-sea:#EAD5CC;--vg-win:#F4CDB6}
+.vg.ph-morning{--vg-sky:#D7E9E4;--vg-sky2:#F9F4E9;--vg-sea:#CBE2DC;--vg-win:#D7E9E4}
+.vg.ph-noon{--vg-sky:#DDEDE9;--vg-sky2:#FCF8EF;--vg-sea:#C3DFD8;--vg-win:#DDEDE9}
+.vg.ph-afternoon{--vg-sky:#F3E2C2;--vg-sky2:#FBF4E6;--vg-sea:#D2E2D6;--vg-win:#F3E2C2}
+.vg.ph-golden{--vg-sky:#F4BC77;--vg-sky2:#FBE3BE;--vg-sea:#EFC48F;--vg-sand:#F1D2A3;--vg-win:#F4BC77;--vg-sun:#EE8433}
+.vg.ph-dusk{--vg-sky:#C6B1CE;--vg-sky2:#F2CBB5;--vg-sea:#C7AEC0;--vg-sand:#E6CDBF;--vg-win:#C6B1CE;--vg-sun:#E8743B}
+.vg.ph-night{--vg-sky:#2B2D4D;--vg-sky2:#4A456C;--vg-ink:#EFD9AC;--vg-soft:#5C5680;--vg-paper:#3B3A5D;--vg-sea:#33365A;--vg-sand:#4C4669;--vg-road:#393757;--vg-floor:#423E61;--vg-roof:#6E5274;--vg-leaf:#3F566B;--vg-win:#2B2D4D;--vg-auto:#C9A65A}
+.vg.in{--vg-ink:var(--lat);--vg-soft:var(--lat-soft);--vg-paper:var(--paper);--vg-floor:#EEE3D2;--vg-roof:#E8AE92;--vg-leaf:#D5E5CC;--vg-auto:#F3D27A;background:var(--vg-wall)}
+.vg.in.ph-night{--vg-wall:#EFE3CC}
+.vg-svg{position:relative;display:block;width:100%;height:100%}
+.vg .ln{stroke:var(--vg-ink);stroke-width:.8}
+.vg .ln.thin{stroke-width:.5}
+.vg .ln.dot{fill:var(--vg-ink);stroke:none}
+.vg .ln.gold{stroke:var(--gold);stroke-width:.85}
+.vg .ln.kum{stroke:var(--kum);stroke-width:1.15}
+.vg .ln.dash{stroke-width:.9;stroke-opacity:.65}
+.vg .ln.mist{stroke-opacity:.45}
+.vg .f-soft{fill:var(--vg-soft)}
+.vg .f-wall,.vg .f-paper{fill:var(--vg-paper)}
+.vg .f-sea,.vg .f-river{fill:var(--vg-sea)}
+.vg .f-sand{fill:var(--vg-sand)}
+.vg .f-road{fill:var(--vg-road)}
+.vg .f-floor{fill:var(--vg-floor)}
+.vg .f-win,.vg .f-cut{fill:var(--vg-win)}
+.vg .f-roof{fill:var(--vg-roof)}
+.vg .f-leaf{fill:var(--vg-leaf)}
+.vg .f-auto{fill:var(--vg-auto)}
+.vg .f-cut2{fill:var(--vg-soft)}
+.vg .f-steel{fill:#E3E0D8}
+.vg .f-kumsoft{fill:#F0C3B3}
+.vg .f-goldsoft{fill:var(--gold-soft)}
+.vg .f-beam{fill:var(--gold);fill-opacity:.3}
+.vg-halo{fill:var(--vg-sun);fill-opacity:.2}
+.vg-rays{fill:none;stroke:var(--gold);stroke-width:.7;stroke-linecap:round}
+.vg-sun{fill:var(--vg-sun);stroke:var(--vg-ink);stroke-width:.6}
+.vg-star{fill:none;stroke:var(--gold);stroke-width:.7;stroke-linecap:round}
+.vg-glow{fill:var(--gold);fill-opacity:.3}
+.vg-glow.s{fill-opacity:.24}
+.vg-txt{font:400 7px var(--f-display);fill:var(--lat)}
+.vg-thumb{flex:0 0 auto;width:58px;height:58px;border-radius:15px}
+.vg-thumb .ln{stroke-width:2.1}
+.vg-thumb .ln.gold{stroke-width:2}
+.vg-thumb .ln.kum{stroke-width:2.4}
+.vg-thumb .ln.thin,.vg-thumb .ln.dash,.vg-thumb .vg-rays,.vg-thumb .vg-txt{display:none}
+.vg-thumb .vg-star{stroke-width:1.6}
+.vg-thumb .vg-sun{stroke-width:1.3}
+.vg-card{height:150px;margin:0 -8px 16px;border-radius:19px}
+.vg-hero{width:100%;aspect-ratio:16/10;margin:6px 0 18px;border-radius:22px}
+.r-body.has-vg{display:flex;align-items:center;gap:12px;padding-right:8px}
+.r-txt{display:block;flex:1;min-width:0}
+.row.done .vg-thumb{filter:saturate(.55);opacity:.8}
+.row.skipped .vg-thumb{filter:grayscale(1);opacity:.45}
+.row.past:not(.done) .vg-thumb{opacity:.85}
+@media (max-width:360px){.vg-thumb{width:50px;height:50px;border-radius:13px}.r-body.has-vg{gap:10px}}
+

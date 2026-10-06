@@ -29,6 +29,15 @@ TRIP.T12133 = [[`Udupi`,`13:20`,`13:22`,1],[`Surathkal`,`14:20`,`14:22`],[`Manga
 TRIP.T17378 = [[`Mangaluru Central`,`—`,`16:45`],[`Mangaluru Jn`,`16:57`,`17:00`,1],[`Bantwal`,`17:30`,`17:32`],[`Subrahmanya Road`,`18:50`,`19:00`],[`Sakleshpur`,`21:20`,`21:30`],[`Hassan`,`22:20`,`22:30`],[`Arsikere`,`23:20`,`23:25`],[`Davangere`,`01:48`,`01:50`],[`Hubballi`,`04:40`,`04:50`],[`Gadag`,`06:25`,`06:30`],[`Badami`,`07:29`,`07:30`],[`Guledagudda Road`,`07:44`,`07:45`],[`Bagalkot`,`07:58`,`08:00`,1]];
 TRIP.FARES = [[`CPC Plaza → Car Street`,`Walk, 10 min`],[`CPC → Manipal`,`₹110–150`],[`CPC → Arbi Falls`,`₹150–200`],[`Manipal → CPC late at night`,`₹120–180`],[`CPC → Malpe`,`₹120–150`],[`CPC → Kemmannu`,`₹200–240`],[`CPC → Mattu`,`₹230–280`],[`CPC → Kaup`,`₹280–350`],[`Kaup → Malpe`,`₹300–400`],[`Kodi Bengre → CPC`,`₹300–350`],[`CPC → Udupi station`,`₹70–90`],[`Udupi → Mulki, express bus`,`About ₹50`],[`Mulki → Mangaluru Jn by cab`,`₹900–1,200`],[`Udupi → Mangaluru Jn by cab`,`₹1,300–1,800`]];
 
+/* The Kaavi picture each stop shows (see js/vignettes.js); stops not listed get one by their kind. */
+TRIP.PICS = {
+  tu1: `pack`, tu2: `phonemap`, tu3: `phonemap`, tu4: `pack`, tu5: `phonemap`, tu6: `phonemap`, tu12: `surf`,
+  we1: `bus`, we2: `town`, we3: `dorm`, we9: `breakfast`, we36: `dress`, we29: `falls`, we25: `gadbad`, we21: `lighthouse`, we22: `lighthouse`, we40: `seawalk`, we41: `dinnersea`,
+  th1: `beachbag`, th2: `breakfast`, th5: `harbour`, th6: `jetty`, th8: `basalt`, th10: `parasail`, th11: `swim`, th12: `shower`, th19: `bridge`, tb3: `beachpalms`, tb6: `bridge`, th21: `delta`, th23: `dress`, th27: `phonetrain`,
+  fr1: `pack`, fr3: `phonetrain`, fr5: `valley`, fr7: `breakfast`, fr9: `estuary`, fs1: `pack`, fs4: `surf`, fs6: `bus`, fs7: `stationmng`, fr14: `phonetrain`, fr17: `stationudp`, fr20: `stationmng`, fr21: `stationmng`, fr22: `chai`, fr24: `rivertrain`, fr25: `train`, fr27: `parcel`, fr30: `berth`,
+  sa3: `berth`, sa6: `stationbgk`
+};
+
 TRIP.SUN = {
   '2026-10-06': { rise: `06:20`, set: `18:17` },
   '2026-10-07': { rise: `06:20`, set: `18:16`, goldAm: [`06:20`,`06:50`], gold: [`17:46`,`18:16`] },

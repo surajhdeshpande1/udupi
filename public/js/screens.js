@@ -111,10 +111,20 @@ function renderBar() {
   h += '<span class="datechip">' + ico(isDay ? 'sun' : 'moon') + '<span>' + esc(label) + '</span></span>';
   $('#barMeta').innerHTML = h;
 }
-function renderNav() {
-  $$('.nav [data-tab]').forEach(b => { if (b.dataset.tab === ui.tab) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current'); });
+function renderNav(dir) {
+  $$('.nav [data-tab]').forEach(b => {
+    const on = b.dataset.tab === ui.tab;
+    if (on && dir && b.getAttribute('aria-current') !== 'page' && !REDUCED) { b.classList.remove('pop'); void b.offsetWidth; b.classList.add('pop'); }
+    if (on) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current');
+  });
   const nav = $('.nav-in');
-  if (nav) nav.style.setProperty('--i', TABS.indexOf(ui.tab));
+  if (!nav) return;
+  /* The pill stretches toward the tapped tab, then its trailing edge catches up. */
+  const i = TABS.indexOf(ui.tab);
+  if (!nav.dataset.ready) { nav.classList.add('instant'); requestAnimationFrame(() => requestAnimationFrame(() => { nav.classList.remove('instant'); nav.dataset.ready = '1'; })); }
+  if (dir) nav.classList.toggle('back', dir === 'back');
+  nav.style.setProperty('--a', i);
+  nav.style.setProperty('--b', i);
 }
 const oopsHTML = () => '<section class="screen"><div class="oops card"><p class="eyebrow">Something slipped</p><h1 class="title">Let’s try that again</h1><p class="sub">This screen hit an error. Your ticks and notes are safe on this phone.</p><div class="bk-acts"><button class="btn primary" type="button" data-act="reload">Reload</button><button class="btn" type="button" data-tab="today">Back to Today</button></div></div></section>';
 function render(anim) {
@@ -127,7 +137,7 @@ function render(anim) {
     main.innerHTML = oopsHTML();
     try { console.error(err); } catch (e) {}
   }
-  if (anim === 'tab' && !ui.vt) { main.classList.remove('enter'); void main.offsetWidth; main.classList.add('enter'); }
+  if (anim === 'tab' && !ui.vt) { main.classList.remove('enter', 'in'); void main.offsetWidth; main.classList.add('enter'); }
   if (anim) easeSun($('.mural.draw', main), ui.intro ? 620 : 0);
   ui.intro = false;
   ui.minute = Math.floor(now() / 60000);
@@ -152,20 +162,31 @@ function easeSun(fig, delay) {
   };
   requestAnimationFrame(step);
 }
+/* Switching tabs: the pill glides at once, the old screen slips out the way it came, and the new one slides in. */
+let tabSeq = 0;
 function setTab(tab) {
   if (!TABS.includes(tab)) return;
   const from = TABS.indexOf(ui.tab), to = TABS.indexOf(tab);
   if (from === to) { window.scrollTo({ top: 0, behavior: REDUCED ? 'auto' : 'smooth' }); return; }
   ui.tab = tab;
   try { history.replaceState(null, '', location.pathname + location.search + '#' + tab); } catch (e) {}
-  const go = () => { render('tab'); window.scrollTo(0, 0); };
-  if (document.startViewTransition && !REDUCED && !document.hidden) {
-    const root = document.documentElement;
-    root.dataset.vt = to > from ? 'fwd' : 'back';
+  const dir = to > from ? 'fwd' : 'back';
+  renderNav(dir);
+  buzz(4);
+  const main = $('#main'), seq = ++tabSeq;
+  if (REDUCED || document.hidden) { render('tab'); window.scrollTo(0, 0); return; }
+  main.classList.remove('in', 'enter');
+  main.style.setProperty('--tx', dir === 'fwd' ? '-14px' : '14px');
+  main.classList.add('out');
+  setTimeout(() => {
+    if (seq !== tabSeq) return;
     ui.vt = true;
-    try {
-      const vt = document.startViewTransition(go);
-      vt.finished.finally(() => { ui.vt = false; delete root.dataset.vt; });
-    } catch (e) { ui.vt = false; go(); }
-  } else go();
+    render('tab');
+    ui.vt = false;
+    window.scrollTo(0, 0);
+    main.classList.remove('out');
+    main.style.setProperty('--tx', dir === 'fwd' ? '24px' : '-24px');
+    void main.offsetWidth;
+    main.classList.add('in');
+  }, 150);
 }

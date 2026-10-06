@@ -62,7 +62,7 @@ function nowCard(L) {
     const diff = L.hard.ts - t;
     foot += '<div class="nf' + (diff < 3 * 3600e3 ? ' red' : '') + '"><span class="k">Deadline</span><span class="v"><b>' + esc(dayShort(L.hard.day) + ' ' + L.hard.t) + '</b>' + esc(L.hard.x) + '</span><span class="c">' + esc(diff <= 0 ? 'now' : dur(diff)) + '</span></div>';
   }
-  return '<article class="now" aria-label="' + esc(label) + '"><div class="now-top"><span class="tag ' + tagCls + '"><i></i>' + label + '</span><span class="now-time">' + esc(timeTxt) + '</span></div>' +
+  return '<article class="now" aria-label="' + esc(label) + '">' + VG.pic(focus, 'card') + '<div class="now-top"><span class="tag ' + tagCls + '"><i></i>' + label + '</span><span class="now-time">' + esc(timeTxt) + '</span></div>' +
     '<button class="now-main" type="button" data-act="open" data-id="' + esc(focus.id) + '"><span class="now-title">' + esc(focus.x) + '</span>' + (focus.kn ? '<span class="now-kn" lang="kn">' + esc(focus.kn) + '</span>' : '') + '</button>' +
     '<div class="now-acts">' + acts.join('') + '</div>' + (foot ? '<div class="now-foot">' + foot + '</div>' : '<div class="now-foot empty"></div>') + '</article>';
 }
@@ -169,8 +169,9 @@ function rowHTML(it, t, curId, i) {
   const node = it.info
     ? '<span class="r-node ' + g + '" aria-hidden="true"><span class="dot"></span></span>'
     : '<button class="r-node ' + g + '" type="button" data-act="toggle" data-id="' + esc(it.id) + '" aria-pressed="' + done + '" aria-label="' + (done ? 'Undo: ' : 'Mark done: ') + esc(it.x) + '"><span class="dot">' + ico(done ? 'check' : it.k === 'move' && it.m === 'w' ? 'walk' : K.icon) + '</span></button>';
-  const inner = '<span class="r-title">' + esc(it.x) + '</span>' + (meta.length ? '<span class="r-meta">' + meta.join(' · ') + '</span>' : '');
-  const body = it.info && !it.b ? '<span class="r-body">' + inner + '</span>' : '<button class="r-body" type="button" data-act="open" data-id="' + esc(it.id) + '">' + inner + '</button>';
+  const pic = it.info ? '' : VG.pic(it, 'thumb');
+  const inner = '<span class="r-txt"><span class="r-title">' + esc(it.x) + '</span>' + (meta.length ? '<span class="r-meta">' + meta.join(' · ') + '</span>' : '') + '</span>' + pic;
+  const body = it.info && !it.b ? '<span class="r-body">' + inner + '</span>' : '<button class="r-body' + (pic ? ' has-vg' : '') + '" type="button" data-act="open" data-id="' + esc(it.id) + '">' + inner + '</button>';
   const guide = !it.info && shotsOf(it).length ? shotGuide(it, it.id === curId && !done && !sk) : '';
   return '<li class="' + cls.join(' ') + '" id="r-' + esc(it.id) + '" style="--i:' + i + '"><span class="r-time">' + esc(it.t) + '</span>' + node + body + guide + '</li>';
 }

@@ -22,7 +22,8 @@ The first time the app opens, a three-card tour shows how it works, and the **?*
 - **Palette:** lime plaster `#F6F1E7`, laterite `#A63A22`, Yakshagana gold `#E2A72E`, kumkum `#B52B19`, areca green, Arabian Sea teal. Light theme only, with text contrast checked against WCAG AA.
 - **Type:** [Tiro Kannada](https://fonts.google.com/specimen/Tiro+Kannada) for headings and every Kannada name, [Figtree](https://fonts.google.com/specimen/Figtree) for the interface.
 - **Motifs:** the Kanakana Kindi window as the emblem, Mangalore-tile eaves under the header, a Yakshagana crown over each heading, and five hand-built SVG murals: the Bagalkot night bus, Udupi's chariot and the Kaup lighthouse, St Mary's basalt columns, the Konkan train over the valley, and Bagalkot station.
-- **Motion:** the Kindi lights up and opens like temple doors, murals draw themselves in while the sun eases to the current time, screens slide between tabs (View Transitions), sheets spring up, ticked stops burst into marigold petals, and finished days are stamped. Everything respects *reduce motion*.
+- **Pictures:** every stop has its own Kaavi vignette (about 45 scenes, from the dawn darshan to the night train), drawn in SVG in `js/vignettes.js`. Each sky follows the stop's time: dawn, morning, noon, afternoon, golden hour, dusk or a lamp-lit night. Rows show a small one, the Now card a wide one, and each stop's sheet opens on a large one that draws itself in. `TRIP.PICS` in `data/trip.js` picks the scene for a stop; anything not listed gets one by its kind, including stops you add.
+- **Motion:** the Kindi lights up and opens like temple doors, murals draw themselves in while the sun eases to the current time, the tab pill stretches toward the tab you tap and its icon lifts while the screen slides out and the next one slides in from the same side, sheets spring up, ticked stops burst into marigold petals, and finished days are stamped. Everything respects *reduce motion*.
 
 ## Project layout
 
@@ -59,7 +60,7 @@ npx playwright install chromium
 npx playwright test
 ```
 
-31 browser tests on a phone-sized Chromium cover ticking, sheets, skipping, editing and adding stops, Plan B on Thursday and Friday, the night-out stops, the shot guide, the first-run tour, the help sheet, day highlights, days, kit, bookings, backup and restore, reset, the journal, day stamps, loading data saved by the previous version, the intro, security headers, the install manifest, offline use, and layout at 320, 390 and 820 px with no console errors or CSP violations. GitHub Actions runs them on every push to `main`.
+34 browser tests on a phone-sized Chromium cover ticking, sheets, skipping, editing and adding stops, Plan B on Thursday and Friday, the night-out stops, the shot guide, the first-run tour, the help sheet, day highlights, a picture on every stop, the tab bar motion, days, kit, bookings, backup and restore, reset, the journal, day stamps, loading data saved by the previous version, the intro, security headers, the install manifest, offline use, and layout at 320, 390 and 820 px with no console errors or CSP violations. GitHub Actions runs them on every push to `main`.
 
 ## Editing the trip
 

@@ -301,5 +301,7 @@ const ART = (() => {
   }
   /* The lotus that closes every screen. */
   const lotus = () => '<div class="orn" aria-hidden="true"><i></i><svg viewBox="0 0 26 26"><path class="lp" d="M13 4C16.2 8 16.2 14 13 18.5C9.8 14 9.8 8 13 4z"/><path class="lp" d="M13 18.5C9 17.8 5.2 14 4.2 9.6C8.4 10.2 11.4 13 13 18.5zM13 18.5C17 17.8 20.8 14 21.8 9.6C17.6 10.2 14.6 13 13 18.5z"/><path class="lp" d="M13 18.5C9.4 20 4.6 19.4 2.2 16.2C6.4 15 10.2 16 13 18.5zM13 18.5C16.6 20 21.4 19.4 23.8 16.2C19.6 15 15.8 16 13 18.5z"/><circle class="lc" cx="13" cy="21.6" r="1.7"/></svg><i></i></div>';
-  return { scene, medal, kirita, kindi, marigold, lotus, MOODS, sunPt, arcSeg };
+  /* Drawing kit shared with the stop pictures in vignettes.js. */
+  const kit = { r1, ln, fl, layer, at, circ, rect, poly, waves, zig, dots, lozenges, hatch, paddy, birds, spiralCloud, palm, lighthouse, rocks, chariot, basalt, boat, bus, train, viaduct, hills };
+  return { scene, medal, kirita, kindi, marigold, lotus, MOODS, sunPt, arcSeg, kit };
 })();

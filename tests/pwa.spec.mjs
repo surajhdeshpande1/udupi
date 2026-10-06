@@ -34,7 +34,7 @@ test.describe('offline', () => {
     await expect.poll(() => page.evaluate(async () => (await caches.keys()).length), { timeout: 15000 }).toBeGreaterThan(0);
     await expect.poll(() => page.evaluate(() => !!navigator.serviceWorker.controller), { timeout: 15000 }).toBe(true);
     const shell = await page.evaluate(async () => { for (const k of await caches.keys()) if (!k.includes('fonts')) return (await (await caches.open(k)).keys()).length; return 0; });
-    expect(shell).toBe(23);
+    expect(shell).toBe(24);
     await context.setOffline(true);
     await page.reload();
     await expect(page.locator('article.now')).toHaveCount(1);

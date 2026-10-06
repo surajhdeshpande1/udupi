@@ -48,7 +48,7 @@ function detailSheet(id, focus) {
   if (it.c && (it.c[0] || it.c[1])) chips.push('<span class="chip">' + ico('wallet') + esc(costStr(it.c)) + '</span>');
   if (golden(it, day)) chips.push('<span class="chip gold">' + ico('sun') + 'Golden hour</span>');
   if (it.win) chips.push('<span class="chip sea">' + ico('clock') + esc(it.win) + '</span>');
-  let h = '<p class="eyebrow">' + esc(K.label + ' · ' + day.tab + (done ? ' · Done' : sk ? ' · Skipped' : '')) + '</p><h2 class="sh-title" tabindex="-1">' + esc(it.x) + '</h2>' + (it.kn ? '<p class="sh-kn" lang="kn">' + esc(it.kn) + '</p>' : '');
+  let h = VG.pic(it, 'hero', 'draw') + '<p class="eyebrow">' + esc(K.label + ' · ' + day.tab + (done ? ' · Done' : sk ? ' · Skipped' : '')) + '</p><h2 class="sh-title" tabindex="-1">' + esc(it.x) + '</h2>' + (it.kn ? '<p class="sh-kn" lang="kn">' + esc(it.kn) + '</p>' : '');
   h += '<div class="sh-body"><div class="facts">' + chips.join('') + '</div>';
   if (it.b) h += '<p>' + esc(it.b) + '</p>';
   if (it.tips && it.tips.length) h += '<ul class="tips">' + it.tips.map(x => '<li>' + esc(x) + '</li>').join('') + '</ul>';

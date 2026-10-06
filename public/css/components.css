@@ -49,8 +49,6 @@ button.chip:active{transform:scale(.94)}
 .ln.dash{stroke-width:2.2;stroke-opacity:.6}
 .dbtn.sealed{border-color:rgba(200,51,31,.35)}
 .dbtn.sealed:not([aria-pressed="true"]){background:linear-gradient(180deg,var(--kum-soft),var(--paper) 70%)}
-.nav-pill{view-transition-name:pill}
-html[data-vt] .nav-pill{transition:none}
 .sh-x{z-index:4}
 .sh-x:active{transform:scale(.92)}
 .update span{min-width:0}
