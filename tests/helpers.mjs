@@ -1,12 +1,13 @@
-// Shared set-up for the specs: no network fonts, the intro skipped unless asked for,
+// Shared set-up for the specs: no network fonts, the intro and the first-run tour skipped unless asked for,
 // and every CSP violation recorded on window.__csp.
-export async function prepare(context, { intro = false } = {}) {
+export async function prepare(context, { intro = false, guide = false } = {}) {
   await context.route(/fonts\.(googleapis|gstatic)\.com/, route => route.fulfill({ status: 200, contentType: 'text/css', body: '' }));
-  await context.addInitScript(skipIntro => {
+  await context.addInitScript(([skipIntro, skipGuide]) => {
     try { if (skipIntro) sessionStorage.setItem('udupi.intro', '1'); } catch (e) { /* storage blocked */ }
+    try { if (skipGuide) localStorage.setItem('udupi.guide', '1'); } catch (e) { /* storage blocked */ }
     window.__csp = [];
     document.addEventListener('securitypolicyviolation', e => window.__csp.push(e.violatedDirective + ' ' + e.blockedURI));
-  }, !intro);
+  }, [!intro, !guide]);
 }
 
 export function trackErrors(page) {

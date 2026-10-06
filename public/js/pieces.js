@@ -35,7 +35,8 @@ function mural(day, t, anim, liveSky) {
 }
 const KIRITA = ART.kirita();
 const LOTUS = ART.lotus();
-const heading = (eyebrow, title, sub) => '<header class="heading">' + KIRITA + '<p class="eyebrow">' + esc(eyebrow) + '</p><h1 class="title">' + esc(title) + '</h1>' + (sub ? '<p class="sub">' + esc(sub) + '</p>' : '') + '<div class="rule" aria-hidden="true"></div></header>';
+const heading = (eyebrow, title, sub, hl) => '<header class="heading">' + KIRITA + '<p class="eyebrow">' + esc(eyebrow) + '</p><h1 class="title">' + esc(title) + '</h1>' + (sub ? '<p class="sub">' + esc(sub) + '</p>' : '') +
+  (hl && hl.length ? '<ul class="hl" aria-label="Highlights of the day">' + hl.map(x => '<li>' + esc(x) + '</li>').join('') + '</ul>' : '') + '<div class="rule" aria-hidden="true"></div></header>';
 
 /* ---------- now card ---------- */
 function nowCard(L) {

@@ -38,6 +38,9 @@ document.addEventListener('click', e => {
   switch (act) {
     case 'toggle': toggleDone(id, a.dataset.from === 'sheet'); break;
     case 'open': detailSheet(id); break;
+    case 'help': helpSheet(); break;
+    case 'guide': guideSheet(Number(a.dataset.step) || 0); break;
+    case 'guide-done': closeSheet(); break;
     case 'rules': rulesSheet(a.dataset.day); break;
     case 'add': editSheet(null, a.dataset.day); break;
     case 'edit': editSheet(id); break;
@@ -224,6 +227,10 @@ window.addEventListener('appinstalled', () => { deferredPrompt = null; renderBar
   }
   render('tab');
   root.classList.add('ready');
+  /* The tour shows once, the first time the app opens on this phone. */
+  let toured = true;
+  try { toured = localStorage.getItem('udupi.guide') === '1'; if (!toured) localStorage.setItem('udupi.guide', '1'); } catch (e) {}
+  if (!toured) setTimeout(() => { if (!ui.sheet) guideSheet(0); }, !seen && !REDUCED ? 1700 : 450);
 })();
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {

@@ -2,6 +2,7 @@
 'use strict';
 TRIP.DAYS.push({ id:`tue`, date:`2026-10-06`, tab:`Tue 6`, short:`Tue`, eyebrow:`Day 0 · Tuesday 6 October · Bagalkot`, name:`Lift-off`,
   sub:`Pack, prep, and the night bus to the coast.`,
+  hl:[`Pack light`,`Book the surf`,`Night bus`],
   planB:[
     `VRL running late: track the bus from the link in VRL’s SMS and stay at the boarding point. Reaching Udupi after 08:00 only means breakfast comes before the temples on Wednesday.`,
     `Missed the bus: other operators run Bagalkot → Udupi night buses. Search redBus or AbhiBus straight away and tell the dorm your new arrival time.`
@@ -11,7 +12,7 @@ TRIP.DAYS.push({ id:`tue`, date:`2026-10-06`, tab:`Tue 6`, short:`Tue`, eyebrow:
     {id:`tu2`,t:`11:00`,k:`prep`,x:`Download offline Google Maps`,b:`Save one offline area covering Udupi, Manipal, Malpe, Kaup and Kodi Bengre. Signal drops on the boat, at the far beaches and in the Ghat section of the train.`},
     {id:`tu3`,t:`11:20`,k:`prep`,x:`Save tickets offline and fill the SOS card`,b:`Screenshot the VRL ticket and both train tickets, 12133 and 17378. Enter the PNRs, coach and berth, and the dorm’s number in SOS, where they stay on this phone.`},
     {id:`tu4`,t:`12:30`,k:`prep`,x:`Withdraw ₹4,000 in cash`,b:`Mostly ₹100s, with a few ₹500s for the water sports and the night out. Autos, boat counters and beach operators move faster with cash, even where they take UPI. Keep ₹500 in a separate pocket for emergencies.`},
-    {id:`tu5`,t:`13:00`,k:`prep`,x:`Message the dorm your timings`,b:`“Arriving about 6:00 AM on Wed 7 Oct. Leaving Fri 9 Oct around 12:15, bag with you until then.” You have agreed both already; this puts it in writing.`},
+    {id:`tu5`,t:`13:00`,k:`prep`,x:`Message the dorm your timings`,b:`“Arriving about 6:00 AM on Wed 7 Oct. Leaving Fri 9 Oct around 12:35, bag with you until then.” You have agreed both already; this puts it in writing.`},
     {id:`tu12`,t:`16:30`,k:`prep`,x:`Book Friday’s surf lesson (optional)`,q:`Mantra Surf Club, Mulki`,b:`Friday’s Plan B is a Discover Surfing session with Mantra Surf Club at Mulki, ₹2,499. Contact them through surfingindia.net, ask for a morning slot on Friday 9 October that ends by 11:00, and switch Friday to Plan B once it is confirmed. No slot? Plan A stays as it is.`},
     {id:`tu6`,t:`17:00`,k:`prep`,x:`Charge phone and power bank to 100%`},
     {id:`tu7`,t:`19:30`,k:`food`,x:`Light dinner at home`,b:`Nothing oily before nine hours on the road. Pack a banana, biscuits and a full water bottle.`},

@@ -70,8 +70,6 @@
 .addrow input{flex:1 1 150px;min-width:0}
 .addrow .btn{flex:0 0 auto}
 
-/* shots */
-.legend{display:flex;align-items:center;gap:6px}
 
 /* ---------- sos ---------- */
 .tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:22px}

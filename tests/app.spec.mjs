@@ -16,8 +16,8 @@ test.afterEach(async ({ page }) => {
 test('Today shows the Now card, the garland and the timeline', async ({ page }) => {
   await page.goto(at('2026-10-07T09:50'));
   await expect(page.locator('article.now .tag')).toContainText('Now');
-  await expect(page.locator('article.now .now-title')).toHaveText('Auto → Arbi Falls');
-  await expect(page.locator('.garland .bead')).toHaveCount(24);
+  await expect(page.locator('article.now .now-title')).toHaveText('Back to the dorm, change for the falls');
+  await expect(page.locator('.garland .bead')).toHaveCount(22);
   await expect(page.locator('.mural .scene-svg')).toHaveCount(1);
   await expect(page.locator('.nav [data-tab=today]')).toHaveAttribute('aria-current', 'page');
 });
@@ -51,14 +51,14 @@ test('a stop sheet logs what was paid and closes on Escape', async ({ page }) =>
 
 test('skipping and restoring a stop from its sheet', async ({ page }) => {
   await page.goto(at('2026-10-07T09:50'));
-  await openStop(page, 'we30');
+  await openStop(page, 'we39');
   await page.click('#sheetBody [data-act=skip]');
-  await expect(page.locator('#r-we30')).toHaveClass(/skipped/);
-  expect((await stored(page)).skip.we30).toBeTruthy();
+  await expect(page.locator('#r-we39')).toHaveClass(/skipped/);
+  expect((await stored(page)).skip.we39).toBeTruthy();
   await page.waitForTimeout(400);
-  await openStop(page, 'we30');
+  await openStop(page, 'we39');
   await page.click('#sheetBody [data-act=skip]');
-  await expect(page.locator('#r-we30')).not.toHaveClass(/skipped/);
+  await expect(page.locator('#r-we39')).not.toHaveClass(/skipped/);
 });
 
 test('editing a built-in stop, then resetting it to the original', async ({ page }) => {
@@ -121,7 +121,7 @@ test('Plan B from the rules sheet, and back to Plan A', async ({ page }) => {
 });
 
 test('Friday Plan B swaps 12133 for the surf and the road to Mangaluru', async ({ page }) => {
-  await page.goto(at('2026-10-09T07:40'));
+  await page.goto(at('2026-10-09T08:00'));
   await expect(page.locator('#r-fr18')).toHaveCount(1);
   await expect(page.locator('#r-fs4')).toHaveCount(0);
   await page.click('.planseg [data-v=B]');
@@ -136,7 +136,49 @@ test('Thursday night out shows the night stops with their own kind', async ({ pa
   await page.goto(at('2026-10-08T21:00'));
   await expect(page.locator('article.now .now-title')).toHaveText('Dinner and drinks at The High Point Lounge');
   await expect(page.locator('#r-th30 .r-node')).toHaveClass(/g-night/);
-  await expect(page.locator('#r-th31')).toContainText('Guzzlers Inn');
+  await expect(page.locator('#r-th32')).toContainText('Rapido back to the dorm');
+});
+
+test('the first-run tour shows once and walks through three cards', async ({ browser }) => {
+  const context = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, serviceWorkers: 'block' });
+  await prepare(context, { guide: true });
+  const page = await context.newPage();
+  await page.goto(at('2026-10-07T09:50'));
+  await expect(page.locator('#sheetBody .gd')).toBeVisible({ timeout: 4000 });
+  await expect(page.locator('#sheetBody .sh-title')).toHaveText('Today runs the trip');
+  await page.click('#sheetBody [data-act=guide][data-step="1"]');
+  await expect(page.locator('#sheetBody .sh-title')).toHaveText('Tick stops as you go');
+  await page.click('#sheetBody [data-act=guide][data-step="2"]');
+  await expect(page.locator('#sheetBody .sh-title')).toHaveText('Ready when plans change');
+  await page.click('#sheetBody [data-act=guide-done]');
+  await expect.poll(() => sheetOpen(page)).toBe(false);
+  expect(await page.evaluate(() => localStorage.getItem('udupi.guide'))).toBe('1');
+  await page.reload();
+  await page.waitForTimeout(1200);
+  expect(await sheetOpen(page)).toBe(false);
+  await context.close();
+});
+
+test('the help sheet explains every circle and mark, and replays the tour', async ({ page }) => {
+  await page.goto(at('2026-10-07T09:50'));
+  await page.click('.bar [data-act=help]');
+  await page.waitForTimeout(450);
+  expect(await sheetOpen(page)).toBe(true);
+  await expect(page.locator('#sheetBody .legend li')).toHaveCount(14);
+  await expect(page.locator('#sheetBody .marks li')).toHaveCount(5);
+  await page.click('#sheetBody [data-act=guide]');
+  await expect(page.locator('#sheetBody .sh-title')).toHaveText('Today runs the trip');
+  await closeSheet(page);
+  expect(await sheetOpen(page)).toBe(false);
+});
+
+test('each day shows its highlights under the title', async ({ page }) => {
+  await page.goto(at('2026-10-07T09:50'));
+  await expect(page.locator('.heading .hl li')).toHaveCount(4);
+  await expect(page.locator('.heading .hl li').first()).toHaveText('Dawn darshan');
+  await page.goto(at('2026-10-07T09:50', 'days'));
+  await page.click('.dbtn[data-day=thu]');
+  await expect(page.locator('.heading .hl li')).toHaveCount(5);
 });
 
 test('Days: the arched tiles switch the day', async ({ page }) => {
@@ -163,12 +205,12 @@ test('Kit is a packing list: ticks and your own items', async ({ page }) => {
 });
 
 test('the day checklist shows where to shoot, folded under each stop and open at the current one', async ({ page }) => {
-  await page.goto(at('2026-10-07T15:40'));
-  const here = page.locator('#r-we30 .r-shots');
+  await page.goto(at('2026-10-07T16:00'));
+  const here = page.locator('#r-we39 .r-shots');
   await expect(here).toHaveClass(/open/);
-  await expect(here.locator('.sg-item')).toHaveCount(2);
-  await expect(here.locator('.sg-item').first().locator('.sg-at')).toContainText('walkway at the top of the beach');
-  await expect(here.locator('.sg-item').first().locator('.sg-fr')).toBeVisible();
+  await expect(here.locator('.sg-item')).toHaveCount(1);
+  await expect(here.locator('.sg-at')).toContainText('south of the rocks');
+  await expect(here.locator('.sg-fr')).toBeVisible();
   await expect(page.locator('#r-we22 .r-shots')).toHaveClass(/gold/);
   await expect(page.locator('#r-we22 .r-shots')).not.toHaveClass(/open/);
   const later = page.locator('#r-we21 .r-shots');
@@ -183,7 +225,7 @@ test('the day checklist shows where to shoot, folded under each stop and open at
   await openStop(page, 'we21');
   await expect(page.locator('#sheetBody input[data-shot="we21-s0"]')).toBeChecked();
   await closeSheet(page);
-  await page.locator('#r-we30 .sg-tog').click();
+  await page.locator('#r-we39 .sg-tog').click();
   await expect(here).not.toHaveClass(/open/);
 });
 

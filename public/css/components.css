@@ -60,3 +60,48 @@ html[data-vt] .nav-pill{transition:none}
 .bloom .fly{fill:var(--gold);stroke:#BE8414;stroke-width:.5;transform-box:fill-box;transform-origin:center;animation:fly .85s cubic-bezier(.2,.7,.3,1) forwards}
 .bloom .fly:nth-of-type(odd){fill:var(--kum);stroke:none}
 @keyframes fly{0%{opacity:0;transform:rotate(var(--a)) translateY(-6px) scale(.4)}20%{opacity:1}100%{opacity:0;transform:rotate(var(--a)) translateY(-40px) scale(1)}}
+
+/* ---------- help sheet ---------- */
+.hp > p{margin:0;font-size:15px;line-height:1.55;color:var(--ink)}
+.hp-h{margin:24px 0 10px;font:400 19px/1.2 var(--f-display);color:var(--ink)}
+.legend{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 12px;margin:0;padding:0;list-style:none}
+.legend li{display:flex;align-items:center;gap:10px;min-width:0;font:600 13.5px/1.3 var(--f-body);color:var(--ink)}
+.lg-node{display:grid;place-items:center;flex:0 0 auto;width:34px;height:34px}
+.lg-node .dot{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--paper);border:1.5px solid currentColor}
+.lg-node svg{width:16px;height:16px}
+.lg-node.hard .dot{background:var(--kum-soft)}
+.lg-node.done .dot{background:var(--gold);border-color:#C98F1C;color:var(--lat-deep)}
+.marks{margin:0;padding:0;list-style:none}
+.marks li{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-top:1px solid var(--line)}
+.marks li:first-child{border-top:0}
+.marks li > span:last-child{min-width:0;font:500 13.5px/1.45 var(--f-body);color:var(--ink-2)}
+.marks b{display:block;margin-bottom:1px;font:700 14px/1.3 var(--f-body);color:var(--ink)}
+.mk{display:grid;place-items:center;flex:0 0 auto;width:34px;height:34px}
+.mk-now{border-radius:12px;background:var(--gold-soft);box-shadow:inset 0 0 0 1px #F0D58C}
+.mk-ico svg{width:20px;height:20px}
+.mk-ico.gold{color:var(--gold-ink)}
+.mk-ico.sea{color:var(--sea)}
+
+/* ---------- first-run tour ---------- */
+.gd{animation:gdIn .45s var(--ease) both}
+@keyframes gdIn{from{opacity:0;transform:translateX(18px)}}
+.gd-art{display:grid;place-items:center;min-height:136px;margin:2px 0 20px;padding:18px;border-radius:22px;background:var(--plaster),linear-gradient(180deg,var(--lat-wash),var(--wall) 80%);box-shadow:inset 0 0 0 1px rgba(166,58,34,.22)}
+.gd-now,.gd-row{width:min(100%,290px);border-radius:18px;background:var(--paper);box-shadow:var(--shadow)}
+.gd-now{display:grid;gap:10px;justify-items:start;padding:14px}
+.gd-now b{font:400 21px/1.15 var(--f-display);color:var(--ink)}
+.gd-btns{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%}
+.gd-btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:36px;border:1px solid var(--line-2);border-radius:12px;font:700 12.5px/1 var(--f-body);color:var(--ink)}
+.gd-btn.p{background:var(--lat);border-color:var(--lat);color:var(--paper)}
+.gd-btn svg{width:15px;height:15px}
+.gd-row{display:grid;grid-template-columns:auto auto minmax(0,1fr);align-items:center;gap:10px;padding:10px 12px}
+.gd-time{font:700 13px/1 var(--f-body);color:var(--gold-ink);font-variant-numeric:tabular-nums}
+.gd-t b{display:block;font:600 15px/1.3 var(--f-body);color:var(--ink)}
+.gd-t span{display:inline-flex;align-items:center;gap:6px;margin-top:4px;font:600 12px/1.2 var(--f-body);color:var(--ink-2)}
+.gd-t svg{width:14px;height:14px;color:var(--sea)}
+.gd-seg{display:flex;gap:2px;width:min(100%,290px);padding:4px;border-radius:17px;background:var(--wall-2);border:1px solid var(--line)}
+.gd-seg span{flex:1 1 0;display:grid;place-items:center;min-height:40px;border-radius:13px;font:700 13px/1 var(--f-body);color:var(--ink-2)}
+.gd-seg .on{background:var(--paper);color:var(--lat);box-shadow:0 1px 2px rgba(127,42,22,.1),0 8px 16px -12px rgba(127,42,22,.6)}
+.gd-b{margin:10px 0 0;font-size:15.5px;line-height:1.55;color:var(--ink)}
+.gd-dots{display:flex;justify-content:center;gap:8px;margin-top:20px}
+.gd-dots i{width:7px;height:7px;border-radius:999px;background:var(--line-2);transition:width .35s var(--ease),background-color .35s}
+.gd-dots i.on{width:22px;background:var(--lat)}

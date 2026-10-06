@@ -11,7 +11,7 @@ function renderToday(anim) {
   }
   const day = dayOf(L.t);
   const items = dayItems(day);
-  return screenOpen(anim) + mural(day, L.t, anim, ist(L.t).date === day.date) + heading(day.eyebrow, day.name) + nowCard(L) + garland(items, L, anim) +
+  return screenOpen(anim) + mural(day, L.t, anim, ist(L.t).date === day.date) + heading(day.eyebrow, day.name, null, day.hl) + nowCard(L) + garland(items, L, anim) +
     '<div class="tl-wrap">' + planBar(day) + timeline(day, items, L, true) + '</div>' + journal(day) + LOTUS + '</section>';
 }
 
@@ -31,7 +31,7 @@ function renderDays(anim) {
   if (hi) facts += '<span class="chip">' + ico('wallet') + 'Plan ≈ ' + esc(costStr([lo, hi])) + '</span>';
   if (paid) facts += '<span class="chip areca">' + ico('wallet') + 'Paid ' + inr(paid) + '</span>';
   return screenOpen(anim) + strip(sel, today) + '<div class="day-body' + (anim === 'day' ? ' swap' : '') + '">' +
-    mural(sel, L.t, anim, sel.date === today) + heading(sel.eyebrow, sel.name, sel.sub) + '<div class="facts">' + facts + '</div>' +
+    mural(sel, L.t, anim, sel.date === today) + heading(sel.eyebrow, sel.name, sel.sub, sel.hl) + '<div class="facts">' + facts + '</div>' +
     (sel.wx ? '<p class="wx">' + ico('rain') + '<span>' + esc(sel.wx) + '</span></p>' : '') +
     '<div class="tl-wrap">' + planBar(sel) + timeline(sel, items, L, false) + '</div>' + journal(sel) + LOTUS + '</div></section>';
 }
@@ -107,6 +107,7 @@ function renderBar() {
   let h = '';
   if (!navigator.onLine) h += '<span class="off">Offline</span>';
   if (deferredPrompt) h += '<button class="pill" type="button" data-act="install">Install</button>';
+  h += '<button class="hbtn" type="button" data-act="help" aria-label="How this app works">' + ico('help') + '</button>';
   h += '<span class="datechip">' + ico(isDay ? 'sun' : 'moon') + '<span>' + esc(label) + '</span></span>';
   $('#barMeta').innerHTML = h;
 }

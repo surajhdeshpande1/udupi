@@ -27,7 +27,7 @@ TRIP.PLACES = [
 TRIP.FIELDS = [[`dormName`,`Dorm name`],[`dormPhone`,`Dorm phone`],[`dormAddr`,`Dorm address or landmark`],[`vrlPnr`,`VRL ticket or PNR`],[`vrlBus`,`VRL bus number and driver phone`],[`t1Pnr`,`12133 PNR`],[`t1Seat`,`12133 coach and berth`],[`t2Pnr`,`17378 PNR`],[`t2Seat`,`17378 coach and berth`],[`homeName`,`Emergency contact name`],[`homePhone`,`Emergency contact phone`]];
 TRIP.T12133 = [[`Udupi`,`13:20`,`13:22`,1],[`Surathkal`,`14:20`,`14:22`],[`Mangaluru Jn`,`15:40`,`—`,1]];
 TRIP.T17378 = [[`Mangaluru Central`,`—`,`16:45`],[`Mangaluru Jn`,`16:57`,`17:00`,1],[`Bantwal`,`17:30`,`17:32`],[`Subrahmanya Road`,`18:50`,`19:00`],[`Sakleshpur`,`21:20`,`21:30`],[`Hassan`,`22:20`,`22:30`],[`Arsikere`,`23:20`,`23:25`],[`Davangere`,`01:48`,`01:50`],[`Hubballi`,`04:40`,`04:50`],[`Gadag`,`06:25`,`06:30`],[`Badami`,`07:29`,`07:30`],[`Guledagudda Road`,`07:44`,`07:45`],[`Bagalkot`,`07:58`,`08:00`,1]];
-TRIP.FARES = [[`CPC Plaza → Car Street`,`Walk, 10 min`],[`CPC → Manipal`,`₹110–150`],[`CPC → Arbi Falls`,`₹150–200`],[`Udupi → Padubidri, NH66 bus`,`About ₹40`],[`Padubidri → Kaup lighthouse`,`₹200–260`],[`Manipal → CPC late at night`,`₹120–180`],[`CPC → Malpe`,`₹120–150`],[`CPC → Kemmannu`,`₹200–240`],[`CPC → Mattu`,`₹230–280`],[`CPC → Kaup`,`₹280–350`],[`Kodi Bengre → CPC`,`₹300–350`],[`CPC → Udupi station`,`₹70–90`],[`Udupi → Mulki, express bus`,`About ₹50`],[`Mulki → Mangaluru Jn by cab`,`₹900–1,200`],[`Udupi → Mangaluru Jn by cab`,`₹1,300–1,800`]];
+TRIP.FARES = [[`CPC Plaza → Car Street`,`Walk, 10 min`],[`CPC → Manipal`,`₹110–150`],[`CPC → Arbi Falls`,`₹150–200`],[`Manipal → CPC late at night`,`₹120–180`],[`CPC → Malpe`,`₹120–150`],[`CPC → Kemmannu`,`₹200–240`],[`CPC → Mattu`,`₹230–280`],[`CPC → Kaup`,`₹280–350`],[`Kaup → Malpe`,`₹300–400`],[`Kodi Bengre → CPC`,`₹300–350`],[`CPC → Udupi station`,`₹70–90`],[`Udupi → Mulki, express bus`,`About ₹50`],[`Mulki → Mangaluru Jn by cab`,`₹900–1,200`],[`Udupi → Mangaluru Jn by cab`,`₹1,300–1,800`]];
 
 TRIP.SUN = {
   '2026-10-06': { rise: `06:20`, set: `18:17` },
@@ -40,18 +40,19 @@ TRIP.RULES = [
   `St Mary’s on Thursday: not on a boat by 10:30, switch Thursday to Plan B. Friday retry, on Plan A only: board by 09:45 and leave Malpe by 11:30.`,
   `12133 on Friday: decide at 12:00 and again at 13:15 using the ETA rules on that stop.`,
   `Surf on Friday only with a confirmed booking. On Plan B, leave Mulki by 14:00.`,
+  `Back at the dorm by about 22:00 each night: book the ride home by 21:30.`,
   `Swim only between the flags at Malpe. Paddle only at Kaup, Padukere, the Delta and Mattu.`,
   `Water rides and the parasail: life jacket on, price agreed first, and only when the operators are running.`,
   `Hear thunder: get off the water, the rocks and the lighthouse.`,
   `At Arbi Falls, Kemmannu, the Delta and Mattu, keep the driver’s number or have him wait.`,
   `Arbi Falls: feet in only, no swimming, and slow on the wet rocks.`,
-  `Night out: bars serve alcohol only to guests 21 and over, so carry photo ID. Book the Rapido home before the venues close.`,
+  `Night out: bars serve alcohol only to guests 21 and over, so carry photo ID.`,
   `Temples: formal trousers, shirt off near the sanctum if asked, no photos there.`
 ];
 TRIP.SAVERS = [
   `Student ID at Hasta Shilpa: save ₹150.`,
   `Quote the Rapido Auto price on long legs: save ₹300–500 across the trip.`,
-  `NH66 bus to Padubidri instead of an auto: about ₹40 instead of ₹500. Bus back from Kaup: about ₹30 instead of ₹300.`,
+  `NH66 bus from Udupi to Kaup instead of an auto: about ₹30 instead of ₹300.`,
   `Two water rides instead of three: save ₹200–800.`,
   `A 30-minute self-paddle instead of a guided trail: save ₹400–600.`,
   `Friday’s surf plan by bus instead of cabs: save about ₹1,500.`
@@ -67,8 +68,8 @@ TRIP.SOURCES = [
   [`Mantra Surf Club: Discover Surfing`, `https://surfingindia.net/discover-surfing/`],
   [`Mantra Surf Club: season and FAQ`, `https://surfingindia.net/faq/`],
   [`Arbi Falls, Manipal (eNidhi)`, `https://www.enidhi.net/2024/07/arbi-falls-manipal-near-udupi.html`],
-  [`Blue Flag Beach, Padubidri (Udupi Tourism)`, `https://udupitourism.com/explore/beach/blue-flag-beach-padubidri`],
-  [`Down The Road, Manipal (EazyDiner)`, `https://www.eazydiner.com/manipal/down-the-road-vidyaratna-nagar-manipal-689370`],
+  [`Malpe Sea Walkway (Udupi Tourism)`, `https://udupitourism.com/explore/leisure-and-lifestyle/malpe-sea-walkway`],
+  [`Paradise Isle Beach Resort, Malpe (KSTDC)`, `https://kstdc.co/hotels/paradise-isle-beach-resort-malpe-beach/`],
   [`The High Point Lounge (EazyDiner)`, `https://www.eazydiner.com/mangalore-tricity/the-high-point-lounge-vidyaratna-nagar-manipal-710912`],
   [`Guzzlers Inn (EazyDiner)`, `https://www.eazydiner.com/manipal/guzzlers-inn-manipal-689324`],
   [`Country Inn Manipal: Next-2 and Big Shot`, `https://www.radissonhotels.com/en-us/hotels/country-inn-manipal/restaurant-bar`]

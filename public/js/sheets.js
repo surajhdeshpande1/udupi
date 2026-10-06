@@ -85,6 +85,52 @@ function setPaid(id, raw, rerender) {
   if (rerender && ui.sheet && ui.sheet.id === id) detailSheet(id, '[data-paid]');
 }
 
+/* ---------- help: what every circle, colour and tap means ---------- */
+const LEGEND = ['temple', 'culture', 'coast', 'nature', 'adventure', 'explore', 'boat', 'photo', 'food', 'night', 'move', 'bus', 'train', 'rest'];
+const lgNode = (g, icon, extra) => '<span class="lg-node ' + g + (extra ? ' ' + extra : '') + '" aria-hidden="true"><span class="dot">' + ico(icon) + '</span></span>';
+function helpSheet() {
+  const mark = (art, k, v) => '<li>' + art + '<span><b>' + k + '</b>' + v + '</span></li>';
+  let h = '<p class="eyebrow">Guide</p><h2 class="sh-title" tabindex="-1">How this app works</h2><div class="sh-body hp">' +
+    '<p><b>Today</b> runs the day you are in, <b>Days</b> shows any day of the trip, <b>Kit</b> is your packing list, and <b>SOS</b> keeps emergency numbers, bookings, train times and backup.</p>' +
+    '<h3 class="hp-h">What the circles mean</h3><ul class="legend">' + LEGEND.map(k => '<li>' + lgNode('g-' + KINDS[k].g, KINDS[k].icon) + '<span>' + esc(KINDS[k].label) + '</span></li>').join('') + '</ul>' +
+    '<h3 class="hp-h">Marks and colours</h3><ul class="marks">' +
+    mark(lgNode('g-hard', 'clock', 'hard'), 'Red circle', 'A hard deadline: a boat, bus or train that will not wait.') +
+    mark('<span class="mk mk-now" aria-hidden="true"></span>', 'Gold row', 'The stop you are at right now.') +
+    mark('<span class="mk mk-ico gold" aria-hidden="true">' + ico('star') + '</span>', 'Iconic', 'One of the best moments of the trip.') +
+    mark('<span class="mk mk-ico sea" aria-hidden="true">' + ico('camera') + '</span>', 'Where to shoot', 'Unfolds under a stop: where to stand and how to frame each photo.') +
+    mark('<span class="mk mk-ico gold" aria-hidden="true">' + ico('sun') + '</span>', 'Golden hour', 'The soft light just after sunrise and before sunset.') + '</ul>' +
+    '<h3 class="hp-h">Taps</h3><ul class="tips">' +
+    '<li>Tap a circle to mark a stop done, and tap it again to undo.</li>' +
+    '<li>Tap a stop for its story, opening hours, tips, Directions, Edit and Skip.</li>' +
+    '<li>If plans change has the backup for rain, rough sea or a late train. Days with a Plan B have a switch above the timeline.</li>' +
+    '<li>Add a stop, at the end of any day, puts your own plans on the timeline.</li></ul>' +
+    '<h3 class="hp-h">Offline and private</h3><p>Open the app once with signal and it works with none. Ticks, notes and bookings stay on this phone, and Backup in SOS saves them to a file.</p>' +
+    '<div class="sh-acts"><button class="btn wide" type="button" data-act="guide" data-step="0">' + ico('compass') + 'Show the tour again</button></div></div>';
+  openSheet(h, { kind: 'help', label: 'How this app works' });
+}
+
+/* ---------- first-run tour: three cards, then out of the way ---------- */
+const GUIDE = [
+  { t: 'Today runs the trip', b: 'The top card shows where to be now, what comes next and the next deadline, with a countdown. Directions opens Google Maps.',
+    art: () => '<div class="gd-now"><span class="tag live"><i></i>Now</span><b>Kaup beach sunset</b><span class="gd-btns"><span class="gd-btn">' + ico('pin') + 'Directions</span><span class="gd-btn p">' + ico('check') + 'Mark done</span></span></div>' },
+  { t: 'Tick stops as you go', b: 'Tap the circle when a stop is done, and the day’s garland fills with marigolds. Tap the stop itself for its story, timings, tips and the best photo spots.',
+    art: () => '<div class="gd-row"><span class="gd-time">17:30</span>' + lgNode('g-sea', 'check', 'done') + '<span class="gd-t"><b>Kaup beach sunset</b><span>' + ico('camera') + 'Where to shoot</span></span></div>' },
+  { t: 'Ready when plans change', b: 'Rain, rough sea or a late train? If plans change has the backup for every day, and some days carry a Plan B. Everything works offline, and your ticks stay on this phone.',
+    art: () => '<div class="gd-seg"><span class="on">Plan A</span><span>Plan B · Boats off</span></div>' }
+];
+function guideSheet(i) {
+  const n = GUIDE.length;
+  i = Math.max(0, Math.min(n - 1, i || 0));
+  const s = GUIDE[i];
+  const h = '<div class="gd"><div class="gd-art" aria-hidden="true">' + s.art() + '</div>' +
+    '<p class="eyebrow">Welcome · ' + (i + 1) + ' of ' + n + '</p><h2 class="sh-title" tabindex="-1">' + esc(s.t) + '</h2><p class="gd-b">' + esc(s.b) + '</p>' +
+    '<div class="gd-dots" aria-hidden="true">' + GUIDE.map((x, k) => '<i' + (k === i ? ' class="on"' : '') + '></i>').join('') + '</div>' +
+    '<div class="sh-acts">' + (i < n - 1
+      ? '<button class="btn" type="button" data-act="guide-done">Skip</button><button class="btn primary" type="button" data-act="guide" data-step="' + (i + 1) + '">Next</button>'
+      : '<button class="btn primary wide" type="button" data-act="guide-done">Start the trip</button>') + '</div></div>';
+  openSheet(h, { kind: 'guide', label: 'Welcome tour', focus: '.sh-title' });
+}
+
 function rulesSheet(dayId) {
   const day = DAY[dayId];
   if (!day) return;

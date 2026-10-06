@@ -2,6 +2,7 @@
 'use strict';
 TRIP.DAYS.push({ id:`sat`, date:`2026-10-10`, tab:`Sat 10`, short:`Sat`, eyebrow:`Saturday 10 October · on the train`, name:`Home`,
   sub:`Wake up in north Karnataka.`,
+  hl:[`Ghats overnight`,`Home by 08:15`],
   planB:[ `Running late: NTES shows the live ETA. Badami (07:29) and Guledagudda Road (07:44) are your cues to get ready.` ],
   items:[
     {id:`sa1`,t:`04:40`,k:`stop`,info:1,x:`Hubballi (sleep through)`},

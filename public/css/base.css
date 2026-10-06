@@ -100,3 +100,12 @@ svg{flex:0 0 auto}
 .k-jewel{fill:var(--kum);stroke:var(--lat-deep);stroke-width:.8}
 .k-base{stroke:var(--lat);stroke-width:1.6}
 .rule{width:min(200px,56%);height:10px;margin:20px auto 0;background:var(--band) center/18px 10px repeat-x;opacity:.55;max-width:220px}
+
+/* help button in the bar, and the day's highlights strung like marigold beads under its title */
+.hbtn{position:relative;display:grid;place-items:center;width:32px;height:32px;padding:0;border:1px solid var(--line);border-radius:50%;background:var(--paper);color:var(--ink-2);cursor:pointer;transition:background-color .25s,transform .3s var(--spring)}
+.hbtn::after{content:"";position:absolute;inset:-7px}
+.hbtn svg{width:18px;height:18px}
+.hbtn:active{transform:scale(.9);background:var(--wall-2)}
+.hl{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 18px;max-width:330px;margin:14px 0 0;padding:0;list-style:none}
+.hl li{display:inline-flex;align-items:center;gap:8px;font:600 13px/1.3 var(--f-body);color:var(--ink-2)}
+.hl li::before{content:"";flex:0 0 auto;width:8px;height:8px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#F7D57A,var(--gold) 58%,#C98F1C);box-shadow:0 0 0 1.5px var(--paper),0 0 0 2.6px rgba(166,58,34,.5)}

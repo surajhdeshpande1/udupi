@@ -1,6 +1,6 @@
 # Udupi · Coast Trip — Kaavi edition
 
-A light, offline-first trip companion for four days on the Udupi coast, 6–10 October 2026: Bagalkot → Udupi by night bus, then three days of beaches, island boats, parasailing, a forest waterfall, kayaking and an optional surf lesson, two nights out in Manipal, and the Krishna Matha at dawn, before the Konkan line and the Ghats take you home. It is drawn in the style of Udupi's **Kaavi** wall art: laterite-red line work on lime-plaster white, with Yakshagana gold and kumkum for highlights.
+A light, offline-first trip companion for four days on the Udupi coast, 6–10 October 2026: Bagalkot → Udupi by night bus, then three days of beaches, island boats, parasailing, a forest waterfall, kayaking and an optional surf lesson, an evening on Malpe's lamp-lit Sea Walk and a lounge night in Manipal, and the Krishna Matha at dawn, before the Konkan line and the Ghats take you home. Every ride has slack around it, and each day keeps one free hour. It is drawn in the style of Udupi's **Kaavi** wall art: laterite-red line work on lime-plaster white, with Yakshagana gold and kumkum for highlights.
 
 ![Today, Days, Kit and SOS screens](docs/screens.png)
 
@@ -10,12 +10,12 @@ A light, offline-first trip companion for four days on the Udupi coast, 6–10 O
 
 | Screen | What you get |
 | --- | --- |
-| **Today** | The day's mural with the real sun moving along its arc, a **Now** card with directions and a one-tap *Mark done*, the next stop and the next hard deadline with countdowns, a marigold garland of progress, and the timeline (earlier stops fold away). Stops with photos carry a folded **Where to shoot** guide: for each shot, where to stand, how to frame it and, where the light matters, when. It opens by itself at the stop you are at. |
+| **Today** | The day's mural with the real sun moving along its arc, the day's highlights under its title, a **Now** card with directions and a one-tap *Mark done*, the next stop and the next hard deadline with countdowns, a marigold garland of progress, and the timeline (earlier stops fold away). Stops with photos carry a folded **Where to shoot** guide: for each shot, where to stand, how to frame it and, where the light matters, when. It opens by itself at the stop you are at. |
 | **Days** | Five arched day tiles that take a rubber-stamp seal when every stop on that day is done, sun and golden-hour times, the weather note, Plan A / Plan B where it matters, and *If plans change* for each day. |
 | **Kit** | The packing list, with your own items. |
 | **SOS** | Tap-to-call emergency numbers, hospitals and stations with directions, your bookings (kept on the phone), both train timetables, the rules that protect the trip, auto fares, a plan-versus-paid money card, and backup to a file. |
 
-Every stop opens a sheet with its story, its Kannada name, opening hours, tips, where to shoot, what you paid, and *Directions*, *Edit* and *Skip*. You can add your own stops on any day. A one-line journal with a mood closes each day.
+The first time the app opens, a three-card tour shows how it works, and the **?** in the header explains every circle, colour and tap at any time. Every stop opens a sheet with its story, its Kannada name, opening hours, tips, where to shoot, what you paid, and *Directions*, *Edit* and *Skip*. You can add your own stops on any day. A one-line journal with a mood closes each day.
 
 ## Design
 
@@ -59,7 +59,7 @@ npx playwright install chromium
 npx playwright test
 ```
 
-28 browser tests on a phone-sized Chromium cover ticking, sheets, skipping, editing and adding stops, Plan B on Thursday and Friday, the night-out stops, the shot guide, days, kit, bookings, backup and restore, reset, the journal, day stamps, loading data saved by the previous version, the intro, security headers, the install manifest, offline use, and layout at 320, 390 and 820 px with no console errors or CSP violations. GitHub Actions runs them on every push to `main`.
+31 browser tests on a phone-sized Chromium cover ticking, sheets, skipping, editing and adding stops, Plan B on Thursday and Friday, the night-out stops, the shot guide, the first-run tour, the help sheet, day highlights, days, kit, bookings, backup and restore, reset, the journal, day stamps, loading data saved by the previous version, the intro, security headers, the install manifest, offline use, and layout at 320, 390 and 820 px with no console errors or CSP violations. GitHub Actions runs them on every push to `main`.
 
 ## Editing the trip
 
@@ -74,11 +74,12 @@ Each day lives in `public/data/day-*.js`. A stop looks like this:
 | --- | --- |
 | `id` | Stable id. Ticks, skips and edits are saved against it, so never reuse or renumber ids. |
 | `t`, `dur` | Start time (24 h, IST) and minutes. |
-| `k` | Kind: `temple`, `culture`, `coast`, `nature`, `adventure`, `photo`, `boat`, `food`, `night`, `move`, `bus`, `train`, `rest`, `prep`, `stop`. |
+| `k` | Kind: `temple`, `culture`, `coast`, `nature`, `adventure`, `explore` (free hour), `photo`, `boat`, `food`, `night`, `move`, `bus`, `train`, `rest`, `prep`, `stop`. |
 | `x`, `kn` | Title and Kannada name. |
 | `q`, `m` | Google Maps query, and `m:'w'` for walking directions. |
 | `c` | Cost range in rupees, `[low, high]`. |
 | `win`, `b`, `tips` | Opening hours, body text and tips. |
+| `hl` (on the day) | Three to five highlights shown under the day's title. |
 | `sh` | Shots, each `{x, at, fr, tm}`: what to shoot, where to stand, how to frame it and, optionally, the best time. Ticks are saved by position, so add new shots at the end. |
 | `hard`, `fix`, `star`, `info` | Hard deadline, fixed time, highlight, passing information with no tick. |
 | `v` | `A` or `B` for stops that belong to one plan on days with a Plan B. |
