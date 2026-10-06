@@ -34,7 +34,7 @@ TRIP.PICS = {
   tu1: `pack`, tu2: `phonemap`, tu3: `phonemap`, tu4: `pack`, tu5: `phonemap`, tu6: `phonemap`, tu12: `surf`,
   we1: `bus`, we2: `town`, we3: `dorm`, we9: `breakfast`, we36: `dress`, we29: `falls`, we25: `gadbad`, we21: `lighthouse`, we22: `lighthouse`, we40: `seawalk`, we41: `dinnersea`,
   th1: `beachbag`, th2: `breakfast`, th5: `harbour`, th6: `jetty`, th8: `basalt`, th10: `parasail`, th11: `swim`, th12: `shower`, th19: `bridge`, tb3: `beachpalms`, tb6: `bridge`, th21: `delta`, th23: `dress`, th27: `phonetrain`,
-  fr1: `pack`, fr3: `phonetrain`, fr5: `valley`, fr7: `breakfast`, fr9: `estuary`, fs1: `pack`, fs4: `surf`, fs6: `bus`, fs7: `stationmng`, fr14: `phonetrain`, fr17: `stationudp`, fr20: `stationmng`, fr21: `stationmng`, fr22: `chai`, fr24: `rivertrain`, fr25: `train`, fr27: `parcel`, fr30: `berth`,
+  fr1: `pack`, fr3: `phonetrain`, fr5: `valley`, fr7: `breakfast`, fr9: `estuary`, fs8: `phonemap`, fs1: `pack`, fs4: `surf`, fs6: `bus`, fs7: `stationmng`, fr14: `phonetrain`, fr17: `stationudp`, fr20: `stationmng`, fr21: `stationmng`, fr22: `chai`, fr24: `rivertrain`, fr25: `train`, fr27: `parcel`, fr30: `berth`,
   sa3: `berth`, sa6: `stationbgk`
 };
 
@@ -48,7 +48,7 @@ TRIP.SUN = {
 TRIP.RULES = [
   `St Mary’s on Thursday: not on a boat by 10:30, switch Thursday to Plan B. Friday retry, on Plan A only: board by 09:45 and leave Malpe by 11:30.`,
   `12133 on Friday: decide at 12:00 and again at 13:15 using the ETA rules on that stop.`,
-  `Surf on Friday only with a confirmed booking. On Plan B, leave Mulki by 14:00.`,
+  `Surf on Friday only with a confirmed booking, and confirm again at 05:30. Plan A is the backup; on Plan B, leave Mulki by 14:00.`,
   `Back at the dorm by about 22:00 each night: book the ride home by 21:30.`,
   `Swim only between the flags at Malpe. Paddle only at Kaup, Padukere, the Delta and Mattu.`,
   `Water rides and the parasail: life jacket on, price agreed first, and only when the operators are running.`,
@@ -76,6 +76,8 @@ TRIP.SOURCES = [
   [`Parasailing at Malpe (Karnataka Tourism)`, `https://karnatakatourism.org/experiences/parasailing-at-malpe-beach`],
   [`Mantra Surf Club: Discover Surfing`, `https://surfingindia.net/discover-surfing/`],
   [`Mantra Surf Club: season and FAQ`, `https://surfingindia.net/faq/`],
+  [`Sasihithlu beach (Karnataka Tourism)`, `https://karnatakatourism.org/attractions/sasihithlu-beach-mangaluru`],
+  [`Panambur beach (Karnataka Tourism)`, `https://karnatakatourism.org/tour-item/panambur-beach/`],
   [`Arbi Falls, Manipal (eNidhi)`, `https://www.enidhi.net/2024/07/arbi-falls-manipal-near-udupi.html`],
   [`Malpe Sea Walkway (Udupi Tourism)`, `https://udupitourism.com/explore/leisure-and-lifestyle/malpe-sea-walkway`],
   [`Paradise Isle Beach Resort, Malpe (KSTDC)`, `https://kstdc.co/hotels/paradise-isle-beach-resort-malpe-beach/`],
