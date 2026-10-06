@@ -1,6 +1,6 @@
 # Udupi · Coast Trip — Kaavi edition
 
-A light, offline-first trip companion for four days on the Udupi coast, 6–10 October 2026: Bagalkot → Udupi by night bus, three days of temples, sea and backwaters, then the Konkan line and the Ghats home. It is drawn in the style of Udupi's **Kaavi** wall art: laterite-red line work on lime-plaster white, with Yakshagana gold and kumkum for highlights.
+A light, offline-first trip companion for four days on the Udupi coast, 6–10 October 2026: Bagalkot → Udupi by night bus, then three days of island boats, parasailing, kayaking and an optional surf lesson, two evenings out, and only the temples most worth seeing, before the Konkan line and the Ghats take you home. It is drawn in the style of Udupi's **Kaavi** wall art: laterite-red line work on lime-plaster white, with Yakshagana gold and kumkum for highlights.
 
 ![Today, Days, Kit and SOS screens](docs/screens.png)
 
@@ -59,14 +59,14 @@ npx playwright install chromium
 npx playwright test
 ```
 
-24 browser tests on a phone-sized Chromium cover ticking, sheets, skipping, editing and adding stops, Plan B, days, kit, bookings, backup and restore, reset, the journal, day stamps, loading data saved by the previous version, the intro, security headers, the install manifest, offline use, and layout at 320, 390 and 820 px with no console errors or CSP violations. GitHub Actions runs them on every push to `main`.
+26 browser tests on a phone-sized Chromium cover ticking, sheets, skipping, editing and adding stops, Plan B on Thursday and Friday, the night-out stops, days, kit, bookings, backup and restore, reset, the journal, day stamps, loading data saved by the previous version, the intro, security headers, the install manifest, offline use, and layout at 320, 390 and 820 px with no console errors or CSP violations. GitHub Actions runs them on every push to `main`.
 
 ## Editing the trip
 
 Each day lives in `public/data/day-*.js`. A stop looks like this:
 
 ```js
-{id:`we7`, t:`07:20`, k:`temple`, x:`Sri Krishna Matha, quick darshan`, kn:`ಶ್ರೀ ಕೃಷ್ಣ ಮಠ`,
+{id:`we7`, t:`07:15`, k:`temple`, x:`Sri Krishna Matha, dawn darshan`, kn:`ಶ್ರೀ ಕೃಷ್ಣ ಮಠ`,
  q:`Udupi Sri Krishna Matha`, m:`w`, dur:35, win:`Darshan from 05:00`, b:`…`, tips:[`…`], sh:[`…`]}
 ```
 
@@ -74,7 +74,7 @@ Each day lives in `public/data/day-*.js`. A stop looks like this:
 | --- | --- |
 | `id` | Stable id. Ticks, skips and edits are saved against it, so never reuse or renumber ids. |
 | `t`, `dur` | Start time (24 h, IST) and minutes. |
-| `k` | Kind: `temple`, `culture`, `coast`, `nature`, `adventure`, `photo`, `boat`, `food`, `move`, `bus`, `train`, `rest`, `prep`, `stop`. |
+| `k` | Kind: `temple`, `culture`, `coast`, `nature`, `adventure`, `photo`, `boat`, `food`, `night`, `move`, `bus`, `train`, `rest`, `prep`, `stop`. |
 | `x`, `kn` | Title and Kannada name. |
 | `q`, `m` | Google Maps query, and `m:'w'` for walking directions. |
 | `c` | Cost range in rupees, `[low, high]`. |

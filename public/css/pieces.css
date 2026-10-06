@@ -121,6 +121,7 @@ article.now::after{content:"";position:absolute;left:0;right:0;top:12px;height:1
 .g-spirit{color:var(--lat)}
 .g-sea{color:var(--sea)}
 .g-food{color:var(--areca)}
+.g-night{color:var(--gold-ink)}
 .g-ink{color:var(--ink-2)}
 .g-hard{color:var(--kum)}
 .row.hard:not(.done) .r-node .dot{background:var(--kum-soft)}

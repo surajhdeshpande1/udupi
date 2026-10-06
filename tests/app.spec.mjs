@@ -16,22 +16,22 @@ test.afterEach(async ({ page }) => {
 test('Today shows the Now card, the garland and the timeline', async ({ page }) => {
   await page.goto(at('2026-10-07T09:50'));
   await expect(page.locator('article.now .tag')).toContainText('Now');
-  await expect(page.locator('article.now .now-title')).toHaveText('Kadiyali Mahishamardini Temple');
-  await expect(page.locator('.garland .bead')).toHaveCount(27);
+  await expect(page.locator('article.now .now-title')).toHaveText('Auto → Hasta Shilpa');
+  await expect(page.locator('.garland .bead')).toHaveCount(23);
   await expect(page.locator('.mural .scene-svg')).toHaveCount(1);
   await expect(page.locator('.nav [data-tab=today]')).toHaveAttribute('aria-current', 'page');
 });
 
 test('ticking a stop blooms, counts and can be undone', async ({ page }) => {
   await page.goto(at('2026-10-07T09:50'));
-  await page.click('#r-we11 .r-node');
-  await expect(page.locator('#r-we11 .bloom')).toHaveCount(1);
+  await page.click('#r-we12 .r-node');
+  await expect(page.locator('#r-we12 .bloom')).toHaveCount(1);
   await expect(page.locator('#toast')).toHaveText(/^Done/);
   await expect(page.locator('.bead.pop')).toHaveCount(1);
-  expect((await stored(page)).done.we11).toBeTruthy();
+  expect((await stored(page)).done.we12).toBeTruthy();
   await expect(page.locator('.bloom')).toHaveCount(0, { timeout: 3000 });
-  await page.click('#r-we11 .r-node');
-  expect((await stored(page)).done.we11).toBeFalsy();
+  await page.click('#r-we12 .r-node');
+  expect((await stored(page)).done.we12).toBeFalsy();
 });
 
 test('a stop sheet logs what was paid and closes on Escape', async ({ page }) => {
@@ -120,6 +120,25 @@ test('Plan B from the rules sheet, and back to Plan A', async ({ page }) => {
   expect((await stored(page)).variant.thu).toBe('A');
 });
 
+test('Friday Plan B swaps 12133 for the surf and the road to Mangaluru', async ({ page }) => {
+  await page.goto(at('2026-10-09T07:40'));
+  await expect(page.locator('#r-fr18')).toHaveCount(1);
+  await expect(page.locator('#r-fs4')).toHaveCount(0);
+  await page.click('.planseg [data-v=B]');
+  await expect(page.locator('#r-fs4')).toHaveCount(1);
+  await expect(page.locator('#r-fr18')).toHaveCount(0);
+  await expect(page.locator('#r-fr23')).toHaveCount(1);
+  await expect(page.locator('article.now .now-title')).toHaveText('Surf lesson with Mantra Surf Club');
+  expect((await stored(page)).variant.fri).toBe('B');
+});
+
+test('Thursday night out shows the night stops with their own kind', async ({ page }) => {
+  await page.goto(at('2026-10-08T21:00'));
+  await expect(page.locator('article.now .now-title')).toHaveText('Dinner and drinks at The High Point Lounge');
+  await expect(page.locator('#r-th30 .r-node')).toHaveClass(/g-night/);
+  await expect(page.locator('#r-th31')).toContainText('Guzzlers Inn');
+});
+
 test('Days: the arched tiles switch the day', async ({ page }) => {
   await page.goto(at('2026-10-07T09:50'));
   await page.click('.nav [data-tab=days]');
@@ -190,7 +209,7 @@ test('Journal keeps a mood and a line', async ({ page }) => {
 
 test('Finishing a day stamps it, and undoing lifts the stamp', async ({ page }) => {
   await page.goto(at('2026-10-06T21:20'));
-  await page.evaluate(() => { for (let i = 1; i <= 10; i++) state.done['tu' + i] = 1; save(); render(); });
+  await page.evaluate(() => { for (let i = 1; i <= 12; i++) if (i !== 11) state.done['tu' + i] = 1; save(); render(); });
   await page.click('#r-tu11 .r-node');
   await expect(page.locator('.stamp-wrap .medal').first()).toBeVisible();
   expect((await stored(page)).sealed.tue).toBeTruthy();

@@ -1,6 +1,6 @@
 /* Udupi Coast Trip app, part 1: time, icons, state, plan. Everything runs on IST. */
 'use strict';
-const APP_V = 'udupi-kaavi-1';
+const APP_V = 'udupi-kaavi-2';
 const DAYS = TRIP.DAYS;
 const DAY = Object.fromEntries(DAYS.map(d => [d.id, d]));
 const TABS = ['today', 'days', 'kit', 'sos'];
@@ -38,6 +38,7 @@ const P = {
   auto: '<path d="M4 17v-6a5.5 5.5 0 0 1 5.5-5.5H14l4.5 5.5h1a1 1 0 0 1 1 1v5"/><path d="M4 12.5h16.5"/><circle cx="7.5" cy="17.5" r="2"/><circle cx="17.5" cy="17.5" r="2"/><path d="M9.5 17.5h6"/>',
   bus: '<rect x="4.5" y="3" width="15" height="14.5" rx="3"/><path d="M4.5 10.5h15"/><path d="M8 20.5v-3M16 20.5v-3"/><circle cx="8.3" cy="14" r=".9"/><circle cx="15.7" cy="14" r=".9"/>',
   train: '<rect x="5.5" y="3" width="13" height="14" rx="4"/><path d="M5.5 10h13"/><path d="M9 21l1.8-4M15 21l-1.8-4"/><circle cx="9.2" cy="13.5" r=".9"/><circle cx="14.8" cy="13.5" r=".9"/>',
+  night: '<path d="M10 3.5l1.6 4.4 4.4 1.6-4.4 1.6L10 15.5l-1.6-4.4L4 9.5l4.4-1.6z"/><path d="M17.5 13.5l.9 2.1 2.1.9-2.1.9-.9 2.1-.9-2.1-2.1-.9 2.1-.9z"/>',
   moon: '<path d="M19.5 14.5A7.5 7.5 0 1 1 9.5 4.5a6 6 0 0 0 10 10z"/>',
   list: '<path d="M10 6.5h10M10 12h10M10 17.5h10"/><path d="M3.8 6.5l1.4 1.4 2.4-2.6M3.8 12l1.4 1.4 2.4-2.6M3.8 17.5l1.4 1.4 2.4-2.6"/>',
   check: '<path d="M5.5 12.5l4 4 9-9.5"/>',
@@ -71,6 +72,7 @@ const KINDS = {
   photo: { g: 'sea', label: 'Photo', icon: 'camera' },
   boat: { g: 'sea', label: 'Boat', icon: 'boat' },
   food: { g: 'food', label: 'Food', icon: 'leaf' },
+  night: { g: 'night', label: 'Night out', icon: 'night' },
   move: { g: 'ink', label: 'Auto or walk', icon: 'auto' },
   bus: { g: 'ink', label: 'Bus', icon: 'bus' },
   train: { g: 'ink', label: 'Train', icon: 'train' },
@@ -78,7 +80,7 @@ const KINDS = {
   prep: { g: 'ink', label: 'Prep', icon: 'list' },
   stop: { g: 'ink', label: 'On the way', icon: '' }
 };
-const CUSTOM_KINDS = ['temple', 'culture', 'coast', 'nature', 'adventure', 'photo', 'food', 'move', 'rest', 'prep'];
+const CUSTOM_KINDS = ['temple', 'culture', 'coast', 'nature', 'adventure', 'photo', 'food', 'night', 'move', 'rest', 'prep'];
 const MOOD_KEYS = ART.MOODS.map(m => m[0]);
 
 /* ---------- state: stays on this phone, and every value is checked on the way in ---------- */
