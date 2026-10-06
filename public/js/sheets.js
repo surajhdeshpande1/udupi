@@ -52,7 +52,7 @@ function detailSheet(id, focus) {
   h += '<div class="sh-body"><div class="facts">' + chips.join('') + '</div>';
   if (it.b) h += '<p>' + esc(it.b) + '</p>';
   if (it.tips && it.tips.length) h += '<ul class="tips">' + it.tips.map(x => '<li>' + esc(x) + '</li>').join('') + '</ul>';
-  if (it.sh && it.sh.length) h += '<div class="shots-box"><span class="label">Shot list' + (golden(it, day) ? ' · golden hour' : '') + '</span><ul class="checks">' + it.sh.map((s, k) => '<li>' + checkHTML('shot', it.id + '-s' + k, s, !!state.shots[it.id + '-s' + k]) + '</li>').join('') + '</ul></div>';
+  if (shotsOf(it).length) h += '<div class="shots-box"><span class="label">Where to shoot' + (golden(it, day) ? ' · golden hour' : '') + '</span>' + shotList(it) + '</div>';
   if (!it.info) h += paidBox(it);
   if (!it.info) {
     h += '<div class="sh-acts">';

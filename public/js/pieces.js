@@ -168,9 +168,29 @@ function rowHTML(it, t, curId, i) {
   const node = it.info
     ? '<span class="r-node ' + g + '" aria-hidden="true"><span class="dot"></span></span>'
     : '<button class="r-node ' + g + '" type="button" data-act="toggle" data-id="' + esc(it.id) + '" aria-pressed="' + done + '" aria-label="' + (done ? 'Undo: ' : 'Mark done: ') + esc(it.x) + '"><span class="dot">' + ico(done ? 'check' : it.k === 'move' && it.m === 'w' ? 'walk' : K.icon) + '</span></button>';
-  const inner = '<span class="r-title">' + esc(it.x) + '</span>' + (it.kn ? '<span class="r-kn" lang="kn">' + esc(it.kn) + '</span>' : '') + (meta.length ? '<span class="r-meta">' + meta.join(' · ') + '</span>' : '');
+  const inner = '<span class="r-title">' + esc(it.x) + '</span>' + (meta.length ? '<span class="r-meta">' + meta.join(' · ') + '</span>' : '');
   const body = it.info && !it.b ? '<span class="r-body">' + inner + '</span>' : '<button class="r-body" type="button" data-act="open" data-id="' + esc(it.id) + '">' + inner + '</button>';
-  return '<li class="' + cls.join(' ') + '" id="r-' + esc(it.id) + '" style="--i:' + i + '"><span class="r-time">' + esc(it.t) + '</span>' + node + body + '</li>';
+  const guide = !it.info && shotsOf(it).length ? shotGuide(it, it.id === curId && !done && !sk) : '';
+  return '<li class="' + cls.join(' ') + '" id="r-' + esc(it.id) + '" style="--i:' + i + '"><span class="r-time">' + esc(it.t) + '</span>' + node + body + guide + '</li>';
+}
+
+/* ---------- shot guide: where to stand and how to frame, folded under its stop ---------- */
+function shotGuide(it, auto) {
+  const list = shotsOf(it);
+  const open = ui.shots[it.id] != null ? ui.shots[it.id] : auto;
+  const gold = DAY[it.day] && golden(it, DAY[it.day]);
+  return '<div class="r-shots' + (open ? ' open' : '') + (gold ? ' gold' : '') + '"><button class="sg-tog" type="button" data-act="shots" data-id="' + esc(it.id) + '" aria-expanded="' + open + '">' + ico('camera') +
+    '<span class="sg-l">Where to shoot</span>' + (gold ? '<span class="sg-gold">' + ico('sun') + '<span class="vh">Golden hour</span></span>' : '') +
+    '<span class="sg-n" data-sgn="' + esc(it.id) + '">' + shotsDone(it) + '/' + list.length + '</span>' + ico('chev') + '</button>' +
+    '<div class="sg-body"><div class="sg-in">' + shotList(it) + '</div></div></div>';
+}
+function shotList(it) {
+  const line = (cls, icon, label, v) => v ? '<span class="sg-line ' + cls + '">' + ico(icon) + '<span><span class="vh">' + label + ': </span>' + esc(v) + '</span></span>' : '';
+  return '<ul class="sg-list">' + shotsOf(it).map((s, k) => {
+    const key = it.id + '-s' + k;
+    return '<li><label class="check sg-item"><input type="checkbox" data-shot="' + esc(key) + '"' + (state.shots[key] ? ' checked' : '') + '><span class="box">' + ico('check') + '</span>' +
+      '<span class="sg-txt"><span class="txt">' + esc(s.x) + '</span>' + line('sg-at', 'pin', 'Where to stand', s.at) + line('sg-fr', 'frame', 'Framing', s.fr) + line('sg-tm', 'sun', 'Best time', s.tm) + '</span></label></li>';
+  }).join('') + '</ul>';
 }
 
 /* ---------- day journal: one line and a mood ---------- */

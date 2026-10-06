@@ -1,6 +1,6 @@
 /* Udupi Coast Trip app, part 1: time, icons, state, plan. Everything runs on IST. */
 'use strict';
-const APP_V = 'udupi-kaavi-2';
+const APP_V = 'udupi-kaavi-3';
 const DAYS = TRIP.DAYS;
 const DAY = Object.fromEntries(DAYS.map(d => [d.id, d]));
 const TABS = ['today', 'days', 'kit', 'sos'];
@@ -42,6 +42,7 @@ const P = {
   moon: '<path d="M19.5 14.5A7.5 7.5 0 1 1 9.5 4.5a6 6 0 0 0 10 10z"/>',
   list: '<path d="M10 6.5h10M10 12h10M10 17.5h10"/><path d="M3.8 6.5l1.4 1.4 2.4-2.6M3.8 12l1.4 1.4 2.4-2.6M3.8 17.5l1.4 1.4 2.4-2.6"/>',
   check: '<path d="M5.5 12.5l4 4 9-9.5"/>',
+  frame: '<path d="M4 9V6a2 2 0 0 1 2-2h3M15 4h3a2 2 0 0 1 2 2v3M20 15v3a2 2 0 0 1-2 2h-3M9 20H6a2 2 0 0 1-2-2v-3"/><circle cx="12" cy="12" r="2.6"/>',
   pin: '<path d="M12 21s-6.5-6-6.5-11.5a6.5 6.5 0 0 1 13 0C18.5 15 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.4"/>',
   edit: '<path d="M4.5 19.5h4l10-10-4-4-10 10z"/><path d="M13 7l4 4"/>',
   skip: '<circle cx="12" cy="12" r="8"/><path d="M8.5 12h7"/>',
@@ -134,7 +135,7 @@ let state = load();
 let saveTimer = 0;
 function save() { clearTimeout(saveTimer); saveTimer = 0; try { localStorage.setItem(LS, JSON.stringify(state)); } catch (e) {} }
 function saveSoon() { clearTimeout(saveTimer); saveTimer = setTimeout(save, 300); }
-const ui = { tab: 'today', day: null, sheet: null, needsRender: false, minute: -1, earlier: false, open: {}, kit: 'pack', pending: null, vt: false, intro: false };
+const ui = { tab: 'today', day: null, sheet: null, needsRender: false, minute: -1, earlier: false, open: {}, pending: null, vt: false, intro: false, shots: {} };
 function commit(opts) { save(); if (!opts || opts.render !== false) { if (ui.sheet && !(opts && opts.force)) ui.needsRender = true; else render(); } }
 
 /* ---------- plan ---------- */
@@ -188,8 +189,9 @@ function kitItems() {
   state.packCustom.forEach(p => out.push({ id: p.id, label: p.label, cat: p.cat, custom: true }));
   return out;
 }
-const shotStops = () => DAYS.map(d => ({ day: d, items: dayItems(d).filter(i => i.sh && i.sh.length && !skipped(i)) })).filter(g => g.items.length);
-function shotCount() { let n = 0, d = 0; shotStops().forEach(g => g.items.forEach(it => it.sh.forEach((s, k) => { n++; if (state.shots[it.id + '-s' + k]) d++; }))); return [d, n]; }
+/* A shot is {x: what, at: where to stand, fr: how to frame it, tm: best time}; plain strings still work. */
+const shotsOf = it => (Array.isArray(it.sh) ? it.sh : []).map(s => (typeof s === 'string' ? { x: s } : s)).filter(s => s && s.x);
+const shotsDone = it => shotsOf(it).filter((s, k) => state.shots[it.id + '-s' + k]).length;
 
 /* ---------- the trip seal: a day is stamped when every stop on it is done ---------- */
 function complete(day) { const t = targets(dayItems(day)); return t.length > 0 && t.every(i => state.done[i.id]); }

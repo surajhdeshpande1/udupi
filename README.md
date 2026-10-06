@@ -10,12 +10,12 @@ A light, offline-first trip companion for four days on the Udupi coast, 6–10 O
 
 | Screen | What you get |
 | --- | --- |
-| **Today** | The day's mural with the real sun moving along its arc, a **Now** card with directions and a one-tap *Mark done*, the next stop and the next hard deadline with countdowns, a marigold garland of progress, and the timeline (earlier stops fold away). |
+| **Today** | The day's mural with the real sun moving along its arc, a **Now** card with directions and a one-tap *Mark done*, the next stop and the next hard deadline with countdowns, a marigold garland of progress, and the timeline (earlier stops fold away). Stops with photos carry a folded **Where to shoot** guide: for each shot, where to stand, how to frame it and, where the light matters, when. It opens by itself at the stop you are at. |
 | **Days** | Five arched day tiles that take a rubber-stamp seal when every stop on that day is done, sun and golden-hour times, the weather note, Plan A / Plan B where it matters, and *If plans change* for each day. |
-| **Kit** | The packing list (add your own items) and the shot list for every photo stop, with golden-hour stops marked. |
+| **Kit** | The packing list, with your own items. |
 | **SOS** | Tap-to-call emergency numbers, hospitals and stations with directions, your bookings (kept on the phone), both train timetables, the rules that protect the trip, auto fares, a plan-versus-paid money card, and backup to a file. |
 
-Every stop opens a sheet with its story, opening hours, tips, shot list, what you paid, and *Directions*, *Edit* and *Skip*. You can add your own stops on any day. A one-line journal with a mood closes each day.
+Every stop opens a sheet with its story, its Kannada name, opening hours, tips, where to shoot, what you paid, and *Directions*, *Edit* and *Skip*. You can add your own stops on any day. A one-line journal with a mood closes each day.
 
 ## Design
 
@@ -59,7 +59,7 @@ npx playwright install chromium
 npx playwright test
 ```
 
-26 browser tests on a phone-sized Chromium cover ticking, sheets, skipping, editing and adding stops, Plan B on Thursday and Friday, the night-out stops, days, kit, bookings, backup and restore, reset, the journal, day stamps, loading data saved by the previous version, the intro, security headers, the install manifest, offline use, and layout at 320, 390 and 820 px with no console errors or CSP violations. GitHub Actions runs them on every push to `main`.
+28 browser tests on a phone-sized Chromium cover ticking, sheets, skipping, editing and adding stops, Plan B on Thursday and Friday, the night-out stops, the shot guide, days, kit, bookings, backup and restore, reset, the journal, day stamps, loading data saved by the previous version, the intro, security headers, the install manifest, offline use, and layout at 320, 390 and 820 px with no console errors or CSP violations. GitHub Actions runs them on every push to `main`.
 
 ## Editing the trip
 
@@ -78,7 +78,8 @@ Each day lives in `public/data/day-*.js`. A stop looks like this:
 | `x`, `kn` | Title and Kannada name. |
 | `q`, `m` | Google Maps query, and `m:'w'` for walking directions. |
 | `c` | Cost range in rupees, `[low, high]`. |
-| `win`, `b`, `tips`, `sh` | Opening hours, body text, tips and shot list. |
+| `win`, `b`, `tips` | Opening hours, body text and tips. |
+| `sh` | Shots, each `{x, at, fr, tm}`: what to shoot, where to stand, how to frame it and, optionally, the best time. Ticks are saved by position, so add new shots at the end. |
 | `hard`, `fix`, `star`, `info` | Hard deadline, fixed time, highlight, passing information with no tick. |
 | `v` | `A` or `B` for stops that belong to one plan on days with a Plan B. |
 

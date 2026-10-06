@@ -52,7 +52,15 @@ document.addEventListener('click', e => {
     }
     case 'earlier': ui.earlier = !ui.earlier; render(); break;
     case 'day': if (ui.day !== a.dataset.day) { ui.day = a.dataset.day; ui.earlier = false; render('day'); } break;
-    case 'kitview': if (ui.kit !== a.dataset.v) { ui.kit = a.dataset.v; render('view'); } break;
+    case 'shots': {
+      const box = a.closest('.r-shots');
+      if (!box) break;
+      const open = !box.classList.contains('open');
+      ui.shots[id] = open;
+      box.classList.toggle('open', open);
+      a.setAttribute('aria-expanded', String(open));
+      break;
+    }
     case 'kit-del': state.packCustom = state.packCustom.filter(p => p.id !== id); delete state.pack[id]; commit(); toast('Removed from Kit'); break;
     case 'mood': {
       const d = a.dataset.day, j = Object.assign({}, state.journal[d]);
@@ -86,26 +94,30 @@ document.addEventListener('click', e => {
 function kitCounts() {
   const items = kitItems();
   const pd = items.filter(i => state.pack[i.id]).length;
-  const [sd, sn] = shotCount();
-  const segs = $$('.kitseg .n');
-  if (segs[0]) segs[0].textContent = pd + '/' + items.length;
-  if (segs[1]) segs[1].textContent = sd + '/' + sn;
   const ks = $('.ksum');
   if (!ks) return;
-  const shots = ui.kit === 'shots';
-  const [d, n] = shots ? [sd, sn] : [pd, items.length];
   const pr = $('.ring .pr', ks);
-  if (pr) { pr.setAttribute('stroke-dashoffset', (C26 * (1 - (n ? d / n : 0))).toFixed(1)); pr.setAttribute('opacity', d ? 1 : 0); }
+  if (pr) { pr.setAttribute('stroke-dashoffset', (C26 * (1 - (items.length ? pd / items.length : 0))).toFixed(1)); pr.setAttribute('opacity', pd ? 1 : 0); }
   const num = $('.ring-wrap span', ks);
-  if (num) num.textContent = d;
-  const [t1, t2] = kitLine(shots ? 'shots' : 'pack', d, n);
+  if (num) num.textContent = pd;
+  const [t1, t2] = kitLine(pd, items.length);
   const b = $('.ksum-t b', ks), s = $('.ksum-t span', ks);
   if (b) b.textContent = t1;
   if (s) s.textContent = t2;
 }
+/* A shot ticked in the timeline or in a sheet: mirror it everywhere it shows and update the stop's count. */
+function shotTick(key, on) {
+  if (on) state.shots[key] = 1; else delete state.shots[key];
+  save();
+  $$('input[data-shot="' + key + '"]').forEach(i => { i.checked = on; });
+  const id = key.replace(/-s\d+$/, '');
+  const it = findItem(id);
+  if (it) $$('[data-sgn="' + id + '"]').forEach(n => { n.textContent = shotsDone(it) + '/' + shotsOf(it).length; });
+  if (on) buzz(6);
+}
 document.addEventListener('change', e => {
   const t = e.target;
-  if (t.dataset.shot) { if (t.checked) state.shots[t.dataset.shot] = 1; else delete state.shots[t.dataset.shot]; save(); kitCounts(); if (t.checked) buzz(6); }
+  if (t.dataset.shot) shotTick(t.dataset.shot, t.checked);
   else if (t.dataset.pack) { if (t.checked) state.pack[t.dataset.pack] = 1; else delete state.pack[t.dataset.pack]; save(); kitCounts(); if (t.checked) buzz(6); }
   else if (t.id === 'restoreFile') readBackup(t.files && t.files[0]);
   else if (t.dataset.paid) setPaid(t.dataset.paid, t.value, false);

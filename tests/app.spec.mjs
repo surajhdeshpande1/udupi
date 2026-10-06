@@ -149,7 +149,7 @@ test('Days: the arched tiles switch the day', async ({ page }) => {
   await expect(page.locator('.dbtn[data-day=fri]')).toHaveAttribute('aria-pressed', 'true');
 });
 
-test('Kit: packing ticks, your own items and the shots view', async ({ page }) => {
+test('Kit is a packing list: ticks and your own items', async ({ page }) => {
   await page.goto(at('2026-10-07T09:50', 'kit'));
   await page.click('label.check:has(input[data-pack=k1])');
   await expect(page.locator('.ring-wrap span')).toHaveText('1');
@@ -159,8 +159,39 @@ test('Kit: packing ticks, your own items and the shots view', async ({ page }) =
   await expect(page.locator('#main')).toContainText('Spare specs');
   await page.click('[data-act=kit-del]');
   await expect(page.locator('#main')).not.toContainText('Spare specs');
-  await page.click('[data-act=kitview][data-v=shots]');
-  expect(await page.locator('.sstop').count()).toBeGreaterThan(5);
+  await expect(page.locator('[data-act=kitview], .sg-item')).toHaveCount(0);
+});
+
+test('the day checklist shows where to shoot, folded under each stop and open at the current one', async ({ page }) => {
+  await page.goto(at('2026-10-07T17:40'));
+  const here = page.locator('#r-we22 .r-shots');
+  await expect(here).toHaveClass(/open/);
+  await expect(here).toHaveClass(/gold/);
+  await expect(here.locator('.sg-item')).toHaveCount(3);
+  await expect(here.locator('.sg-item').first().locator('.sg-at')).toContainText('north of the lighthouse rocks');
+  await expect(here.locator('.sg-item').first().locator('.sg-fr')).toBeVisible();
+  const later = page.locator('#r-we24 .r-shots');
+  await expect(later).not.toHaveClass(/open/);
+  await expect(later.locator('.sg-item').first()).toBeHidden();
+  await later.locator('.sg-tog').click();
+  await expect(later).toHaveClass(/open/);
+  await expect(later.locator('.sg-tog')).toHaveAttribute('aria-expanded', 'true');
+  await later.locator('.sg-item').first().click();
+  expect((await stored(page)).shots['we24-s0']).toBeTruthy();
+  await expect(later.locator('.sg-n')).toHaveText('1/2');
+  await openStop(page, 'we24');
+  await expect(page.locator('#sheetBody input[data-shot="we24-s0"]')).toBeChecked();
+  await closeSheet(page);
+  await page.locator('#r-we22 .sg-tog').click();
+  await expect(here).not.toHaveClass(/open/);
+});
+
+test('rows stay clean: Kannada names only on the Now card and in the sheet', async ({ page }) => {
+  await page.goto(at('2026-10-07T17:40'));
+  await expect(page.locator('.tl .r-kn')).toHaveCount(0);
+  await expect(page.locator('article.now .now-kn')).toHaveText('ಕಾಪು ಬೀಚ್');
+  await openStop(page, 'we22');
+  await expect(page.locator('#sheetBody .sh-kn')).toHaveText('ಕಾಪು ಬೀಚ್');
 });
 
 test('SOS: bookings survive a reload and the money card adds up', async ({ page }) => {

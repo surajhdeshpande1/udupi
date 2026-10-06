@@ -38,36 +38,21 @@ function renderDays(anim) {
 
 const C26 = 2 * Math.PI * 26;
 const ringSVG = (d, n) => '<span class="ring-wrap"><svg class="ring" viewBox="0 0 64 64" aria-hidden="true"><circle class="tr" cx="32" cy="32" r="26"/><circle class="pr" cx="32" cy="32" r="26" stroke-dasharray="' + C26.toFixed(1) + '" stroke-dashoffset="' + (C26 * (1 - (n ? d / n : 0))).toFixed(1) + '" transform="rotate(-90 32 32)" opacity="' + (d ? 1 : 0) + '"/></svg><span>' + d + '</span></span>';
-function kitLine(view, d, n) {
-  if (view === 'shots') return d === n && n ? ['Every shot taken', 'The whole list, golden hours and all.'] : [d + ' of ' + n + ' shots', 'Gold cards fall in golden hour. Tap a stop for its notes.'];
+function kitLine(d, n) {
   return d === n ? ['All packed', 'Bag closed. Nothing left on the list.'] : [d + ' of ' + n + ' packed', (n - d) + ' to go. Tick things as they go into the bag.'];
 }
 function renderKit(anim) {
   const items = kitItems();
   const pd = items.filter(i => state.pack[i.id]).length;
-  const [sd, sn] = shotCount();
-  const view = ui.kit === 'shots' ? 'shots' : 'pack';
-  const [cd, cn] = view === 'shots' ? [sd, sn] : [pd, items.length];
-  const [t1, t2] = kitLine(view, cd, cn);
-  let h = screenOpen(anim) + heading('Packing and photographs', 'Kit') +
-    '<div class="seg kitseg" role="group" aria-label="Kit view"><button type="button" data-act="kitview" data-v="pack" aria-pressed="' + (view === 'pack') + '">Packing<span class="n">' + pd + '/' + items.length + '</span></button><button type="button" data-act="kitview" data-v="shots" aria-pressed="' + (view === 'shots') + '">Shots<span class="n">' + sd + '/' + sn + '</span></button></div>' +
-    '<div class="kit-body' + (anim === 'view' ? ' swap' : '') + '"><div class="ksum card">' + ringSVG(cd, cn) + '<div class="ksum-t"><b>' + esc(t1) + '</b><span>' + esc(t2) + '</span></div></div>';
-  if (view === 'pack') {
-    TRIP.KIT.forEach(g => {
-      const list = items.filter(i => i.cat === g.cat);
-      h += '<div class="group card"><h2 class="label">' + esc(g.cat) + '</h2><ul class="checks">' + list.map(i => '<li>' + checkHTML('pack', i.id, i.label, !!state.pack[i.id]) +
-        (i.custom ? '<button class="x" type="button" data-act="kit-del" data-id="' + esc(i.id) + '" aria-label="Remove ' + esc(i.label) + '">' + ico('x') + '</button>' : '') + '</li>').join('') + '</ul></div>';
-    });
-    h += '<form class="addrow card" id="kitadd" novalidate><select id="kit-cat" aria-label="Category">' + TRIP.KIT.map(g => '<option>' + esc(g.cat) + '</option>').join('') + '</select><input id="kit-label" type="text" maxlength="80" placeholder="Add your own item" aria-label="Item to add" autocomplete="off" enterkeyhint="done"><button class="btn primary" type="submit">' + ico('plus') + 'Add</button></form>';
-  } else {
-    shotStops().forEach(g => {
-      h += '<div class="sday"><h2 class="sday-h"><span class="label">' + esc(g.day.tab) + '</span>' + esc(g.day.name) + '</h2>' + g.items.map(it => {
-        const gold = golden(it, g.day);
-        return '<div class="sstop card' + (gold ? ' golden' : '') + '"><button class="ss-head" type="button" data-act="open" data-id="' + esc(it.id) + '"><span class="ss-time">' + esc(it.t) + '</span><span class="ss-title">' + esc(it.x) + '</span>' + (gold ? '<span class="gbadge">' + ico('sun') + 'Golden</span>' : '') + '</button><ul class="checks">' +
-          it.sh.map((s, k) => '<li>' + checkHTML('shot', it.id + '-s' + k, s, !!state.shots[it.id + '-s' + k]) + '</li>').join('') + '</ul></div>';
-      }).join('') + '</div>';
-    });
-  }
+  const [t1, t2] = kitLine(pd, items.length);
+  let h = screenOpen(anim) + heading('Packing list', 'Kit') +
+    '<div class="kit-body"><div class="ksum card">' + ringSVG(pd, items.length) + '<div class="ksum-t"><b>' + esc(t1) + '</b><span>' + esc(t2) + '</span></div></div>';
+  TRIP.KIT.forEach(g => {
+    const list = items.filter(i => i.cat === g.cat);
+    h += '<div class="group card"><h2 class="label">' + esc(g.cat) + '</h2><ul class="checks">' + list.map(i => '<li>' + checkHTML('pack', i.id, i.label, !!state.pack[i.id]) +
+      (i.custom ? '<button class="x" type="button" data-act="kit-del" data-id="' + esc(i.id) + '" aria-label="Remove ' + esc(i.label) + '">' + ico('x') + '</button>' : '') + '</li>').join('') + '</ul></div>';
+  });
+  h += '<form class="addrow card" id="kitadd" novalidate><select id="kit-cat" aria-label="Category">' + TRIP.KIT.map(g => '<option>' + esc(g.cat) + '</option>').join('') + '</select><input id="kit-label" type="text" maxlength="80" placeholder="Add your own item" aria-label="Item to add" autocomplete="off" enterkeyhint="done"><button class="btn primary" type="submit">' + ico('plus') + 'Add</button></form>';
   return h + '</div>' + LOTUS + '</section>';
 }
 
