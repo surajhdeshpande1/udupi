@@ -16,64 +16,64 @@ test.afterEach(async ({ page }) => {
 test('Today shows the Now card, the garland and the timeline', async ({ page }) => {
   await page.goto(at('2026-10-07T09:50'));
   await expect(page.locator('article.now .tag')).toContainText('Now');
-  await expect(page.locator('article.now .now-title')).toHaveText('Auto → Hasta Shilpa');
-  await expect(page.locator('.garland .bead')).toHaveCount(23);
+  await expect(page.locator('article.now .now-title')).toHaveText('Auto → Arbi Falls');
+  await expect(page.locator('.garland .bead')).toHaveCount(24);
   await expect(page.locator('.mural .scene-svg')).toHaveCount(1);
   await expect(page.locator('.nav [data-tab=today]')).toHaveAttribute('aria-current', 'page');
 });
 
 test('ticking a stop blooms, counts and can be undone', async ({ page }) => {
   await page.goto(at('2026-10-07T09:50'));
-  await page.click('#r-we12 .r-node');
-  await expect(page.locator('#r-we12 .bloom')).toHaveCount(1);
+  await page.click('#r-we37 .r-node');
+  await expect(page.locator('#r-we37 .bloom')).toHaveCount(1);
   await expect(page.locator('#toast')).toHaveText(/^Done/);
   await expect(page.locator('.bead.pop')).toHaveCount(1);
-  expect((await stored(page)).done.we12).toBeTruthy();
+  expect((await stored(page)).done.we37).toBeTruthy();
   await expect(page.locator('.bloom')).toHaveCount(0, { timeout: 3000 });
-  await page.click('#r-we12 .r-node');
-  expect((await stored(page)).done.we12).toBeFalsy();
+  await page.click('#r-we37 .r-node');
+  expect((await stored(page)).done.we37).toBeFalsy();
 });
 
 test('a stop sheet logs what was paid and closes on Escape', async ({ page }) => {
   await page.goto(at('2026-10-07T09:50'));
-  await openStop(page, 'we13');
+  await openStop(page, 'we29');
   expect(await sheetOpen(page)).toBe(true);
   expect(await page.evaluate(() => document.activeElement.classList.contains('sh-title'))).toBe(true);
   expect(await page.evaluate(() => document.getElementById('main').hasAttribute('inert'))).toBe(true);
-  await page.fill('input[data-paid=we13]', '300');
+  await page.fill('input[data-paid=we29]', '300');
   await page.waitForTimeout(400);
-  expect((await stored(page)).spent.we13).toBe(300);
+  expect((await stored(page)).spent.we29).toBe(300);
   await closeSheet(page);
   expect(await sheetOpen(page)).toBe(false);
-  await expect(page.locator('#r-we13')).toContainText('Paid ₹300');
+  await expect(page.locator('#r-we29')).toContainText('Paid ₹300');
   expect(await page.evaluate(() => document.getElementById('main').hasAttribute('inert'))).toBe(false);
 });
 
 test('skipping and restoring a stop from its sheet', async ({ page }) => {
   await page.goto(at('2026-10-07T09:50'));
-  await openStop(page, 'we14');
+  await openStop(page, 'we30');
   await page.click('#sheetBody [data-act=skip]');
-  await expect(page.locator('#r-we14')).toHaveClass(/skipped/);
-  expect((await stored(page)).skip.we14).toBeTruthy();
+  await expect(page.locator('#r-we30')).toHaveClass(/skipped/);
+  expect((await stored(page)).skip.we30).toBeTruthy();
   await page.waitForTimeout(400);
-  await openStop(page, 'we14');
+  await openStop(page, 'we30');
   await page.click('#sheetBody [data-act=skip]');
-  await expect(page.locator('#r-we14')).not.toHaveClass(/skipped/);
+  await expect(page.locator('#r-we30')).not.toHaveClass(/skipped/);
 });
 
 test('editing a built-in stop, then resetting it to the original', async ({ page }) => {
   await page.goto(at('2026-10-07T09:50'));
-  await openStop(page, 'we15');
+  await openStop(page, 'we25');
   await page.click('#sheetBody [data-act=edit]');
-  await page.fill('#f-title', 'Lunch at Madhuvan, edited');
+  await page.fill('#f-title', 'Lunch at Diana, edited');
   await page.click('#editForm [type=submit]');
-  await expect(page.locator('#r-we15 .r-title')).toHaveText('Lunch at Madhuvan, edited');
+  await expect(page.locator('#r-we25 .r-title')).toHaveText('Lunch at Diana, edited');
   await page.waitForTimeout(400);
-  await openStop(page, 'we15');
+  await openStop(page, 'we25');
   await page.click('#sheetBody [data-act=edit]');
   await page.click('[data-act=reset-stop]');
   await page.click('[data-act=reset-stop]');
-  await expect(page.locator('#r-we15 .r-title')).toHaveText(/^Lunch at Madhuvan Veg/);
+  await expect(page.locator('#r-we25 .r-title')).toHaveText(/^Lunch at Diana, home/);
 });
 
 test('adding a stop checks its fields, and deleting it takes two taps', async ({ page }) => {
@@ -163,26 +163,27 @@ test('Kit is a packing list: ticks and your own items', async ({ page }) => {
 });
 
 test('the day checklist shows where to shoot, folded under each stop and open at the current one', async ({ page }) => {
-  await page.goto(at('2026-10-07T17:40'));
-  const here = page.locator('#r-we22 .r-shots');
+  await page.goto(at('2026-10-07T15:40'));
+  const here = page.locator('#r-we30 .r-shots');
   await expect(here).toHaveClass(/open/);
-  await expect(here).toHaveClass(/gold/);
-  await expect(here.locator('.sg-item')).toHaveCount(3);
-  await expect(here.locator('.sg-item').first().locator('.sg-at')).toContainText('north of the lighthouse rocks');
+  await expect(here.locator('.sg-item')).toHaveCount(2);
+  await expect(here.locator('.sg-item').first().locator('.sg-at')).toContainText('walkway at the top of the beach');
   await expect(here.locator('.sg-item').first().locator('.sg-fr')).toBeVisible();
-  const later = page.locator('#r-we24 .r-shots');
+  await expect(page.locator('#r-we22 .r-shots')).toHaveClass(/gold/);
+  await expect(page.locator('#r-we22 .r-shots')).not.toHaveClass(/open/);
+  const later = page.locator('#r-we21 .r-shots');
   await expect(later).not.toHaveClass(/open/);
   await expect(later.locator('.sg-item').first()).toBeHidden();
   await later.locator('.sg-tog').click();
   await expect(later).toHaveClass(/open/);
   await expect(later.locator('.sg-tog')).toHaveAttribute('aria-expanded', 'true');
   await later.locator('.sg-item').first().click();
-  expect((await stored(page)).shots['we24-s0']).toBeTruthy();
+  expect((await stored(page)).shots['we21-s0']).toBeTruthy();
   await expect(later.locator('.sg-n')).toHaveText('1/2');
-  await openStop(page, 'we24');
-  await expect(page.locator('#sheetBody input[data-shot="we24-s0"]')).toBeChecked();
+  await openStop(page, 'we21');
+  await expect(page.locator('#sheetBody input[data-shot="we21-s0"]')).toBeChecked();
   await closeSheet(page);
-  await page.locator('#r-we22 .sg-tog').click();
+  await page.locator('#r-we30 .sg-tog').click();
   await expect(here).not.toHaveClass(/open/);
 });
 
@@ -197,7 +198,7 @@ test('rows stay clean: Kannada names only on the Now card and in the sheet', asy
 test('SOS: bookings survive a reload and the money card adds up', async ({ page }) => {
   await page.goto(at('2026-10-07T09:50', 'sos'));
   await page.fill('#sos-dormName', 'Coast Dorm');
-  await page.evaluate(() => { state.spent.we13 = 300; save(); });
+  await page.evaluate(() => { state.spent.we29 = 300; save(); });
   await page.waitForTimeout(400);
   await page.reload();
   await expect(page.locator('#sos-dormName')).toHaveValue('Coast Dorm');

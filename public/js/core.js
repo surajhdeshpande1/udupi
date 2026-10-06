@@ -1,6 +1,6 @@
 /* Udupi Coast Trip app, part 1: time, icons, state, plan. Everything runs on IST. */
 'use strict';
-const APP_V = 'udupi-kaavi-3';
+const APP_V = 'udupi-kaavi-4';
 const DAYS = TRIP.DAYS;
 const DAY = Object.fromEntries(DAYS.map(d => [d.id, d]));
 const TABS = ['today', 'days', 'kit', 'sos'];

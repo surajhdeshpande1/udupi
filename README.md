@@ -1,6 +1,6 @@
 # Udupi · Coast Trip — Kaavi edition
 
-A light, offline-first trip companion for four days on the Udupi coast, 6–10 October 2026: Bagalkot → Udupi by night bus, then three days of island boats, parasailing, kayaking and an optional surf lesson, two evenings out, and only the temples most worth seeing, before the Konkan line and the Ghats take you home. It is drawn in the style of Udupi's **Kaavi** wall art: laterite-red line work on lime-plaster white, with Yakshagana gold and kumkum for highlights.
+A light, offline-first trip companion for four days on the Udupi coast, 6–10 October 2026: Bagalkot → Udupi by night bus, then three days of beaches, island boats, parasailing, a forest waterfall, kayaking and an optional surf lesson, two nights out in Manipal, and the Krishna Matha at dawn, before the Konkan line and the Ghats take you home. It is drawn in the style of Udupi's **Kaavi** wall art: laterite-red line work on lime-plaster white, with Yakshagana gold and kumkum for highlights.
 
 ![Today, Days, Kit and SOS screens](docs/screens.png)
 
