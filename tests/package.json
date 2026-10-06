@@ -1,0 +1,13 @@
+{
+  "name": "udupi-kaavi-tests",
+  "private": true,
+  "description": "Browser tests for the Udupi Coast Trip app: interactions, offline support, layout and security headers.",
+  "type": "module",
+  "scripts": {
+    "serve": "node server.mjs",
+    "test": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.56.0"
+  }
+}

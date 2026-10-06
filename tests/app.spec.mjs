@@ -1,0 +1,239 @@
+// Interaction tests: everything a traveller taps, types or swipes, checked against what the app saves.
+import { readFileSync } from 'node:fs';
+import { test, expect } from '@playwright/test';
+import { prepare, trackErrors, at, stored, live, sheetOpen, openStop, closeSheet } from './helpers.mjs';
+
+let errors;
+test.beforeEach(async ({ context, page }) => {
+  await prepare(context);
+  errors = trackErrors(page);
+});
+test.afterEach(async ({ page }) => {
+  expect(errors, 'console errors').toEqual([]);
+  expect(await page.evaluate(() => window.__csp || []), 'CSP violations').toEqual([]);
+});
+
+test('Today shows the Now card, the garland and the timeline', async ({ page }) => {
+  await page.goto(at('2026-10-07T09:50'));
+  await expect(page.locator('article.now .tag')).toContainText('Now');
+  await expect(page.locator('article.now .now-title')).toHaveText('Kadiyali Mahishamardini Temple');
+  await expect(page.locator('.garland .bead')).toHaveCount(27);
+  await expect(page.locator('.mural .scene-svg')).toHaveCount(1);
+  await expect(page.locator('.nav [data-tab=today]')).toHaveAttribute('aria-current', 'page');
+});
+
+test('ticking a stop blooms, counts and can be undone', async ({ page }) => {
+  await page.goto(at('2026-10-07T09:50'));
+  await page.click('#r-we11 .r-node');
+  await expect(page.locator('#r-we11 .bloom')).toHaveCount(1);
+  await expect(page.locator('#toast')).toHaveText(/^Done/);
+  await expect(page.locator('.bead.pop')).toHaveCount(1);
+  expect((await stored(page)).done.we11).toBeTruthy();
+  await expect(page.locator('.bloom')).toHaveCount(0, { timeout: 3000 });
+  await page.click('#r-we11 .r-node');
+  expect((await stored(page)).done.we11).toBeFalsy();
+});
+
+test('a stop sheet logs what was paid and closes on Escape', async ({ page }) => {
+  await page.goto(at('2026-10-07T09:50'));
+  await openStop(page, 'we13');
+  expect(await sheetOpen(page)).toBe(true);
+  expect(await page.evaluate(() => document.activeElement.classList.contains('sh-title'))).toBe(true);
+  expect(await page.evaluate(() => document.getElementById('main').hasAttribute('inert'))).toBe(true);
+  await page.fill('input[data-paid=we13]', '300');
+  await page.waitForTimeout(400);
+  expect((await stored(page)).spent.we13).toBe(300);
+  await closeSheet(page);
+  expect(await sheetOpen(page)).toBe(false);
+  await expect(page.locator('#r-we13')).toContainText('Paid ₹300');
+  expect(await page.evaluate(() => document.getElementById('main').hasAttribute('inert'))).toBe(false);
+});
+
+test('skipping and restoring a stop from its sheet', async ({ page }) => {
+  await page.goto(at('2026-10-07T09:50'));
+  await openStop(page, 'we14');
+  await page.click('#sheetBody [data-act=skip]');
+  await expect(page.locator('#r-we14')).toHaveClass(/skipped/);
+  expect((await stored(page)).skip.we14).toBeTruthy();
+  await page.waitForTimeout(400);
+  await openStop(page, 'we14');
+  await page.click('#sheetBody [data-act=skip]');
+  await expect(page.locator('#r-we14')).not.toHaveClass(/skipped/);
+});
+
+test('editing a built-in stop, then resetting it to the original', async ({ page }) => {
+  await page.goto(at('2026-10-07T09:50'));
+  await openStop(page, 'we15');
+  await page.click('#sheetBody [data-act=edit]');
+  await page.fill('#f-title', 'Lunch at Madhuvan, edited');
+  await page.click('#editForm [type=submit]');
+  await expect(page.locator('#r-we15 .r-title')).toHaveText('Lunch at Madhuvan, edited');
+  await page.waitForTimeout(400);
+  await openStop(page, 'we15');
+  await page.click('#sheetBody [data-act=edit]');
+  await page.click('[data-act=reset-stop]');
+  await page.click('[data-act=reset-stop]');
+  await expect(page.locator('#r-we15 .r-title')).toHaveText(/^Lunch at Madhuvan Veg/);
+});
+
+test('adding a stop checks its fields, and deleting it takes two taps', async ({ page }) => {
+  await page.goto(at('2026-10-07T09:50'));
+  await page.click('.add[data-act=add]');
+  await page.waitForTimeout(450);
+  await page.click('#editForm [type=submit]');
+  await expect(page.locator('#f-err')).toBeVisible();
+  await page.fill('#f-title', 'Tender coconut at Malpe');
+  await page.fill('#f-time', '16:10');
+  await page.fill('#f-cost', '60');
+  await page.click('#editForm [type=submit]');
+  await page.waitForTimeout(450);
+  const custom = (await stored(page)).custom;
+  expect(custom).toHaveLength(1);
+  expect(custom[0]).toMatchObject({ t: '16:10', c: [60, 60], x: 'Tender coconut at Malpe' });
+  const row = page.locator('#r-' + custom[0].id);
+  await expect(row).toContainText('Yours');
+  await openStop(page, custom[0].id);
+  await page.click('#sheetBody [data-act=edit]');
+  await page.click('[data-act=del-stop]');
+  await page.click('[data-act=del-stop]');
+  await expect(row).toHaveCount(0);
+  expect((await stored(page)).custom).toHaveLength(0);
+});
+
+test('earlier stops fold away on Today', async ({ page }) => {
+  await page.goto(at('2026-10-07T09:50'));
+  const folded = await page.locator('.tl .row').count();
+  await page.click('[data-act=earlier]');
+  expect(await page.locator('.tl .row').count()).toBeGreaterThan(folded);
+});
+
+test('Plan B from the rules sheet, and back to Plan A', async ({ page }) => {
+  await page.goto(at('2026-10-08T08:00'));
+  await page.click('[data-act=rules]');
+  await page.waitForTimeout(450);
+  await page.click('#sheetBody [data-act=variant]');
+  await expect(page.locator('#r-tb1')).toHaveCount(1);
+  expect((await stored(page)).variant.thu).toBe('B');
+  await page.waitForTimeout(400);
+  await page.click('.planseg [data-v=A]');
+  await expect(page.locator('#r-th6')).toHaveCount(1);
+  expect((await stored(page)).variant.thu).toBe('A');
+});
+
+test('Days: the arched tiles switch the day', async ({ page }) => {
+  await page.goto(at('2026-10-07T09:50'));
+  await page.click('.nav [data-tab=days]');
+  await expect(page.locator('.strip .dbtn')).toHaveCount(5);
+  await expect(page).toHaveURL(/#days$/);
+  await page.click('.dbtn[data-day=fri]');
+  await expect(page.locator('.day-body .title')).toContainText('two trains');
+  await expect(page.locator('.dbtn[data-day=fri]')).toHaveAttribute('aria-pressed', 'true');
+});
+
+test('Kit: packing ticks, your own items and the shots view', async ({ page }) => {
+  await page.goto(at('2026-10-07T09:50', 'kit'));
+  await page.click('label.check:has(input[data-pack=k1])');
+  await expect(page.locator('.ring-wrap span')).toHaveText('1');
+  expect((await stored(page)).pack.k1).toBeTruthy();
+  await page.fill('#kit-label', 'Spare specs');
+  await page.press('#kit-label', 'Enter');
+  await expect(page.locator('#main')).toContainText('Spare specs');
+  await page.click('[data-act=kit-del]');
+  await expect(page.locator('#main')).not.toContainText('Spare specs');
+  await page.click('[data-act=kitview][data-v=shots]');
+  expect(await page.locator('.sstop').count()).toBeGreaterThan(5);
+});
+
+test('SOS: bookings survive a reload and the money card adds up', async ({ page }) => {
+  await page.goto(at('2026-10-07T09:50', 'sos'));
+  await page.fill('#sos-dormName', 'Coast Dorm');
+  await page.evaluate(() => { state.spent.we13 = 300; save(); });
+  await page.waitForTimeout(400);
+  await page.reload();
+  await expect(page.locator('#sos-dormName')).toHaveValue('Coast Dorm');
+  await expect(page.locator('.money .mn-big')).toContainText('300');
+  await expect(page.locator('.tiles .tile')).toHaveCount(4);
+});
+
+test('Backup saves a file, and restore asks before replacing', async ({ page }) => {
+  await page.goto(at('2026-10-07T09:50', 'sos'));
+  await page.evaluate(() => { state.done.we5 = 1; save(); });
+  const [download] = await Promise.all([page.waitForEvent('download'), page.click('[data-act=backup]')]);
+  expect(download.suggestedFilename()).toMatch(/^udupi-trip-2026-10-07-[0-9]{4}[.]json$/);
+  const backup = JSON.parse(readFileSync(await download.path(), 'utf8'));
+  expect(backup.app).toBe('udupi-coast-trip');
+  backup.state.done = { tu1: 1, tu2: 1 };
+  await page.setInputFiles('#restoreFile', { name: 'trip.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify(backup)) });
+  await expect(page.locator('.bk-confirm')).toHaveCount(1);
+  await page.click('[data-act=restore-yes]');
+  await expect.poll(async () => Object.keys((await stored(page)).done).sort()).toEqual(['tu1', 'tu2']);
+});
+
+test('Reset clears ticks but keeps bookings', async ({ page }) => {
+  await page.goto(at('2026-10-07T09:50', 'sos'));
+  await page.evaluate(() => { state.done.we5 = 1; state.sos.dormName = 'Coast Dorm'; save(); render(); });
+  await page.click('details[data-acc=reset] summary');
+  await page.click('[data-act=reset]');
+  await page.click('[data-act=reset]');
+  await expect.poll(async () => Object.keys((await stored(page)).done).length).toBe(0);
+  expect((await stored(page)).sos.dormName).toBe('Coast Dorm');
+});
+
+test('Journal keeps a mood and a line', async ({ page }) => {
+  await page.goto(at('2026-10-07T20:00'));
+  await page.click('.mood[data-v=calm]');
+  await page.fill('input[data-jr=wed]', 'Lamps at night');
+  await page.waitForTimeout(450);
+  expect((await stored(page)).journal.wed).toEqual({ mood: 'calm', note: 'Lamps at night' });
+  await expect(page.locator('.mood[data-v=calm]')).toHaveAttribute('aria-pressed', 'true');
+});
+
+test('Finishing a day stamps it, and undoing lifts the stamp', async ({ page }) => {
+  await page.goto(at('2026-10-06T21:20'));
+  await page.evaluate(() => { for (let i = 1; i <= 10; i++) state.done['tu' + i] = 1; save(); render(); });
+  await page.click('#r-tu11 .r-node');
+  await expect(page.locator('.stamp-wrap .medal').first()).toBeVisible();
+  expect((await stored(page)).sealed.tue).toBeTruthy();
+  await page.click('.stamp-wrap .btn');
+  await expect(page.locator('.stamp-wrap')).toHaveCount(0);
+  await page.click('#r-tu11 .r-node');
+  expect((await stored(page)).sealed.tue).toBeFalsy();
+});
+
+test('Data saved by the earlier version still loads', async ({ page }) => {
+  await page.goto(at('2026-10-07T12:00', 'days'));
+  await page.evaluate(() => {
+    removeEventListener('pagehide', save);
+    save = () => {};
+    localStorage.setItem('udupi.app.v1', JSON.stringify({ v: 1, done: { we5: 1791234000000, we6: 1 }, skip: { we16: 1 }, edits: {}, custom: [{ id: 'cabc123', day: 'wed', t: '11:00', k: 'food', x: 'Old custom', q: '', b: '', hard: 0, c: null }], shots: { 'we8-s0': 1 }, pack: { k3: 1 }, packCustom: [{ id: 'pcx1', cat: 'Tech', label: 'Old cable' }], sos: { vrlPnr: 'PNR1' }, variant: { thu: 'A' }, theme: 'dark' }));
+  });
+  await page.reload();
+  const s = await live(page);
+  expect(s.done.we5).toBeTruthy();
+  expect(s.skip.we16).toBeTruthy();
+  expect(s.custom).toHaveLength(1);
+  expect(s.sos.vrlPnr).toBe('PNR1');
+  expect(s).not.toHaveProperty('theme');
+  await expect(page.locator('#r-cabc123')).toHaveCount(1);
+});
+
+test('Hash links and the brand switch tabs', async ({ page }) => {
+  await page.goto(at('2026-10-07T12:00', 'days'));
+  await page.evaluate(() => { location.hash = '#kit'; });
+  await expect(page.locator('.nav [data-tab=kit]')).toHaveAttribute('aria-current', 'page');
+  await page.click('.brand');
+  await expect(page.locator('.nav [data-tab=today]')).toHaveAttribute('aria-current', 'page');
+});
+
+test('The Kindi intro plays once per session', async ({ browser }) => {
+  const context = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, serviceWorkers: 'block' });
+  await prepare(context, { intro: true });
+  const page = await context.newPage();
+  await page.goto(at('2026-10-07T09:50'), { waitUntil: 'domcontentloaded' });
+  expect(await page.evaluate(() => document.documentElement.classList.contains('intro-on'))).toBe(true);
+  await expect.poll(() => page.evaluate(() => document.documentElement.classList.contains('intro-on')), { timeout: 4000 }).toBe(false);
+  await page.reload();
+  expect(await page.evaluate(() => document.documentElement.classList.contains('intro-on'))).toBe(false);
+  await context.close();
+});
+

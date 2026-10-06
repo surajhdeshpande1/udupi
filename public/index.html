@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en-IN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Udupi · Coast Trip</title>
+<meta name="description" content="A day-by-day companion for four days on the Udupi coast, 6–10 October 2026.">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#F6F1E7">
+<meta name="color-scheme" content="light">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Udupi">
+<meta name="format-detection" content="telephone=no">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" href="/icons/kindi.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/icons/kindi-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400..800&family=Tiro+Kannada&display=swap">
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/css/components.css">
+<link rel="stylesheet" href="/css/pieces.css">
+<link rel="stylesheet" href="/css/screens.css">
+<link rel="stylesheet" href="/css/motion.css">
+</head>
+<body>
+<svg class="defs" aria-hidden="true" focusable="false"><filter id="inked" x="-8%" y="-8%" width="116%" height="116%"><feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="11" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="1.6" xChannelSelector="R" yChannelSelector="G" result="d"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -5 3.4" result="m"/><feComposite in="d" in2="m" operator="in"/></filter></svg>
+
+<header class="bar">
+  <div class="bar-in">
+    <a class="brand" href="#today" data-tab="today" aria-label="Udupi Coast Trip, back to Today">
+      <svg class="kindi" viewBox="0 0 26 30" aria-hidden="true"><path class="kd-f" d="M3 28.5V12a10 10 0 0 1 20 0v16.5z"/><g class="kd-h"><circle cx="13" cy="7.2" r="1.6"/><rect x="5.6" y="11.1" width="3.6" height="3.6" rx=".9"/><rect x="11.2" y="11.1" width="3.6" height="3.6" rx=".9"/><rect x="16.8" y="11.1" width="3.6" height="3.6" rx=".9"/><rect x="5.6" y="16.7" width="3.6" height="3.6" rx=".9"/><rect x="11.2" y="16.7" width="3.6" height="3.6" rx=".9"/><rect x="16.8" y="16.7" width="3.6" height="3.6" rx=".9"/><rect x="5.6" y="22.3" width="3.6" height="3.6" rx=".9"/><rect x="11.2" y="22.3" width="3.6" height="3.6" rx=".9"/><rect x="16.8" y="22.3" width="3.6" height="3.6" rx=".9"/></g></svg>
+      <b>Udupi</b><i lang="kn">ಉಡುಪಿ</i>
+    </a>
+    <div class="bar-meta" id="barMeta"></div>
+  </div>
+</header>
+
+<main class="app" id="main" tabindex="-1"></main>
+
+<nav class="nav" aria-label="Sections">
+  <div class="nav-in">
+    <span class="nav-pill" aria-hidden="true"></span>
+    <button type="button" data-tab="today"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 17a7 7 0 0 1 14 0"/><path d="M2.5 20.5h19M12 9V3.5M9.5 6 12 3.5 14.5 6"/></svg></span>Today</button>
+    <button type="button" data-tab="days"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20.5V11a3.5 3.5 0 0 1 7 0v9.5M13 20.5V11a3.5 3.5 0 0 1 7 0v9.5"/><path d="M2.5 20.5h19"/></svg></span>Days</button>
+    <button type="button" data-tab="kit"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.5 7V5.5a3.5 3.5 0 0 1 7 0V7"/><rect x="4.5" y="7" width="15" height="14" rx="4"/><path d="M9 13.5h6v3.5H9z"/></svg></span>Kit</button>
+    <button type="button" data-tab="sos"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="3.6"/><path d="M6 6l3.4 3.4M14.6 14.6 18 18M18 6l-3.4 3.4M9.4 14.6 6 18"/></svg></span>SOS</button>
+  </div>
+</nav>
+
+<div class="sheet-wrap" id="sheet" hidden>
+  <div class="scrim" data-act="close"></div>
+  <section class="sheet" role="dialog" aria-modal="true" aria-label="Details">
+    <div class="grab" aria-hidden="true"><i></i></div>
+    <button class="sh-x" type="button" data-act="close" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    <div id="sheetBody"></div>
+  </section>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<div class="intro" aria-hidden="true">
+  <div class="door dl"><div class="ik"><svg viewBox="0 0 26 30"><path class="kd-f" d="M3 28.5V12a10 10 0 0 1 20 0v16.5z"/><g class="kd-h"><circle style="--k:0" cx="13" cy="7.2" r="1.6"/><rect style="--k:1" x="5.6" y="11.1" width="3.6" height="3.6" rx=".9"/><rect style="--k:2" x="11.2" y="11.1" width="3.6" height="3.6" rx=".9"/><rect style="--k:3" x="16.8" y="11.1" width="3.6" height="3.6" rx=".9"/><rect style="--k:4" x="5.6" y="16.7" width="3.6" height="3.6" rx=".9"/><rect style="--k:5" x="11.2" y="16.7" width="3.6" height="3.6" rx=".9"/><rect style="--k:6" x="16.8" y="16.7" width="3.6" height="3.6" rx=".9"/><rect style="--k:7" x="5.6" y="22.3" width="3.6" height="3.6" rx=".9"/><rect style="--k:8" x="11.2" y="22.3" width="3.6" height="3.6" rx=".9"/><rect style="--k:9" x="16.8" y="22.3" width="3.6" height="3.6" rx=".9"/></g></svg></div><p class="ik-cap" lang="kn">ಉಡುಪಿ</p></div>
+  <div class="door dr"><div class="ik"><svg viewBox="0 0 26 30"><path class="kd-f" d="M3 28.5V12a10 10 0 0 1 20 0v16.5z"/><g class="kd-h"><circle style="--k:0" cx="13" cy="7.2" r="1.6"/><rect style="--k:1" x="5.6" y="11.1" width="3.6" height="3.6" rx=".9"/><rect style="--k:2" x="11.2" y="11.1" width="3.6" height="3.6" rx=".9"/><rect style="--k:3" x="16.8" y="11.1" width="3.6" height="3.6" rx=".9"/><rect style="--k:4" x="5.6" y="16.7" width="3.6" height="3.6" rx=".9"/><rect style="--k:5" x="11.2" y="16.7" width="3.6" height="3.6" rx=".9"/><rect style="--k:6" x="16.8" y="16.7" width="3.6" height="3.6" rx=".9"/><rect style="--k:7" x="5.6" y="22.3" width="3.6" height="3.6" rx=".9"/><rect style="--k:8" x="11.2" y="22.3" width="3.6" height="3.6" rx=".9"/><rect style="--k:9" x="16.8" y="22.3" width="3.6" height="3.6" rx=".9"/></g></svg></div><p class="ik-cap" lang="kn">ಉಡುಪಿ</p></div>
+</div>
+
+<noscript><p class="nojs">This trip companion needs JavaScript switched on.</p></noscript>
+<script src="/data/trip.js"></script>
+<script src="/data/day-tue.js"></script>
+<script src="/data/day-wed.js"></script>
+<script src="/data/day-thu.js"></script>
+<script src="/data/day-fri.js"></script>
+<script src="/data/day-sat.js"></script>
+<script src="/js/art.js"></script>
+<script src="/js/core.js"></script>
+<script src="/js/pieces.js"></script>
+<script src="/js/screens.js"></script>
+<script src="/js/sheets.js"></script>
+<script src="/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+/* Udupi Coast Trip · Kaavi edition: components. Cards, buttons, segments, chips, sections. */
+.defs{position:absolute;width:0;height:0;overflow:hidden}
+.card{border-radius:22px;background:var(--paper);border:1px solid var(--line);box-shadow:var(--shadow)}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 18px;border:1px solid var(--line-2);border-radius:16px;background:var(--paper);color:var(--ink);font:700 14.5px/1.15 var(--f-body);text-align:center;text-decoration:none;white-space:nowrap;cursor:pointer;-webkit-user-select:none;user-select:none;transition:transform .35s var(--spring),background-color .2s,border-color .2s,color .2s,box-shadow .2s}
+.btn svg{width:18px;height:18px}
+.btn:active{transform:scale(.96)}
+.btn.primary{background:var(--lat);border-color:var(--lat);color:var(--paper);box-shadow:0 12px 22px -14px rgba(127,42,22,.95)}
+.btn.primary:active{background:var(--lat-deep);border-color:var(--lat-deep)}
+.btn.gold{background:var(--gold);border-color:#C98F1C;color:var(--lat-deep)}
+.btn.danger{border-color:rgba(200,51,31,.4);color:var(--kum)}
+.btn.sm{min-height:40px;padding:0 14px;border-radius:13px;font-size:13.5px}
+.btn[data-armed="1"]{background:var(--kum);border-color:var(--kum);color:var(--paper)}
+.link{display:inline-flex;align-items:center;gap:3px;min-height:40px;padding:0 2px;border:0;background:none;color:var(--lat);font:700 13.5px/1 var(--f-body);cursor:pointer}
+.link svg{width:16px;height:16px;transition:transform .3s var(--spring)}
+.link:active svg{transform:translateX(3px)}
+
+/* ---------- segmented control ---------- */
+.seg{display:flex;gap:2px;padding:4px;border-radius:17px;background:var(--wall-2);border:1px solid var(--line)}
+.seg button{flex:1 1 0;min-width:0;display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:42px;padding:0 10px;border:0;border-radius:13px;background:none;color:var(--ink-2);font:700 13.5px/1.2 var(--f-body);cursor:pointer;transition:background-color .3s var(--ease),color .3s,box-shadow .3s}
+.seg button[aria-pressed="true"]{background:var(--paper);color:var(--lat);box-shadow:0 1px 2px rgba(127,42,22,.1),0 8px 16px -12px rgba(127,42,22,.6)}
+.seg .n{font:600 12px/1 var(--f-body);color:var(--ink-3);font-variant-numeric:tabular-nums}
+.seg button[aria-pressed="true"] .n{color:var(--gold-ink)}
+
+/* ---------- chips ---------- */
+.facts{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-top:16px}
+.chip{display:inline-flex;align-items:center;gap:5px;min-height:28px;padding:0 10px;border-radius:999px;background:var(--paper);border:1px solid var(--line);color:var(--ink-2);font:600 12.5px/1.2 var(--f-body);font-variant-numeric:tabular-nums;white-space:nowrap}
+.chip svg{width:14px;height:14px;color:var(--lat)}
+.chip.gold{background:var(--gold-soft);border-color:#F0D58C;color:var(--gold-ink)}
+.chip.gold svg{color:var(--gold-ink)}
+.chip.areca{background:var(--areca-soft);border-color:transparent;color:var(--areca)}
+.chip.areca svg{color:var(--areca)}
+.chip.red{background:var(--kum-soft);border-color:transparent;color:var(--kum);font-weight:700}
+.chip.sea{background:var(--sea-soft);border-color:transparent;color:var(--sea);white-space:normal;text-align:left;padding:5px 10px}
+button.chip{cursor:pointer;transition:transform .3s var(--spring),background-color .2s}
+button.chip:active{transform:scale(.94)}
+
+/* ---------- sections and notes ---------- */
+.section{margin-top:32px}
+.sec-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:0 4px 10px}
+.sec-head h2{margin:0;font:400 23px/1.15 var(--f-display);color:var(--ink)}
+.sec-head .label{color:var(--lat)}
+.note{margin:10px 0 0;font-size:13px;line-height:1.55;color:var(--ink-2);text-wrap:pretty}
+.kit-body{display:block}
+
+/* ---------- small pieces the art needs ---------- */
+.k-line{fill:none;stroke:var(--lat);stroke-width:1;stroke-linecap:round}
+.ln.dash{stroke-width:2.2;stroke-opacity:.6}
+.dbtn.sealed{border-color:rgba(200,51,31,.35)}
+.dbtn.sealed:not([aria-pressed="true"]){background:linear-gradient(180deg,var(--kum-soft),var(--paper) 70%)}
+.nav-pill{view-transition-name:pill}
+html[data-vt] .nav-pill{transition:none}
+.sh-x{z-index:4}
+.sh-x:active{transform:scale(.92)}
+.update span{min-width:0}
+.update .btn{flex:0 0 auto}
+
+/* flying petals for the bloom */
+.bloom .fly{fill:var(--gold);stroke:#BE8414;stroke-width:.5;transform-box:fill-box;transform-origin:center;animation:fly .85s cubic-bezier(.2,.7,.3,1) forwards}
+.bloom .fly:nth-of-type(odd){fill:var(--kum);stroke:none}
+@keyframes fly{0%{opacity:0;transform:rotate(var(--a)) translateY(-6px) scale(.4)}20%{opacity:1}100%{opacity:0;transform:rotate(var(--a)) translateY(-40px) scale(1)}}

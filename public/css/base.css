@@ -1,0 +1,102 @@
+/* Udupi Coast Trip · Kaavi edition
+   Lime-white plaster, laterite line art, Yakshagana gold and kumkum. Light only. */
+:root{
+  --wall:#F6F1E7;
+  --wall-2:#EFE6D6;
+  --paper:#FFFDF8;
+  --paper-2:#FAF4EA;
+  --ink:#1D2340;
+  --ink-2:#555A6F;
+  --ink-3:#6B6C7D;
+  --line:#E8DDCA;
+  --line-2:#D8C8AE;
+  --lat:#A63A22;
+  --lat-deep:#7F2A16;
+  --lat-soft:#F3E1D6;
+  --lat-wash:#FAF0E8;
+  --gold:#E2A72E;
+  --gold-ink:#855808;
+  --gold-soft:#FBEBC4;
+  --kum:#B52B19;
+  --kum-soft:#FADFD7;
+  --areca:#2F5D3A;
+  --areca-soft:#E0EBDC;
+  --sea:#1F6B73;
+  --sea-soft:#DDEDEB;
+  --scrim:rgba(46,24,14,.38);
+  --shadow:0 1px 1px rgba(127,42,22,.04),0 14px 34px -20px rgba(127,42,22,.38);
+  --shadow-lg:0 2px 6px rgba(127,42,22,.06),0 28px 60px -26px rgba(127,42,22,.5);
+  --f-display:"Tiro Kannada","Noto Serif Kannada",Georgia,"Times New Roman",serif;
+  --f-body:"Figtree",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --ease:cubic-bezier(.2,.8,.2,1);
+  --spring:cubic-bezier(.24,1.24,.4,1);
+  --plaster:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .55 0 0 0 0 .32 0 0 0 0 .16 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --band:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='10'%3E%3Cpath d='M2 5l7-3.5 7 3.5-7 3.5z' fill='none' stroke='%23A63A22' stroke-width='1'/%3E%3Ccircle cx='9' cy='5' r='1.1' fill='%23A63A22'/%3E%3C/svg%3E");
+  color-scheme:light;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent;background:var(--wall)}
+html.lock,html.lock body{overflow:hidden}
+body{margin:0;min-height:100vh;background:var(--wall) var(--plaster);color:var(--ink);font:400 15.5px/1.55 var(--f-body);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:var(--lat)}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:10px}
+[hidden]{display:none!important}
+[lang="kn"]{font-family:var(--f-display)}
+svg{flex:0 0 auto}
+::selection{background:var(--gold-soft);color:var(--ink)}
+
+/* ---------- header ---------- */
+.bar{position:fixed;inset:0 0 auto;z-index:30;padding-top:env(safe-area-inset-top,0px);background:rgba(246,241,231,.88);-webkit-backdrop-filter:saturate(1.3) blur(16px);backdrop-filter:saturate(1.3) blur(16px)}
+.bar::after{content:"";position:absolute;left:0;right:0;bottom:-6px;height:6px;background:radial-gradient(circle at 50% 0,var(--lat-soft) 0 3.6px,transparent 4.1px) 0 0/9px 6px repeat-x;pointer-events:none}
+.bar-in{position:relative;max-width:560px;margin:0 auto;height:56px;padding-inline:16px;display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid var(--line-2)}
+.brand{display:flex;align-items:center;gap:10px;min-width:0;text-decoration:none;color:var(--ink)}
+.kindi{width:22px;height:26px;flex:0 0 auto}
+.kd-f{fill:var(--paper);stroke:var(--lat);stroke-width:2;stroke-linejoin:round}
+.kd-h{fill:var(--gold)}
+.brand b{font:400 24px/1 var(--f-display);letter-spacing:.005em;transform:translateY(2px)}
+.brand i{font:400 15px/1 var(--f-display);font-style:normal;color:var(--lat);transform:translateY(2px)}
+.bar-meta{display:flex;align-items:center;gap:8px;white-space:nowrap}
+.datechip{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 12px;border-radius:999px;background:var(--paper);border:1px solid var(--line);font:600 12.5px/1 var(--f-body);color:var(--ink-2);font-variant-numeric:tabular-nums}
+.datechip svg{width:14px;height:14px;color:var(--gold-ink)}
+.pill{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 12px;border-radius:999px;border:1px solid var(--lat);background:var(--lat);font:700 12px/1 var(--f-body);color:var(--paper);cursor:pointer}
+.off{display:inline-flex;align-items:center;gap:6px;font:700 12px/1 var(--f-body);color:var(--kum)}
+.off::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--kum)}
+@media (max-width:350px){.brand i{display:none}}
+
+/* ---------- frame ---------- */
+.app{position:relative;z-index:1;max-width:560px;margin:0 auto;padding:calc(env(safe-area-inset-top,0px) + 76px) 16px calc(env(safe-area-inset-bottom,0px) + 112px);outline:none;view-transition-name:main}
+.screen{display:block}
+.enter{animation:rise .42s var(--ease) both}
+@keyframes rise{from{opacity:0;transform:translateY(12px)}}
+.nojs{position:relative;z-index:2;max-width:560px;margin:110px auto 0;padding:0 16px;color:var(--ink-2)}
+
+/* ---------- bottom nav ---------- */
+.nav{position:fixed;inset:auto 0 0;z-index:30;padding-bottom:env(safe-area-inset-bottom,0px);background:rgba(255,253,248,.9);-webkit-backdrop-filter:saturate(1.3) blur(16px);backdrop-filter:saturate(1.3) blur(16px);border-top:1px solid var(--line-2)}
+.nav::before{content:"";position:absolute;left:0;right:0;top:3px;height:1px;background:var(--line)}
+.nav-in{position:relative;max-width:560px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);padding:8px 8px 8px}
+.nav-pill{position:absolute;top:8px;left:8px;width:calc((100% - 16px)/4);height:34px;display:grid;place-items:center;pointer-events:none;transform:translateX(calc(var(--i,0) * 100%));transition:transform .5s var(--spring)}
+.nav-pill::before{content:"";width:62px;height:34px;border-radius:999px;background:var(--lat-soft);box-shadow:inset 0 0 0 1px rgba(166,58,34,.18)}
+.nav button{position:relative;display:flex;flex-direction:column;align-items:center;gap:3px;border:0;background:none;padding:0;color:var(--ink-3);font:700 11px/1 var(--f-body);letter-spacing:.03em;cursor:pointer;transition:color .3s var(--ease)}
+.nav .ic{display:grid;place-items:center;width:62px;height:34px}
+.nav svg{width:22px;height:22px;transition:transform .45s var(--spring)}
+.nav button[aria-current="page"]{color:var(--lat)}
+.nav button[aria-current="page"] svg{transform:translateY(-1px) scale(1.06)}
+
+/* ---------- type ---------- */
+.eyebrow{margin:0;font:700 11px/1.3 var(--f-body);letter-spacing:.16em;text-transform:uppercase;color:var(--lat)}
+.title{margin:6px 0 0;font:400 clamp(33px,9.6vw,42px)/1.04 var(--f-display);letter-spacing:-.005em;text-wrap:balance}
+.sub{margin:10px 0 0;color:var(--ink-2);max-width:58ch;text-wrap:pretty}
+.label{font:700 11px/1.2 var(--f-body);letter-spacing:.15em;text-transform:uppercase;color:var(--ink-2)}
+.num{font-variant-numeric:tabular-nums}
+.heading{display:flex;flex-direction:column;align-items:center;text-align:center;margin-top:18px}
+.heading .kirita{width:46px;height:20px;margin-bottom:8px}
+.heading .title{max-width:15ch}
+.heading .sub{text-align:center}
+.k-fan{fill:var(--gold-soft);stroke:var(--lat);stroke-width:.9}
+.k-band{fill:var(--gold);stroke:var(--lat);stroke-width:.9}
+.k-dots circle{fill:var(--gold);stroke:var(--lat);stroke-width:.6}
+.k-jewel{fill:var(--kum);stroke:var(--lat-deep);stroke-width:.8}
+.k-base{stroke:var(--lat);stroke-width:1.6}
+.rule{width:min(200px,56%);height:10px;margin:20px auto 0;background:var(--band) center/18px 10px repeat-x;opacity:.55;max-width:220px}

@@ -1,0 +1,24 @@
+{
+  "name": "Udupi · Coast Trip",
+  "short_name": "Udupi",
+  "description": "A day-by-day companion for four days on the Udupi coast, 6–10 October 2026.",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "lang": "en-IN",
+  "background_color": "#F6F1E7",
+  "theme_color": "#F6F1E7",
+  "categories": ["travel", "navigation"],
+  "icons": [
+    { "src": "/icons/kindi-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/kindi-512m.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/kindi-512m.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "/icons/kindi.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ],
+  "shortcuts": [
+    { "name": "Days", "url": "/#days", "icons": [{ "src": "/icons/kindi-192.png", "sizes": "192x192" }] },
+    { "name": "SOS", "url": "/#sos", "icons": [{ "src": "/icons/kindi-192.png", "sizes": "192x192" }] }
+  ]
+}
