@@ -122,16 +122,32 @@ const MAP = (() => {
     g += G.roads.map(rd => '<path class="mp-road" d="' + line(P, rd) + '"/>').join('');
     g += '<path class="mp-nh" d="' + line(P, G.nh66) + '"/>';
     if (vs.some(v => G.areas[v.a].rail)) g += '<path class="mp-rail" d="' + line(P, G.rail) + '"/>';
-    const taken = spots.map(s => ({ x: s.x - 11, y: s.y - 11, w: 22, h: 22 }));
+    /* Spot labels go first, so the places you visit always get their names; towns fill the gaps. */
+    const taken = spots.map(s => ({ x: s.x - 11, y: s.y - 11, w: 22, h: 22, s }));
+    const order = spots.slice().sort((p, q) => (p.home ? -1 : 0) - (q.home ? -1 : 0));
+    for (const s of order) {
+      const text = s.home ? s.name + ' · start' : s.name;
+      for (const pos of ['r', 'l', 't', 'b']) {
+        const b = labelBox(s.x, s.y, text, pos);
+        if (b.x < 3 || b.x + b.w > W - 3 || b.y < 3 || b.y + b.h > H - 3) continue;
+        if (taken.some(o => o.s !== s && hit(o, b))) continue;
+        s.label = Object.assign(b, { text });
+        taken.push(b);
+        break;
+      }
+    }
     const towns = G.towns.map(([name, la, lo, big]) => {
       const [x, y] = P([la, lo]);
       if (x < 6 || x > W - 6 || y < 8 || y > H - 8) return '';
       if (spots.some(s => Math.hypot(s.x - x, s.y - y) < 26)) return '';
-      const bx = { x: x + 5, y: y - 6, w: name.length * 5.4 + 4, h: 11 };
-      const right = bx.x + bx.w <= W - 4;
-      if (!right) bx.x = x - 5 - bx.w;
-      taken.push(bx);
-      return '<circle class="mp-town" cx="' + x + '" cy="' + y + '" r="' + (big ? 2.4 : 1.8) + '"/><text class="mp-town-t' + (big ? ' big' : '') + '" x="' + (right ? r1(x + 5) : r1(x - 5)) + '" y="' + r1(y + 3.2) + '" text-anchor="' + (right ? 'start' : 'end') + '">' + esc(name) + '</text>';
+      const w = name.length * 5.4 + 4;
+      const R = { x: x + 5, y: y - 6, w, h: 11 }, Lf = { x: x - 5 - w, y: y - 6, w, h: 11 };
+      const fits = bx => bx.x >= 3 && bx.x + bx.w <= W - 3 && !taken.some(o => hit(o, bx));
+      const right = fits(R), left = !right && fits(Lf);
+      const dot = '<circle class="mp-town" cx="' + x + '" cy="' + y + '" r="' + (big ? 2.4 : 1.8) + '"/>';
+      if (!right && !left) return dot;
+      taken.push(right ? R : Lf);
+      return dot + '<text class="mp-town-t' + (big ? ' big' : '') + '" x="' + (right ? r1(x + 5) : r1(x - 5)) + '" y="' + r1(y + 3.2) + '" text-anchor="' + (right ? 'start' : 'end') + '">' + esc(name) + '</text>';
     }).join('');
     g += towns;
     /* NH66 badge where the road crosses the middle of the frame */
@@ -152,8 +168,6 @@ const MAP = (() => {
     g += '<g class="mp-route">' + route + '</g>';
 
     /* spots and their labels */
-    const labels = [];
-    const order = spots.slice().sort((p, q) => (p.home ? -1 : 0) - (q.home ? -1 : 0));
     let sp = '';
     for (const s of order) {
       const main = s.first.main;
@@ -162,21 +176,13 @@ const MAP = (() => {
         (s.now ? '<circle class="mp-pulse" cx="' + s.x + '" cy="' + s.y + '" r="12"/>' : '') +
         '<circle class="mp-dot" cx="' + s.x + '" cy="' + s.y + '" r="' + (s.home ? 11 : 9.5) + '"/>' +
         (s.home ? '<g transform="translate(' + r1(s.x - 7) + ' ' + r1(s.y - 7.4) + ') scale(.58)"><path class="mp-house" d="M4 11 12 4.5 20 11M6 10v9.5h12V10M10 19.5v-5h4v5"/></g>' : '<text class="mp-num" x="' + s.x + '" y="' + r1(s.y + 3.6) + '" text-anchor="middle">' + s.num + '</text>') + '</g>';
-      const text = s.home ? s.name + ' · start' : s.name;
-      let box = null;
-      for (const pos of ['r', 'l', 't', 'b']) {
-        const b = labelBox(s.x, s.y, text, pos);
-        if (b.x < 3 || b.x + b.w > W - 3 || b.y < 3 || b.y + b.h > H - 3) continue;
-        if (labels.some(o => hit(o, b)) || taken.filter(t => !(Math.abs(t.x + 11 - s.x) < 1 && Math.abs(t.y + 11 - s.y) < 1)).some(o => hit(o, b))) continue;
-        box = b; break;
-      }
-      if (box) { labels.push(box); sp += '<text class="mp-label' + (s.home ? ' home' : '') + '" x="' + r1(box.tx) + '" y="' + r1(box.ty) + '" text-anchor="' + box.a + '">' + esc(text) + '</text>'; }
+      if (s.label) sp += '<text class="mp-label' + (s.home ? ' home' : '') + '" x="' + r1(s.label.tx) + '" y="' + r1(s.label.ty) + '" text-anchor="' + s.label.a + '">' + esc(s.label.text) + '</text>';
     }
     g += sp;
 
     /* compass and scale */
     g += '<g class="mp-compass" transform="translate(' + (W - 24) + ' 26)"><circle r="13"/><path d="M0 -9 4 3 0 0 -4 3z"/><text y="-14.5" text-anchor="middle">N</text></g>';
-    const kmStep = F.pxKm * 10 > 120 ? 2 : F.pxKm * 10 > 60 ? 5 : 10;
+    const kmStep = [20, 10, 5, 2, 1].find(k => F.pxKm * k <= 110) || 1;
     const sw = r1(F.pxKm * kmStep);
     g += '<g class="mp-scale" transform="translate(14 ' + (H - 16) + ')"><path d="M0 -4V0H' + sw + 'V-4"/><text x="' + r1(sw + 6) + '" y="0">' + kmStep + ' km</text></g>';
     return { svg: '<svg class="mp-svg" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + esc('Map of ' + day.tab + ': ' + spots.length + ' spots') + '">' + g + '</svg>', spots };

@@ -28,13 +28,13 @@ TRIP.PLACES = [
 TRIP.FIELDS = [[`dormName`,`Dorm name`],[`dormPhone`,`Dorm phone`],[`dormAddr`,`Dorm address or landmark`],[`scootShop`,`Scooter rental shop and phone`],[`scootPlate`,`Scooter number plate`],[`vrlPnr`,`VRL ticket or PNR`],[`vrlBus`,`VRL bus number and driver phone`],[`t1Pnr`,`12133 PNR`],[`t1Seat`,`12133 coach and berth`],[`t2Pnr`,`17378 PNR`],[`t2Seat`,`17378 coach and berth`],[`homeName`,`Emergency contact name`],[`homePhone`,`Emergency contact phone`]];
 TRIP.T12133 = [[`Udupi`,`13:20`,`13:22`,1],[`Surathkal`,`14:20`,`14:22`],[`Mangaluru Jn`,`15:40`,`—`,1]];
 TRIP.T17378 = [[`Mangaluru Central`,`—`,`16:45`],[`Mangaluru Jn`,`16:57`,`17:00`,1],[`Bantwal`,`17:30`,`17:32`],[`Subrahmanya Road`,`18:50`,`19:00`],[`Sakleshpur`,`21:20`,`21:30`],[`Hassan`,`22:20`,`22:30`],[`Arsikere`,`23:20`,`23:25`],[`Davangere`,`01:48`,`01:50`],[`Hubballi`,`04:40`,`04:50`],[`Gadag`,`06:25`,`06:30`],[`Badami`,`07:29`,`07:30`],[`Guledagudda Road`,`07:44`,`07:45`],[`Bagalkot`,`07:58`,`08:00`,1]];
-TRIP.FARES = [[`Petrol in Udupi, 7 Oct`,`About ₹110 a litre`],[`Wed north run, about 150 km`,`About 3.5 L, ₹350–400`],[`Thu or Fri rides, about 60 km`,`About 1.5 L, ₹150–200`],[`Two-wheeler parking at beaches`,`₹10–20`],[`CPC → Manipal, Rapido (Thu night)`,`₹110–150`],[`Manipal → CPC late at night`,`₹120–180`],[`CPC → Udupi station, auto`,`₹70–90`],[`Udupi → Mangaluru Jn by cab`,`₹1,300–1,800`]];
+TRIP.FARES = [[`Petrol in Udupi, 7 Oct`,`About ₹110 a litre`],[`Wed, about 108 km in all`,`About 2.5 L, ₹250–300`],[`Thu or Fri rides, about 55–65 km`,`About 1.5 L, ₹150–200`],[`Daily limit on the scooter`,`120 km`],[`Two-wheeler parking at beaches`,`₹10–20`],[`CPC → Manipal, Rapido (Thu night)`,`₹110–150`],[`Manipal → CPC late at night`,`₹120–180`],[`CPC → Udupi station, auto`,`₹70–90`],[`Udupi → Mangaluru Jn by cab`,`₹1,300–1,800`]];
 
 /* The Kaavi picture each stop shows (see js/vignettes.js); stops not listed get one by their kind. */
 TRIP.PICS = {
   tu1: `pack`, tu2: `phonemap`, tu3: `phonemap`, tu4: `pack`, tu5: `phonemap`, tu6: `phonemap`, tu12: `surf`,
   we1: `bus`, we2: `town`, we3: `dorm`, we9: `breakfast`, we36: `dress`, we29: `falls`, we25: `gadbad`,
-  wa2: `twowaters`, wa4: `hilltop`, wa5: `rockbeach`, wa7: `boatsea`, wb3: `estuary`, we21: `lighthouse`, we22: `lighthouse`, we40: `seawalk`, we41: `dinnersea`,
+  ka2: `seawalk`, ka3: `beach`, wa7: `boatsea`, wb3: `estuary`, we21: `lighthouse`, we22: `lighthouse`, we40: `seawalk`, we41: `dinnersea`,
   th1: `beachbag`, th41: `valley`, th2: `breakfast`, th5: `harbour`, th6: `jetty`, th8: `basalt`, th10: `parasail`, th11: `swim`, th12: `shower`, th44: `beachpalms`, th46: `twowaters`, th19: `bridge`,
   tb3: `beachpalms`, tb6: `bridge`, tb9: `town`, th21: `delta`, th23: `dress`, th27: `phonetrain`, th33: `pack`,
   fs8: `phonemap`, fa1: `pack`, fa3: `chai`, fs4: `surf`, fa4: `shower`, fa5: `breakfast`, fa7: `swim`, fa9: `lighthouse`,
@@ -51,9 +51,10 @@ TRIP.SUN = {
   '2026-10-10': { rise: `06:21`, set: `18:13` }
 };
 TRIP.RULES = [
+  `Scooter limit: 120 km a day, counted from the odometer. Note it each morning; Wednesday comes to about 108, Thursday about 55, Friday about 65.`,
   `Scooter: helmet on and strapped, licence and rental papers with you, every ride.`,
   `No alcohol on a day you ride. Thursday night is Rapido both ways, and the scooter stays at the dorm.`,
-  `Off NH66 by dark: leave Byndoor by 16:30 on Wednesday. Keep left at 50–60 km/h and let buses and trucks pass.`,
+  `Off NH66 by dark: leave Kodi by 16:30 on Wednesday. Keep left at 50–60 km/h and let buses and trucks pass.`,
   `Lightning or a downpour: pull in under a solid roof, a petrol station or a shop, never a tree.`,
   `Phone on a mount or zipped away while riding; stop to check the map.`,
   `St Mary’s on Thursday: not on a boat by 10:30, switch Thursday to Plan B.`,

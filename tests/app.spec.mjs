@@ -17,7 +17,7 @@ test('Today shows the Now card, the garland and the timeline', async ({ page }) 
   await page.goto(at('2026-10-07T09:50'));
   await expect(page.locator('article.now .tag')).toContainText('Now');
   await expect(page.locator('article.now .now-title')).toHaveText('Back to the dorm, change for the falls');
-  await expect(page.locator('.garland .bead')).toHaveCount(23);
+  await expect(page.locator('.garland .bead')).toHaveCount(21);
   await expect(page.locator('.mural .scene-svg')).toHaveCount(1);
   await expect(page.locator('.nav [data-tab=today]')).toHaveAttribute('aria-current', 'page');
 });
@@ -51,14 +51,14 @@ test('a stop sheet logs what was paid and closes on Escape', async ({ page }) =>
 
 test('skipping and restoring a stop from its sheet', async ({ page }) => {
   await page.goto(at('2026-10-07T09:50'));
-  await openStop(page, 'wa5');
+  await openStop(page, 'ka3');
   await page.click('#sheetBody [data-act=skip]');
-  await expect(page.locator('#r-wa5')).toHaveClass(/skipped/);
-  expect((await stored(page)).skip.wa5).toBeTruthy();
+  await expect(page.locator('#r-ka3')).toHaveClass(/skipped/);
+  expect((await stored(page)).skip.ka3).toBeTruthy();
   await page.waitForTimeout(400);
-  await openStop(page, 'wa5');
+  await openStop(page, 'ka3');
   await page.click('#sheetBody [data-act=skip]');
-  await expect(page.locator('#r-wa5')).not.toHaveClass(/skipped/);
+  await expect(page.locator('#r-ka3')).not.toHaveClass(/skipped/);
 });
 
 test('editing a built-in stop, then resetting it to the original', async ({ page }) => {
@@ -134,13 +134,13 @@ test('Friday surfs on Plan A, and Plan B rides the coast when the surf is off; b
   expect((await stored(page)).variant.fri).toBe('B');
 });
 
-test('Wednesday rides north by scooter on Plan A and stays close on Plan B', async ({ page }) => {
+test('Wednesday rides to Kundapura on Plan A, inside the 120 km limit, and stays close on Plan B', async ({ page }) => {
   await page.goto(at('2026-10-07T12:00'));
   await expect(page.locator('article.now .now-title')).toHaveText(/^Lunch at Diana/);
   await expect(page.locator('#r-wa1 .vg-thumb[data-vg=scooter]')).toHaveCount(1);
-  await expect(page.locator('#r-wa2 .vg-thumb[data-vg=twowaters]')).toHaveCount(1);
-  await expect(page.locator('#r-wa4 .vg-thumb[data-vg=hilltop]')).toHaveCount(1);
-  await expect(page.locator('#r-wa5 .vg-thumb[data-vg=rockbeach]')).toHaveCount(1);
+  await expect(page.locator('#r-ka2 .vg-thumb[data-vg=seawalk]')).toHaveCount(1);
+  await expect(page.locator('#r-ka3 .vg-thumb[data-vg=beach]')).toHaveCount(1);
+  await expect(page.locator('#r-wa6')).toContainText('leave Kodi by 16:30');
   await expect(page.locator('#r-we21')).toHaveCount(0);
   await page.click('.planseg [data-v=B]');
   await expect(page.locator('#r-we21')).toHaveCount(1);
@@ -241,13 +241,13 @@ test('the Map tab draws each day as one journey from the dorm, with spots in ord
   await expect(page.locator('.nav [data-tab=map]')).toHaveAttribute('aria-current', 'page');
   await expect(page.locator('.mp-svg')).toBeVisible();
   await expect(page.locator('.mp-spot.home')).toHaveCount(1);
-  await expect(page.locator('.mp-spot')).toHaveCount(5);
+  await expect(page.locator('.mp-spot')).toHaveCount(4);
   await expect(page.locator('.mp-spot.now')).toHaveCount(1);
-  await expect(page.locator('.jy-row')).toHaveCount(8);
-  await expect(page.locator('.jy-row').nth(3)).toContainText('Maravanthe');
+  await expect(page.locator('.jy-row')).toHaveCount(6);
+  await expect(page.locator('.jy-row').nth(3)).toContainText('Kodi beach');
   const route = await page.locator('.mp-links a').first().getAttribute('href');
   expect(route).toContain('waypoints=');
-  expect(decodeURIComponent(route)).toContain('Kshitija Nesaradhama, Ottinene');
+  expect(decodeURIComponent(route)).toContain('Kodi Beach, Kundapura');
   await page.click('.dbtn[data-day=thu]');
   await expect(page.locator('.mp-spot')).toHaveCount(9);
   await expect(page.locator('.mp-leg.sea')).toHaveCount(2);
@@ -275,18 +275,18 @@ test('every day has a brief, and stop sheets add facts at a glance and steps', a
     await expect(page.locator('.brief .br-row').first()).toBeVisible();
   }
   await page.goto(at('2026-10-07T12:10'));
-  await openStop(page, 'wa2');
+  await openStop(page, 'ka2');
   await expect(page.locator('#sheetBody .kb div')).toHaveCount(5);
   await expect(page.locator('#sheetBody .steps li')).toHaveCount(5);
-  await expect(page.locator('#sheetBody .kb')).toContainText('Free');
+  await expect(page.locator('#sheetBody .kb')).toContainText('31.5 m');
 });
 
 test('updates: SOS checks for a newer version, and a ready update offers Refresh', async ({ page }) => {
   await page.goto(at('2026-10-07T12:10', 'sos'));
   await page.click('.acc[data-acc=updates] summary');
   await expect(page.locator('[data-act=update-check]')).toBeVisible();
-  await expect(page.locator('.acc[data-acc=updates]')).toContainText('version 10');
-  await expect(page.locator('.colophon')).toContainText('version 10');
+  await expect(page.locator('.acc[data-acc=updates]')).toContainText('version 11');
+  await expect(page.locator('.colophon')).toContainText('version 11');
   await page.evaluate(() => showUpdate());
   await expect(page.locator('.update')).toContainText('Update ready');
   await expect(page.locator('.update [data-act=reload]')).toHaveText('Refresh');
@@ -317,10 +317,10 @@ test('Kit is a packing list: ticks and your own items', async ({ page }) => {
 
 test('the day checklist shows where to shoot, folded under each stop and open at the current one', async ({ page }) => {
   await page.goto(at('2026-10-07T16:00'));
-  const here = page.locator('#r-wa5 .r-shots');
+  const here = page.locator('#r-ka3 .r-shots');
   await expect(here).toHaveClass(/open/);
   await expect(here.locator('.sg-item')).toHaveCount(1);
-  await expect(here.locator('.sg-at')).toContainText('biggest boulders');
+  await expect(here.locator('.sg-at')).toContainText('nobody has walked on');
   await expect(here.locator('.sg-fr')).toBeVisible();
   const later = page.locator('#r-wa7 .r-shots');
   await expect(later).toHaveClass(/gold/);
@@ -335,7 +335,7 @@ test('the day checklist shows where to shoot, folded under each stop and open at
   await openStop(page, 'wa7');
   await expect(page.locator('#sheetBody input[data-shot="wa7-s0"]')).toBeChecked();
   await closeSheet(page);
-  await page.locator('#r-wa5 .sg-tog').click();
+  await page.locator('#r-ka3 .sg-tog').click();
   await expect(here).not.toHaveClass(/open/);
 });
 

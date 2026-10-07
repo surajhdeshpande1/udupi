@@ -4,10 +4,10 @@ TRIP.DAYS.push({ id:`thu`, date:`2026-10-08`, tab:`Thu 8`, short:`Thu`, eyebrow:
   sub:`End Point at sunrise, St Mary’s Island, a parasail and a jet ski, then the coast road past Padukere and Hoode to the mangroves, the Delta at sunset and a night out in Manipal.`,
   hl:[`End Point sunrise`,`St Mary’s Island`,`Parasail`,`Mangrove kayak`,`Delta sunset`,`Manipal night`],
   sun:{rise:`06:20`,set:`18:15`,goldAm:[`06:20`,`06:50`],gold:[`17:45`,`18:15`]}, wx:TRIP.WX,
-  briefLine:`About 50 km in short hops · island, parasail, kayak · night out`,
+  briefLine:`About 55 km in short hops · island, parasail, kayak · night out`,
   brief:[
     [`map`,`Route`,`Dorm → End Point → Car Street → Malpe → St Mary’s Island → Malpe beach → Padukere → Hoode → Kemmannu → Delta → dorm → Manipal by Rapido → dorm.`],
-    [`scooter`,`Riding`,`About 50 km, all in short hops on town and coast roads; none of it on NH66 for long. The scooter rests from 19:20.`],
+    [`scooter`,`Riding`,`About 55 km (Plan B about 80 km), well under the 120 km limit, all in short hops on town and coast roads. The scooter rests from 19:20.`],
     [`clock`,`Deadlines`,`Ticket counter by 08:45. Not on a boat by 10:30: switch to Plan B. At the Delta by 17:45 for the 18:15 sunset. Rapido home booked by 21:30.`],
     [`shirt`,`Wear`,`Swim shorts under quick-dry clothes all day. For the night: collared shirt, trousers or clean jeans, closed shoes.`],
     [`bag`,`Carry`,`Beach bag: towel, a dry change, sunscreen, cap, waterproof pouch, 1 L of water, licence and ₹3,000 in cash. At night: photo ID and cash for the ride.`],

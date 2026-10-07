@@ -15,6 +15,7 @@ TRIP.GEO = {
     hoode: { n: `Hoode`, ll: [13.3940, 74.6965] },
     kemmannu: { n: `Kemmannu`, ll: [13.4085, 74.7045] },
     delta: { n: `Delta`, ll: [13.4497, 74.6951] },
+    kodi: { n: `Kodi beach`, ll: [13.6455, 74.6675] },
     maravanthe: { n: `Maravanthe`, ll: [13.7040, 74.6435] },
     ottinene: { n: `Ottinene`, ll: [13.8730, 74.6110] },
     someshwara: { n: `Someshwara`, ll: [13.8605, 74.6075] },
@@ -32,7 +33,7 @@ TRIP.GEO = {
     'Udupi Railway Station': `station`,
     'Malpe Beach': `malpe`, 'Malpe Sea Walk': `malpe`, 'Malpe Fishing Harbour': `malpe`, "St Mary's Island Boating, Malpe": `malpe`, 'Hotel Shivsagar, Malpe': `malpe`, 'Paradise Isle Beach Resort, Malpe': `malpe`,
     "St Mary's Island, Malpe": `stmarys`, 'Padukere Beach, Malpe': `padukere`, 'Hoode Beach, Udupi': `hoode`, 'Kemmannu Hanging Bridge': `kemmannu`, 'Delta Beach, Kodi Bengre': `delta`,
-    'Maravanthe Beach': `maravanthe`, 'Kshitija Nesaradhama, Ottinene': `ottinene`, 'Someshwara Beach, Byndoor': `someshwara`,
+    'Kodi Beach, Kundapura': `kodi`, 'Maravanthe Beach': `maravanthe`, 'Kshitija Nesaradhama, Ottinene': `ottinene`, 'Someshwara Beach, Byndoor': `someshwara`,
     'Mattu Beach, Udupi': `mattu`, 'Kaup Beach': `kaup`, 'Kaup Lighthouse': `kaup`, 'Padubidri Blue Flag Beach': `padubidri`, 'Mantra Surf Club, Mulki': `mulki`,
     'Mangaluru Junction Railway Station': `mangaluru`
   },

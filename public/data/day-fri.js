@@ -7,7 +7,7 @@ TRIP.DAYS.push({ id:`fri`, date:`2026-10-09`, tab:`Fri 9`, short:`Fri`, eyebrow:
   briefLine:`About 65 km · surf at 07:00 · 12133 at 13:22`,
   brief:[
     [`map`,`Route`,`Dorm → Mulki (surf) → Padubidri → Kaup → Udupi, scooter back → Woodlands → Udupi station → 12133 → Mangaluru Jn → 17378 overnight.`],
-    [`scooter`,`Riding`,`About 65 km: 32 km south in the dawn, then back north with stops. The scooter goes back with a full tank by 11:35.`],
+    [`scooter`,`Riding`,`About 65 km, well under the 120 km limit: 32 km south in the dawn, then back north with stops. The scooter goes back with a full tank by 11:35.`],
     [`clock`,`Deadlines`,`Surf at 07:00 (your booking decides). Scooter back 11:35. On the platform by 13:00 for 12133 at 13:22. 17378 leaves Mangaluru Jn at 17:00.`],
     [`shirt`,`Wear`,`Rash guard or a fitted quick-dry T-shirt and board shorts for the surf; travel clothes and a light layer for the night train.`],
     [`bag`,`Carry`,`Daypack: tickets, ID, licence, power bank, cash, sunscreen, towel; wet kit in a zip-lock. The main bag waits at the dorm until 12:30.`],
