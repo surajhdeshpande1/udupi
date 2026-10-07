@@ -320,6 +320,6 @@ function showUpdate() {
   const el = document.createElement('div');
   el.className = 'update';
   el.setAttribute('role', 'status');
-  el.innerHTML = '<span>A fresh version of the app is ready.</span><button class="btn gold sm" type="button" data-act="reload">Reload</button>';
+  el.innerHTML = '<span><b>Update ready.</b> Refresh to load the newest plan.</span><button class="btn gold sm" type="button" data-act="reload">Refresh</button>';
   document.body.appendChild(el);
 }

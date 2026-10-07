@@ -90,6 +90,7 @@ document.addEventListener('click', e => {
       if (deferredPrompt) { const p = deferredPrompt; p.prompt(); p.userChoice.finally(() => { deferredPrompt = null; renderBar(); if (ui.tab === 'sos') render(); }); }
       break;
     case 'reload': location.reload(); break;
+    case 'update-check': updateNow(a); break;
   }
 });
 
@@ -232,15 +233,48 @@ window.addEventListener('appinstalled', () => { deferredPrompt = null; renderBar
   try { toured = localStorage.getItem('udupi.guide') === '1'; if (!toured) localStorage.setItem('udupi.guide', '1'); } catch (e) {}
   if (!toured) setTimeout(() => { if (!ui.sheet) guideSheet(0); }, !seen && !REDUCED ? 1700 : 450);
 })();
+/* ---------- updates: check every time the app opens or comes back, and offer a one-tap Refresh ---------- */
+let swReg = null;
+const askVersion = () => { try { if (navigator.serviceWorker.controller) navigator.serviceWorker.controller.postMessage('v'); } catch (e) {} };
+const checkUpdate = () => { if (swReg && navigator.onLine) swReg.update().catch(() => {}); };
 if ('serviceWorker' in navigator) {
+  const sw = navigator.serviceWorker;
+  sw.addEventListener('message', e => { if (e.data && e.data.v) { ui.swV = e.data.v; if (e.data.v !== APP_V) showUpdate(); } });
   window.addEventListener('load', () => {
-    const sw = navigator.serviceWorker;
     const had = !!sw.controller;
+    const watch = w => { if (w) w.addEventListener('statechange', () => { if (w.state === 'activated') { if (had) showUpdate(); else toast('Ready to work offline'); } }); };
     sw.register('/sw.js').then(reg => {
-      if (!had) reg.addEventListener('updatefound', () => { const w = reg.installing; if (w) w.addEventListener('statechange', () => { if (w.state === 'activated') toast('Ready to work offline'); }); });
+      swReg = reg;
+      watch(reg.installing);
+      reg.addEventListener('updatefound', () => watch(reg.installing));
+      /* The worker in charge may already be newer than the code on screen. */
+      askVersion();
+      checkUpdate();
     }).catch(() => {});
-    sw.addEventListener('message', e => { if (e.data && e.data.v && e.data.v !== APP_V) showUpdate(); });
-    sw.addEventListener('controllerchange', () => { if (had && sw.controller) sw.controller.postMessage('v'); });
+    sw.addEventListener('controllerchange', askVersion);
   });
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) { checkUpdate(); askVersion(); } });
+  window.addEventListener('online', checkUpdate);
+  setInterval(() => { if (!document.hidden) checkUpdate(); }, 15 * 60000);
+}
+/* The Check for updates button: fetch the newest version if there is one, then reload into it. */
+async function updateNow(btn) {
+  if (btn) { btn.disabled = true; btn.textContent = 'Checking…'; }
+  const done = msg => { if (btn) { btn.disabled = false; btn.textContent = 'Check for updates'; } if (msg) toast(msg); };
+  if (!('serviceWorker' in navigator) || !navigator.onLine) { done(navigator.onLine ? '' : 'Offline: connect to check for updates'); if (navigator.onLine) location.reload(); return; }
+  try {
+    const reg = swReg || await navigator.serviceWorker.getRegistration();
+    if (!reg) { location.reload(); return; }
+    await reg.update();
+    const w = reg.installing || reg.waiting;
+    if (w) {
+      toast('Updating the app…');
+      w.addEventListener('statechange', () => { if (w.state === 'activated') location.reload(); });
+      setTimeout(() => location.reload(), 9000);
+      return;
+    }
+    if (ui.swV && ui.swV !== APP_V) { location.reload(); return; }
+    done('You have the latest version');
+  } catch (e) { done(); location.reload(); }
 }
 try { if (navigator.storage && navigator.storage.persist) navigator.storage.persist(); } catch (e) {}

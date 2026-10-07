@@ -92,10 +92,11 @@ function renderSos(anim) {
     acc('Ways to save', '<ul class="bullets">' + TRIP.SAVERS.map(r => '<li>' + esc(r) + '</li>').join('') + '</ul>') + '</div>');
   h += section('Backup', 'Save and restore', backupCard());
   h += section('This app', '', '<div class="accs">' +
+    acc('Updates', '<p class="note" style="margin-top:0">The app checks for a newer version every time you open it or come back to it, and shows <b>Update ready · Refresh</b> at the top when there is one. You can also check now.</p><div class="bk-acts"><button class="btn sm" type="button" data-act="update-check">Check for updates</button></div><p class="note">This phone runs version ' + esc(APP_V.replace(/^\D+/, '')) + '.</p>') +
     acc('Install on your phone', '<p class="note" style="margin-top:0"><b>Android:</b> Chrome menu → Install app. <b>iPhone:</b> Safari → Share → Add to Home Screen. Once opened, the app works without signal.</p>' + (deferredPrompt ? '<div class="bk-acts"><button class="btn gold sm" type="button" data-act="install">Install the app</button></div>' : '')) +
     acc('Reset', '<p class="note" style="margin-top:0">Clears every tick, shot, packed item and stamp. Amounts paid, journal lines, your own stops, edits and bookings stay.</p><div class="bk-acts"><button class="btn danger sm" type="button" data-act="reset">Clear all ticks</button></div>') +
     acc('Sources, checked 6 Oct 2026', '<ul class="srcs">' + TRIP.SOURCES.map(([l, u]) => '<li><a href="' + esc(u) + '" target="_blank" rel="noopener">' + esc(l) + '</a></li>').join('') + '</ul><p class="note">Opening hours and prices come from venue listings and can change.</p>') + '</div>');
-  return h + '<footer class="colophon">' + ART.kindi() + '<span>Udupi Coast Trip · Kaavi edition · v2.0<br>Works offline. Nothing leaves this phone.</span></footer></section>';
+  return h + '<footer class="colophon">' + ART.kindi() + '<span>Udupi Coast Trip · Kaavi edition · version ' + esc(APP_V.replace(/^\D+/, '')) + '<br>Works offline. Nothing leaves this phone.</span></footer></section>';
 }
 
 /* ---------- frame ---------- */

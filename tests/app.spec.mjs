@@ -281,6 +281,17 @@ test('every day has a brief, and stop sheets add facts at a glance and steps', a
   await expect(page.locator('#sheetBody .kb')).toContainText('Free');
 });
 
+test('updates: SOS checks for a newer version, and a ready update offers Refresh', async ({ page }) => {
+  await page.goto(at('2026-10-07T12:10', 'sos'));
+  await page.click('.acc[data-acc=updates] summary');
+  await expect(page.locator('[data-act=update-check]')).toBeVisible();
+  await expect(page.locator('.acc[data-acc=updates]')).toContainText('version 10');
+  await expect(page.locator('.colophon')).toContainText('version 10');
+  await page.evaluate(() => showUpdate());
+  await expect(page.locator('.update')).toContainText('Update ready');
+  await expect(page.locator('.update [data-act=reload]')).toHaveText('Refresh');
+});
+
 test('Days: the arched tiles switch the day', async ({ page }) => {
   await page.goto(at('2026-10-07T09:50'));
   await page.click('.nav [data-tab=days]');

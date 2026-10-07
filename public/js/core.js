@@ -1,6 +1,6 @@
 /* Udupi Coast Trip app, part 1: time, icons, state, plan. Everything runs on IST. */
 'use strict';
-const APP_V = 'udupi-kaavi-9';
+const APP_V = 'udupi-kaavi-10';
 const DAYS = TRIP.DAYS;
 const DAY = Object.fromEntries(DAYS.map(d => [d.id, d]));
 const TABS = ['today', 'days', 'map', 'kit', 'sos'];
@@ -145,7 +145,7 @@ let state = load();
 let saveTimer = 0;
 function save() { clearTimeout(saveTimer); saveTimer = 0; try { localStorage.setItem(LS, JSON.stringify(state)); } catch (e) {} }
 function saveSoon() { clearTimeout(saveTimer); saveTimer = setTimeout(save, 300); }
-const ui = { tab: 'today', day: null, sheet: null, needsRender: false, minute: -1, earlier: false, open: {}, pending: null, vt: false, intro: false, shots: {} };
+const ui = { tab: 'today', day: null, sheet: null, needsRender: false, minute: -1, earlier: false, open: {}, pending: null, vt: false, intro: false, shots: {}, swV: null };
 function commit(opts) { save(); if (!opts || opts.render !== false) { if (ui.sheet && !(opts && opts.force)) ui.needsRender = true; else render(); } }
 
 /* ---------- plan ---------- */
