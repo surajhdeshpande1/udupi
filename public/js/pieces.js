@@ -109,6 +109,14 @@ function garland(items, L, anim) {
 }
 
 /* ---------- timeline ---------- */
+/* The day brief: route, riding, deadlines, what to wear, carry, eat and spend, and what to watch for. */
+function dayBrief(day, openDefault) {
+  if (!day.brief || !day.brief.length) return '';
+  const key = 'brief-' + day.id + (openDefault ? '-d' : '-t');
+  const open = ui.open[key] != null ? ui.open[key] : openDefault;
+  return '<details class="acc brief" data-acc="' + key + '"' + (open ? ' open' : '') + '><summary><span class="br-sum"><span class="br-ic">' + ico('list') + '</span><span class="br-t"><b>Day brief</b>' + (day.briefLine ? '<small>' + esc(day.briefLine) + '</small>' : '') + '</span></span>' + ico('chev') + '</summary>' +
+    '<div class="acc-body"><dl class="br">' + day.brief.map(([ic, k, v]) => '<div class="br-row"><dt>' + ico(ic) + '<span>' + esc(k) + '</span></dt><dd>' + esc(v) + '</dd></div>').join('') + '</dl></div></details>';
+}
 function planBar(day) {
   let h = '<div class="tl-head"><h2>Timeline</h2><button class="link" type="button" data-act="rules" data-day="' + day.id + '">If plans change' + ico('right') + '</button></div>';
   if (day.variants) {

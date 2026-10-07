@@ -51,6 +51,8 @@ function detailSheet(id, focus) {
   let h = VG.pic(it, 'hero', 'draw') + '<p class="eyebrow">' + esc(K.label + ' · ' + day.tab + (done ? ' · Done' : sk ? ' · Skipped' : '')) + '</p><h2 class="sh-title" tabindex="-1">' + esc(it.x) + '</h2>' + (it.kn ? '<p class="sh-kn" lang="kn">' + esc(it.kn) + '</p>' : '');
   h += '<div class="sh-body"><div class="facts">' + chips.join('') + '</div>';
   if (it.b) h += '<p>' + esc(it.b) + '</p>';
+  if (it.kb && it.kb.length) h += '<dl class="kb" aria-label="At a glance">' + it.kb.map(([k, v]) => '<div><dt>' + esc(k) + '</dt><dd>' + esc(v) + '</dd></div>').join('') + '</dl>';
+  if (it.steps && it.steps.length) h += '<div class="steps-box"><span class="label">Step by step</span><ol class="steps">' + it.steps.map(x => '<li>' + esc(x) + '</li>').join('') + '</ol></div>';
   if (it.tips && it.tips.length) h += '<ul class="tips">' + it.tips.map(x => '<li>' + esc(x) + '</li>').join('') + '</ul>';
   if (shotsOf(it).length) h += '<div class="shots-box"><span class="label">Where to shoot' + (golden(it, day) ? ' · golden hour' : '') + '</span>' + shotList(it) + '</div>';
   if (!it.info) h += paidBox(it);
@@ -91,7 +93,7 @@ const lgNode = (g, icon, extra) => '<span class="lg-node ' + g + (extra ? ' ' + 
 function helpSheet() {
   const mark = (art, k, v) => '<li>' + art + '<span><b>' + k + '</b>' + v + '</span></li>';
   let h = '<p class="eyebrow">Guide</p><h2 class="sh-title" tabindex="-1">How this app works</h2><div class="sh-body hp">' +
-    '<p><b>Today</b> runs the day you are in, <b>Days</b> shows any day of the trip, <b>Kit</b> is your packing list, and <b>SOS</b> keeps emergency numbers, bookings, train times and backup.</p>' +
+    '<p><b>Today</b> runs the day you are in, <b>Days</b> shows any day of the trip, <b>Map</b> draws each day as one journey from the dorm with its spots numbered in order, <b>Kit</b> is your packing list, and <b>SOS</b> keeps emergency numbers, bookings, train times and backup.</p>' +
     '<h3 class="hp-h">What the circles mean</h3><ul class="legend">' + LEGEND.map(k => '<li>' + lgNode('g-' + KINDS[k].g, KINDS[k].icon) + '<span>' + esc(KINDS[k].label) + '</span></li>').join('') + '</ul>' +
     '<h3 class="hp-h">Marks and colours</h3><ul class="marks">' +
     mark(lgNode('g-hard', 'clock', 'hard'), 'Red circle', 'A hard deadline: a boat, bus or train that will not wait.') +

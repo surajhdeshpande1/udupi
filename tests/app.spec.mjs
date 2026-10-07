@@ -225,7 +225,7 @@ test('the Now card and every stop sheet open on a picture', async ({ page }) => 
 test('switching tabs glides the pill and never widens the page', async ({ page }) => {
   await page.goto(at('2026-10-08T11:40'));
   let widest = 0;
-  for (const tab of ['sos', 'kit', 'today', 'days']) {
+  for (const tab of ['sos', 'map', 'kit', 'today', 'days']) {
     await page.click('.nav [data-tab=' + tab + ']');
     for (let i = 0; i < 8; i++) { await page.waitForTimeout(60); widest = Math.max(widest, await page.evaluate(() => innerWidth)); }
     await expect(page.locator('.nav [data-tab=' + tab + ']')).toHaveAttribute('aria-current', 'page');
@@ -234,6 +234,51 @@ test('switching tabs glides the pill and never widens the page', async ({ page }
   const [pill, icon] = await page.evaluate(() => [document.querySelector('.nav-pill').getBoundingClientRect().left, document.querySelector('.nav [aria-current=page] .ic').getBoundingClientRect().left]);
   expect(Math.abs(pill - icon)).toBeLessThan(1.5);
   await expect(page.locator('#main')).toHaveClass(/in/);
+});
+
+test('the Map tab draws each day as one journey from the dorm, with spots in order', async ({ page }) => {
+  await page.goto(at('2026-10-07T12:10', 'map'));
+  await expect(page.locator('.nav [data-tab=map]')).toHaveAttribute('aria-current', 'page');
+  await expect(page.locator('.mp-svg')).toBeVisible();
+  await expect(page.locator('.mp-spot.home')).toHaveCount(1);
+  await expect(page.locator('.mp-spot')).toHaveCount(5);
+  await expect(page.locator('.mp-spot.now')).toHaveCount(1);
+  await expect(page.locator('.jy-row')).toHaveCount(8);
+  await expect(page.locator('.jy-row').nth(3)).toContainText('Maravanthe');
+  const route = await page.locator('.mp-links a').first().getAttribute('href');
+  expect(route).toContain('waypoints=');
+  expect(decodeURIComponent(route)).toContain('Kshitija Nesaradhama, Ottinene');
+  await page.click('.dbtn[data-day=thu]');
+  await expect(page.locator('.mp-spot')).toHaveCount(9);
+  await expect(page.locator('.mp-leg.sea')).toHaveCount(2);
+  await page.locator('.mp-spot', { hasText: '3' }).first().click();
+  await expect.poll(() => sheetOpen(page)).toBe(true);
+  await expect(page.locator('#sheetBody .sh-title')).toHaveText('St Mary’s Island');
+  await closeSheet(page);
+  await page.click('.dbtn[data-day=fri]');
+  await expect(page.locator('.mp-leg.rail')).toHaveCount(1);
+  await expect(page.locator('.jy-row').last()).toContainText('Mangaluru Jn');
+  await page.click('.dbtn[data-day=tue]');
+  await expect(page.locator('.mp-travel')).toBeVisible();
+  await expect(page.locator('.mp-svg')).toHaveCount(0);
+});
+
+test('every day has a brief, and stop sheets add facts at a glance and steps', async ({ page }) => {
+  await page.goto(at('2026-10-07T12:10'));
+  await expect(page.locator('.brief')).toHaveCount(1);
+  await expect(page.locator('.brief')).not.toHaveAttribute('open', '');
+  await page.goto(at('2026-10-07T12:10', 'days'));
+  await expect(page.locator('.brief')).toHaveAttribute('open', '');
+  await expect(page.locator('.brief .br-row')).toHaveCount(9);
+  for (const d of ['thu', 'fri', 'sat']) {
+    await page.click('.dbtn[data-day=' + d + ']');
+    await expect(page.locator('.brief .br-row').first()).toBeVisible();
+  }
+  await page.goto(at('2026-10-07T12:10'));
+  await openStop(page, 'wa2');
+  await expect(page.locator('#sheetBody .kb div')).toHaveCount(5);
+  await expect(page.locator('#sheetBody .steps li')).toHaveCount(5);
+  await expect(page.locator('#sheetBody .kb')).toContainText('Free');
 });
 
 test('Days: the arched tiles switch the day', async ({ page }) => {

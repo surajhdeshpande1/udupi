@@ -103,3 +103,32 @@ button.chip:active{transform:scale(.94)}
 .gd-dots{display:flex;justify-content:center;gap:8px;margin-top:20px}
 .gd-dots i{width:7px;height:7px;border-radius:999px;background:var(--line-2);transition:width .35s var(--ease),background-color .35s}
 .gd-dots i.on{width:22px;background:var(--lat)}
+
+/* ---------- stop sheet: at a glance and step by step ---------- */
+.kb{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;margin:16px 0 0;border-radius:16px;overflow:hidden;background:var(--line);border:1px solid var(--line)}
+.kb div{min-width:0;padding:10px 12px;background:var(--paper)}
+.kb div:last-child:nth-child(odd){grid-column:1/-1}
+.kb dt{margin:0 0 3px;font:700 10.5px/1.2 var(--f-body);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.kb dd{margin:0;font:600 13.5px/1.4 var(--f-body);color:var(--ink);overflow-wrap:anywhere}
+.steps-box{margin-top:18px}
+.steps{margin:8px 0 0;padding:0;list-style:none;counter-reset:st}
+.steps li{position:relative;padding:7px 0 7px 36px;font:500 14px/1.45 var(--f-body);color:var(--ink);counter-increment:st}
+.steps li::before{content:counter(st);position:absolute;left:0;top:5px;display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--lat-wash);box-shadow:inset 0 0 0 1px rgba(166,58,34,.28);font:700 12px/1 var(--f-body);color:var(--lat)}
+.steps li+li::after{content:"";position:absolute;left:11.5px;top:-9px;height:12px;border-left:1px dashed rgba(166,58,34,.35)}
+
+/* ---------- day brief ---------- */
+.brief{margin-top:18px}
+.brief summary{min-height:62px}
+.br-sum{display:flex;align-items:center;gap:12px;min-width:0}
+.br-ic{display:grid;place-items:center;flex:0 0 auto;width:36px;height:36px;border-radius:12px;background:var(--lat-wash);color:var(--lat)}
+.br-ic svg{width:18px;height:18px;transform:none!important}
+.br-t{display:flex;flex-direction:column;gap:3px;min-width:0}
+.br-t b{font:700 15px/1.2 var(--f-body);color:var(--ink)}
+.br-t small{font:600 12px/1.35 var(--f-body);color:var(--ink-2)}
+.br{margin:0;display:flex;flex-direction:column}
+.br-row{display:grid;grid-template-columns:108px minmax(0,1fr);gap:10px;padding:11px 0;border-top:1px solid var(--line)}
+.br-row:first-child{border-top:0;padding-top:2px}
+.br-row dt{display:flex;align-items:flex-start;gap:7px;margin:0;font:700 12.5px/1.35 var(--f-body);color:var(--lat)}
+.br-row dt svg{flex:0 0 auto;width:16px;height:16px;margin-top:1px;transform:none!important;color:var(--lat)}
+.br-row dd{margin:0;font:500 13.5px/1.5 var(--f-body);color:var(--ink)}
+@media (max-width:360px){.br-row{grid-template-columns:1fr;gap:4px}}

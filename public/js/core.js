@@ -1,9 +1,9 @@
 /* Udupi Coast Trip app, part 1: time, icons, state, plan. Everything runs on IST. */
 'use strict';
-const APP_V = 'udupi-kaavi-8';
+const APP_V = 'udupi-kaavi-9';
 const DAYS = TRIP.DAYS;
 const DAY = Object.fromEntries(DAYS.map(d => [d.id, d]));
-const TABS = ['today', 'days', 'kit', 'sos'];
+const TABS = ['today', 'days', 'map', 'kit', 'sos'];
 
 /* ---------- time ---------- */
 const IST = 330 * 60000;
@@ -63,6 +63,11 @@ const P = {
   rain: '<path d="M7 14.5h10a3.5 3.5 0 0 0 .4-7A5 5 0 0 0 8 8.8 2.9 2.9 0 0 0 7 14.5z"/><path d="M9 17.5l-1 2.5M13 17.5l-1 2.5M17 17.5l-1 2.5"/>',
   download: '<path d="M12 3.5v11M7.5 10 12 14.5 16.5 10"/><path d="M4.5 19.5h15"/>',
   upload: '<path d="M12 14.5v-11M7.5 8 12 3.5 16.5 8"/><path d="M4.5 19.5h15"/>',
+  shirt: '<path d="M8.5 4 4 6.6l1.9 3.9 2.1-1V20h8V9.5l2.1 1L20 6.6 15.5 4a3.5 3.5 0 0 1-7 0z"/>',
+  bag: '<path d="M8.5 7V5.5a3.5 3.5 0 0 1 7 0V7"/><rect x="4.5" y="7" width="15" height="14" rx="4"/><path d="M9 13.5h6v3.5H9z"/>',
+  shield: '<path d="M12 3.5 5 6v5.5c0 4.3 3 7.6 7 9 4-1.4 7-4.7 7-9V6z"/><path d="M9 12l2.2 2.2L15.5 10"/>',
+  map: '<path d="M9 4.5 3.5 6.5v13l5.5-2 6 2 5.5-2v-13l-5.5 2z"/><path d="M9 4.5v13M15 6.5v13"/>',
+  home: '<path d="M4 11 12 4.5 20 11"/><path d="M6 10v9.5h12V10"/><path d="M10 19.5v-5h4v5"/>',
   walk: '<path d="M8.6 13.4c-1.6.2-2.9-1.4-3.1-3.6-.3-2.5.6-4.6 2.2-4.8s3 1.6 3.1 4.1c.1 2.3-.6 4.1-2.2 4.3z"/><path d="M6.3 16.3l4-.5.2 1.6c.1 1.1-.7 2.1-1.9 2.2s-2.1-.6-2.2-1.7z"/><path d="M15.4 10.4c1.6.2 2.9-1.4 3.1-3.6.3-2.5-.6-4.6-2.2-4.8s-3 1.6-3.1 4.1c-.1 2.3.6 4.1 2.2 4.3z"/><path d="M17.7 13.3l-4-.5-.2 1.6c-.1 1.1.7 2.1 1.9 2.2s2.1-.6 2.2-1.7z"/>'
 };
 const ico = n => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + (P[n] || '') + '</svg>';

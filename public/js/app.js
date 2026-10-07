@@ -178,7 +178,7 @@ window.addEventListener('hashchange', () => { const h = location.hash.slice(1); 
   let sx = null, sy = 0;
   const main = $('#main');
   main.addEventListener('touchstart', e => {
-    if (ui.tab !== 'days' || e.touches.length !== 1 || e.target.closest('.tt,input,textarea,select,.strip')) { sx = null; return; }
+    if ((ui.tab !== 'days' && ui.tab !== 'map') || e.touches.length !== 1 || e.target.closest('.tt,input,textarea,select,.strip')) { sx = null; return; }
     sx = e.touches[0].clientX; sy = e.touches[0].clientY;
   }, { passive: true });
   main.addEventListener('touchend', e => {
@@ -201,7 +201,7 @@ function tick() {
   if (m === ui.minute) return;
   const a = document.activeElement;
   const typing = a && /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName) && a.type !== 'checkbox';
-  if (!ui.sheet && !typing && !$('.stamp-wrap') && (ui.tab === 'today' || ui.tab === 'days')) render();
+  if (!ui.sheet && !typing && !$('.stamp-wrap') && (ui.tab === 'today' || ui.tab === 'days' || ui.tab === 'map')) render();
   else renderBar();
 }
 setInterval(tick, 15000);

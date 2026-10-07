@@ -1,9 +1,9 @@
 /* Udupi Coast Trip: offline support.
    The app shell is precached; pages try the network briefly, then fall back to the cache;
    Google Fonts are cached on install so the type survives with no signal. */
-const V = 'udupi-kaavi-8';
+const V = 'udupi-kaavi-9';
 const FONTS = 'udupi-kaavi-fonts-1';
-const SHELL = ['/', '/css/base.css', '/css/components.css', '/css/pieces.css', '/css/screens.css', '/css/motion.css', '/data/trip.js', '/data/day-tue.js', '/data/day-wed.js', '/data/day-thu.js', '/data/day-fri.js', '/data/day-sat.js', '/js/art.js', '/js/vignettes.js', '/js/core.js', '/js/pieces.js', '/js/screens.js', '/js/sheets.js', '/js/app.js', '/manifest.webmanifest', '/icons/kindi.svg', '/icons/kindi-192.png', '/icons/kindi-512m.png', '/icons/kindi-180.png'];
+const SHELL = ['/', '/css/base.css', '/css/components.css', '/css/pieces.css', '/css/screens.css', '/css/motion.css', '/data/trip.js', '/data/day-tue.js', '/data/day-wed.js', '/data/day-thu.js', '/data/day-fri.js', '/data/day-sat.js', '/data/geo.js', '/js/art.js', '/js/vignettes.js', '/js/core.js', '/js/pieces.js', '/js/screens.js', '/js/map.js', '/js/sheets.js', '/js/app.js', '/manifest.webmanifest', '/icons/kindi.svg', '/icons/kindi-192.png', '/icons/kindi-512m.png', '/icons/kindi-180.png'];
 const FONT_CSS = 'https://fonts.googleapis.com/css2?family=Figtree:wght@400..800&family=Tiro+Kannada&display=swap';
 const FONT_HOSTS = ['https://fonts.googleapis.com', 'https://fonts.gstatic.com'];
 const FONT_URL = /url[(](https:[/][/]fonts[.]gstatic[.]com[/][^) ]+)[)]/g;

@@ -34,7 +34,7 @@ test.describe('offline', () => {
     await expect.poll(() => page.evaluate(async () => (await caches.keys()).length), { timeout: 15000 }).toBeGreaterThan(0);
     await expect.poll(() => page.evaluate(() => !!navigator.serviceWorker.controller), { timeout: 15000 }).toBe(true);
     const shell = await page.evaluate(async () => { for (const k of await caches.keys()) if (!k.includes('fonts')) return (await (await caches.open(k)).keys()).length; return 0; });
-    expect(shell).toBe(24);
+    expect(shell).toBe(26);
     await context.setOffline(true);
     await page.reload();
     await expect(page.locator('article.now')).toHaveCount(1);
@@ -51,8 +51,8 @@ for (const width of [320, 390, 820]) {
     await prepare(context);
     const page = await context.newPage();
     const errors = trackErrors(page);
-    for (const [i, tab] of ['today', 'days', 'kit', 'sos'].entries()) {
-      await page.goto(at(`2026-10-0${6 + i}T10:3${i}`, tab));
+    for (const [i, tab] of ['today', 'days', 'map', 'kit', 'sos'].entries()) {
+      await page.goto(at(`2026-10-0${6 + (i % 4)}T10:3${i}`, tab));
       await page.waitForTimeout(300);
       const overflow = await page.evaluate(() => document.documentElement.scrollWidth - innerWidth);
       expect(overflow, `${tab} overflows by ${overflow}px`).toBeLessThanOrEqual(0);

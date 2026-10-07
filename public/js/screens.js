@@ -11,7 +11,7 @@ function renderToday(anim) {
   }
   const day = dayOf(L.t);
   const items = dayItems(day);
-  return screenOpen(anim) + mural(day, L.t, anim, ist(L.t).date === day.date) + heading(day.eyebrow, day.name, null, day.hl) + nowCard(L) + garland(items, L, anim) +
+  return screenOpen(anim) + mural(day, L.t, anim, ist(L.t).date === day.date) + heading(day.eyebrow, day.name, null, day.hl) + nowCard(L) + garland(items, L, anim) + dayBrief(day, false) +
     '<div class="tl-wrap">' + planBar(day) + timeline(day, items, L, true) + '</div>' + journal(day) + LOTUS + '</section>';
 }
 
@@ -32,7 +32,7 @@ function renderDays(anim) {
   if (paid) facts += '<span class="chip areca">' + ico('wallet') + 'Paid ' + inr(paid) + '</span>';
   return screenOpen(anim) + strip(sel, today) + '<div class="day-body' + (anim === 'day' ? ' swap' : '') + '">' +
     mural(sel, L.t, anim, sel.date === today) + heading(sel.eyebrow, sel.name, sel.sub, sel.hl) + '<div class="facts">' + facts + '</div>' +
-    (sel.wx ? '<p class="wx">' + ico('rain') + '<span>' + esc(sel.wx) + '</span></p>' : '') +
+    (sel.wx ? '<p class="wx">' + ico('rain') + '<span>' + esc(sel.wx) + '</span></p>' : '') + dayBrief(sel, true) +
     '<div class="tl-wrap">' + planBar(sel) + timeline(sel, items, L, false) + '</div>' + journal(sel) + LOTUS + '</div></section>';
 }
 
@@ -132,7 +132,7 @@ function render(anim) {
   renderNav();
   const main = $('#main');
   try {
-    main.innerHTML = ui.tab === 'today' ? renderToday(anim) : ui.tab === 'days' ? renderDays(anim) : ui.tab === 'kit' ? renderKit(anim) : renderSos(anim);
+    main.innerHTML = ui.tab === 'today' ? renderToday(anim) : ui.tab === 'days' ? renderDays(anim) : ui.tab === 'map' ? MAP.render(anim) : ui.tab === 'kit' ? renderKit(anim) : renderSos(anim);
   } catch (err) {
     main.innerHTML = oopsHTML();
     try { console.error(err); } catch (e) {}

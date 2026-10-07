@@ -11,11 +11,12 @@ A light, offline-first trip companion for four days on the Udupi coast, 6–10 O
 | Screen | What you get |
 | --- | --- |
 | **Today** | The day's mural with the real sun moving along its arc, the day's highlights under its title, a **Now** card with directions and a one-tap *Mark done*, the next stop and the next hard deadline with countdowns, a marigold garland of progress, and the timeline (earlier stops fold away). Stops with photos carry a folded **Where to shoot** guide: for each shot, where to stand, how to frame it and, where the light matters, when. It opens by itself at the stop you are at. |
-| **Days** | Five arched day tiles that take a rubber-stamp seal when every stop on that day is done, sun and golden-hour times, the weather note, Plan A / Plan B where it matters, and *If plans change* for each day. |
+| **Days** | A day brief for every day (route, riding, deadlines, what to wear, carry, eat and spend, the light, and what to watch for), five arched day tiles that take a rubber-stamp seal when every stop on that day is done, sun and golden-hour times, the weather note, Plan A / Plan B where it matters, and *If plans change* for each day. |
+| **Map** | A Kaavi-drawn map of the coast for each day: sea, rivers, NH66 and towns, the dorm as the start, every spot numbered in the order you reach it, and the journey drawn between them (rides along NH66, the island crossing dashed, the train dotted). The spot you are at pulses; finished spots turn gold. Below it, the journey as a list with directions to each spot, and the whole day as one route in Google Maps. |
 | **Kit** | The packing list, with your own items. |
 | **SOS** | Tap-to-call emergency numbers, hospitals and stations with directions, your bookings (kept on the phone), both train timetables, the rules that protect the trip, auto fares, a plan-versus-paid money card, and backup to a file. |
 
-The first time the app opens, a three-card tour shows how it works, and the **?** in the header explains every circle, colour and tap at any time. Every stop opens a sheet with its story, its Kannada name, opening hours, tips, where to shoot, what you paid, and *Directions*, *Edit* and *Skip*. You can add your own stops on any day. A one-line journal with a mood closes each day.
+The first time the app opens, a three-card tour shows how it works, and the **?** in the header explains every circle, colour and tap at any time. Every stop opens a sheet with its story, its Kannada name, opening hours, facts at a glance, step-by-step actions, tips, where to shoot, what you paid, and *Directions*, *Edit* and *Skip*. You can add your own stops on any day. A one-line journal with a mood closes each day.
 
 ## Design
 
@@ -33,15 +34,15 @@ public/                  the whole site, served as-is (no build step)
   sw.js                  offline cache: app shell plus Google Fonts
   manifest.webmanifest
   css/                   base · components · pieces · screens · motion
-  js/                    art · core · pieces · screens · sheets · app
-  data/                  trip.js (reference data) and one file per day
+  js/                    art · vignettes · core · pieces · screens · map · sheets · app
+  data/                  trip.js (reference data), one file per day, geo.js (the drawn map)
   icons/
 tests/                   Playwright tests and a local server that mirrors vercel.json
 docs/                    screenshots for this README
 vercel.json              security headers (CSP, noindex) and the output directory
 ```
 
-The scripts are plain classic scripts loaded in order and sharing one global scope: trip data → `art.js` (the Kaavi drawings) → `core.js` (time, state, plan) → `pieces.js` → `screens.js` → `sheets.js` → `app.js` (events and start-up). All times are computed in IST, whatever the phone's time zone.
+The scripts are plain classic scripts loaded in order and sharing one global scope: trip data and `geo.js` → `art.js` and `vignettes.js` (the Kaavi drawings) → `core.js` (time, state, plan) → `pieces.js` → `screens.js` → `map.js` → `sheets.js` → `app.js` (events and start-up). All times are computed in IST, whatever the phone's time zone.
 
 ## Run it locally
 
@@ -60,7 +61,7 @@ npx playwright install chromium
 npx playwright test
 ```
 
-35 browser tests on a phone-sized Chromium cover ticking, sheets, skipping, editing and adding stops, Plan B on Wednesday, Thursday and Friday, the scooter rides, the night-out stops, the shot guide, the first-run tour, the help sheet, day highlights, a picture on every stop, the tab bar motion, days, kit, bookings, backup and restore, reset, the journal, day stamps, loading data saved by the previous version, the intro, security headers, the install manifest, offline use, and layout at 320, 390 and 820 px with no console errors or CSP violations. GitHub Actions runs them on every push to `main`.
+37 browser tests on a phone-sized Chromium cover ticking, sheets, skipping, editing and adding stops, Plan B on Wednesday, Thursday and Friday, the scooter rides, the Map tab and its journeys, day briefs and stop facts, the night-out stops, the shot guide, the first-run tour, the help sheet, day highlights, a picture on every stop, the tab bar motion, days, kit, bookings, backup and restore, reset, the journal, day stamps, loading data saved by the previous version, the intro, security headers, the install manifest, offline use, and layout at 320, 390 and 820 px with no console errors or CSP violations. GitHub Actions runs them on every push to `main`.
 
 ## Editing the trip
 
@@ -75,11 +76,14 @@ Each day lives in `public/data/day-*.js`. A stop looks like this:
 | --- | --- |
 | `id` | Stable id. Ticks, skips and edits are saved against it, so never reuse or renumber ids. |
 | `t`, `dur` | Start time (24 h, IST) and minutes. |
-| `k` | Kind: `temple`, `culture`, `coast`, `nature`, `adventure`, `explore` (free hour), `photo`, `boat`, `food`, `night`, `move`, `bus`, `train`, `rest`, `prep`, `stop`. |
+| `k` | Kind: `temple`, `culture`, `coast`, `nature`, `adventure`, `explore` (free hour), `photo`, `boat`, `food`, `night`, `ride` (scooter), `move`, `bus`, `train`, `rest`, `prep`, `stop`. |
 | `x`, `kn` | Title and Kannada name. |
 | `q`, `m` | Google Maps query, and `m:'w'` for walking directions. |
 | `c` | Cost range in rupees, `[low, high]`. |
 | `win`, `b`, `tips` | Opening hours, body text and tips. |
+| `kb`, `steps` | Facts at a glance, `[[label, value], …]`, and a numbered step-by-step list. |
+| `at` | The map area for a stop with no Maps query (see `TRIP.GEO.areas` in `data/geo.js`). |
+| `brief`, `briefLine` (on the day) | The day brief rows, `[[icon, label, text], …]`, and its one-line summary. |
 | `hl` (on the day) | Three to five highlights shown under the day's title. |
 | `sh` | Shots, each `{x, at, fr, tm}`: what to shoot, where to stand, how to frame it and, optionally, the best time. Ticks are saved by position, so add new shots at the end. |
 | `hard`, `fix`, `star`, `info` | Hard deadline, fixed time, highlight, passing information with no tick. |

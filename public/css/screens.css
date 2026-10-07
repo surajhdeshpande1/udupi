@@ -139,3 +139,72 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--gold)!im
 .oops .sub{margin-left:auto;margin-right:auto}
 .oops .bk-acts{justify-content:center}
 .oops .bk-acts .btn{flex:0 1 auto}
+
+/* ---------- map: a Kaavi-drawn coast, each day one journey ---------- */
+.mp-plan{margin-top:18px}
+.mp-card{position:relative;margin:18px 0 0;padding:8px;border-radius:26px;background:var(--paper)}
+.mp-svg{display:block;width:100%;height:auto;border-radius:20px;background:#F7EFE3;box-shadow:inset 0 0 0 1px rgba(166,58,34,.18)}
+.mp-card figcaption{margin:10px 8px 4px;font:500 12px/1.5 var(--f-body);color:var(--ink-3);text-wrap:pretty}
+.mp-land{fill:#F7EFE3}
+.mp-sea{fill:#D5E7E2}
+.mp-wave{fill:none;stroke:#6F9E96;stroke-width:.7;stroke-linecap:round;opacity:.55}
+.mp-coast{fill:none;stroke:var(--lat);stroke-width:1.15;stroke-linejoin:round;opacity:.8}
+.mp-river-edge{fill:none;stroke:#6F9E96;stroke-width:4.4;stroke-linecap:round;stroke-linejoin:round;opacity:.4}
+.mp-river{fill:none;stroke:#D5E7E2;stroke-width:2.9;stroke-linecap:round;stroke-linejoin:round}
+.mp-road{fill:none;stroke:var(--ink-3);stroke-width:.9;stroke-dasharray:2 3;stroke-linecap:round;opacity:.55}
+.mp-nh{fill:none;stroke:#C98F1C;stroke-width:1.7;stroke-dasharray:6 4;stroke-linecap:round;opacity:.8}
+.mp-rail{fill:none;stroke:var(--ink-2);stroke-width:2.2;stroke-dasharray:1 4;stroke-linecap:round;opacity:.55}
+.mp-nhb rect{fill:#F3D27A;stroke:#C98F1C;stroke-width:.8}
+.mp-nhb text{font:800 7.5px/1 var(--f-body);fill:var(--lat-deep);letter-spacing:.04em}
+.mp-town{fill:var(--ink-3)}
+.mp-town-t{font:600 8.5px/1 var(--f-body);fill:var(--ink-3);letter-spacing:.03em;paint-order:stroke;stroke:#F7EFE3;stroke-width:2.4px;stroke-linejoin:round}
+.mp-town-t.big{font-weight:700;fill:var(--ink-2)}
+.mp-leg{fill:none;stroke:var(--lat);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.mp-leg.sea{stroke:var(--sea);stroke-width:2;stroke-dasharray:.035 .03}
+.mp-leg.rail{stroke:var(--ink-2);stroke-width:2.6;stroke-dasharray:.004 .012}
+.mp-spot{cursor:pointer;outline:none}
+.mp-dot{fill:var(--paper);stroke:var(--lat);stroke-width:1.8}
+.mp-spot.home .mp-dot{fill:var(--lat);stroke:var(--lat-deep)}
+.mp-house{fill:none;stroke:#FFFDF8;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.mp-num{font:800 10px/1 var(--f-body);fill:var(--lat)}
+.mp-spot.done .mp-dot{fill:var(--gold);stroke:#C98F1C}
+.mp-spot.done .mp-num{fill:var(--lat-deep)}
+.mp-spot.now .mp-dot{fill:var(--gold-soft);stroke:var(--kum);stroke-width:2.2}
+.mp-spot:focus-visible .mp-dot{stroke:var(--kum);stroke-width:3}
+.mp-pulse{fill:none;stroke:var(--kum);stroke-width:1.6;transform-box:fill-box;transform-origin:center;animation:mpPulse 1.8s ease-out infinite}
+@keyframes mpPulse{0%{opacity:.9;transform:scale(.8)}100%{opacity:0;transform:scale(2.1)}}
+.mp-label{font:700 10.5px/1 var(--f-body);fill:var(--ink);paint-order:stroke;stroke:#FBF6EE;stroke-width:3.4px;stroke-linejoin:round;pointer-events:none}
+.mp-label.home{fill:var(--lat)}
+.mp-compass circle{fill:var(--paper);stroke:var(--line-2)}
+.mp-compass path{fill:var(--lat)}
+.mp-compass text{font:800 8px/1 var(--f-body);fill:var(--lat)}
+.mp-scale path{fill:none;stroke:var(--ink-2);stroke-width:1}
+.mp-scale text{font:600 8.5px/1 var(--f-body);fill:var(--ink-2)}
+.mp-card.draw .mp-leg.road{stroke-dasharray:1;stroke-dashoffset:1;animation:mpDraw .7s var(--ease) forwards;animation-delay:calc(.3s + var(--k,0) * .2s)}
+.mp-card.draw .mp-leg.sea,.mp-card.draw .mp-leg.rail{opacity:0;animation:mpFade .5s var(--ease) forwards;animation-delay:calc(.3s + var(--k,0) * .2s)}
+.mp-card.draw .mp-spot{opacity:0;animation:mpFade .45s var(--ease) forwards;animation-delay:.15s}
+@keyframes mpDraw{to{stroke-dashoffset:0}}
+@keyframes mpFade{to{opacity:1}}
+.jy{margin:0;padding:6px 0;list-style:none}
+.jy-row{position:relative;display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:12px;padding:8px 14px}
+.jy-row+.jy-row::before{content:"";position:absolute;left:29.5px;top:-9px;height:18px;border-left:1.5px dashed rgba(166,58,34,.35)}
+.jy-badge{position:relative;z-index:1;display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--paper);box-shadow:inset 0 0 0 1.8px var(--lat);font:800 13px/1 var(--f-body);color:var(--lat)}
+.jy-badge.home{background:var(--lat);color:var(--paper);box-shadow:none}
+.jy-badge svg{width:17px;height:17px}
+.jy-row.done .jy-badge{background:var(--gold);box-shadow:inset 0 0 0 1.8px #C98F1C;color:var(--lat-deep)}
+.jy-row.now .jy-badge{box-shadow:inset 0 0 0 2.2px var(--kum),0 0 0 4px var(--gold-soft)}
+.jy-main{display:flex;flex-direction:column;align-items:flex-start;gap:3px;min-width:0;padding:4px 0;border:0;background:none;text-align:left;color:var(--ink);cursor:pointer}
+.jy-t{font:700 12px/1 var(--f-body);color:var(--gold-ink);font-variant-numeric:tabular-nums}
+.jy-main b{font:700 15px/1.25 var(--f-body)}
+.jy-what{font:500 12.5px/1.4 var(--f-body);color:var(--ink-2);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.jy-go{display:grid;place-items:center;width:40px;height:40px;border-radius:14px;background:var(--lat-wash);color:var(--lat)}
+.jy-go svg{width:19px;height:19px}
+.jy-go.na{background:var(--wall-2);color:var(--ink-3)}
+.mp-links{display:flex;flex-direction:column;gap:8px}
+.mp-links .btn{justify-content:flex-start;white-space:normal;text-align:left;line-height:1.3}
+.mp-travel{display:flex;gap:14px;align-items:flex-start;margin-top:18px;padding:18px}
+.mp-tr-ic{display:grid;place-items:center;flex:0 0 auto;width:44px;height:44px;border-radius:14px;background:var(--lat-wash);color:var(--lat)}
+.mp-tr-ic svg{width:22px;height:22px}
+.mp-travel b{display:block;font:700 15.5px/1.3 var(--f-body)}
+.mp-travel .note{margin-top:4px}
+@media (prefers-reduced-motion:reduce){.mp-pulse{animation:none;opacity:.6}.mp-card.draw .mp-leg,.mp-card.draw .mp-spot{animation:none;opacity:1;stroke-dashoffset:0}}
