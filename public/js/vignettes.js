@@ -73,6 +73,19 @@ const VG = (() => {
     const beam = night ? fl('M31 -15L74 -25V-4z', 'f-beam') : '';
     return beam + fl(shell, 'f-auto') + fl(door, 'f-cut2') + fl(front, 'f-win') + ln(shell) + ln('M-28 -27.5H25.5') + ln(front) + ln(door) + ln('M-19 -15H4', 'thin') + ln('M6 -25V-7') + fl(wheels, 'f-paper') + ln(wheels) + ln(circ(-17, -5, 1.6) + circ(20, -5, 1.6), 'thin') + fl(circ(29.6, -15, 1.9), 'f-gold') + ln(circ(29.6, -15, 1.9), 'thin');
   }
+  /* A step-through scooter, facing right, wheels on y=0, with a helmeted rider. */
+  function scooter(night) {
+    const wheels = circ(-21, -6, 6) + circ(23, -6, 6);
+    const body = 'M-30 -8Q-33 -22 -20 -23H0Q4 -23 4 -17V-12H13L17 -33Q18 -36 21 -35L23 -34Q20 -24 21 -16L19 -12Q12 -9 4 -9H-30Z';
+    const seat = 'M-24 -23Q-23 -28 -16 -28H-1Q3 -28 3 -23Z';
+    const guard = 'M15 -9Q23 -17 31 -9';
+    const helmet = 'M-10 -51Q-10 -60 -3.5 -60Q2.5 -60 2 -52Z';
+    const beam = night ? fl('M24 -39L72 -50V-24z', 'f-beam') : '';
+    return beam + fl(body, 'f-kumsoft') + fl(seat, 'f-cut2') + ln(body) + ln(seat) + ln('M-26 -16H-4', 'thin') +
+      ln('M21 -16L23 -6M20 -35L19 -41M13 -41.5H25') + ln(guard) + fl(circ(22.5, -38.5, 1.9), 'f-gold') + ln(circ(22.5, -38.5, 1.9), 'thin') +
+      fl(wheels, 'f-paper') + ln(wheels) + ln(circ(-21, -6, 1.8) + circ(23, -6, 1.8), 'thin') +
+      ln('M-6 -48L-9 -31M-7 -44L4 -41L14 -41.5M-9 -31L6 -29L9 -13H15') + fl(circ(-4.5, -50, 3.6), 'f-paper') + ln(circ(-4.5, -50, 3.6)) + fl(helmet, 'f-kum') + ln(helmet) + ln('M-1 -52.5h4', 'thin');
+  }
   function bed(x, base, w, blanket) {
     const frame = 'M' + x + ' ' + base + 'V' + (base - 22) + 'M' + (x + w) + ' ' + base + 'V' + (base - 13);
     const mat = rect(x, base - 11, w, 5.5);
@@ -214,6 +227,28 @@ const VG = (() => {
     auto: ph => [sky(ph) + hills([[0, 58], [60, 50], [120, 56], [160, 48]], 'thin'),
       palm(20, 74, 40, 6) + palm(142, 74, 36, -5) + road(74),
       at(74, 86, 0.9, auto(night(ph))) + ln('M24 66h10M18 70h12', 'thin')],
+    scooter: ph => [sky(ph) + hills([[0, 56], [50, 46], [110, 54], [160, 44]], 'thin') + ln(birds(34, 28, 1), 'thin'),
+      palm(16, 76, 40, 6) + palm(146, 76, 34, -5) + road(76),
+      at(74, 89, 0.86, scooter(night(ph))) + ln('M18 70h10M12 66h12', 'thin')],
+    /* Maravanthe: the highway on a strip of sand, sea on one side, river on the other. */
+    twowaters: ph => [sky(ph, ph === 'golden' || ph === 'dusk' ? [30, 44] : ph === 'night' ? [30, 20] : null) + hills([[96, 52], [118, 40], [140, 46], [162, 36]], 'thin'),
+      fl(poly([[-2, 52], [75, 52], [50, 102], [-2, 102]]), 'f-sea') + ln('M8 66q10 -3 20 0M4 78q12 -4 24 0M-2 92q14 -4 28 0', 'thin') +
+        fl(poly([[93, 52], [162, 52], [162, 70]]), 'f-leaf') + fl(poly([[86, 52], [93, 52], [162, 70], [162, 102], [112, 102]]), 'f-river') +
+        fl(poly([[75, 52], [86, 52], [112, 102], [50, 102]]), 'f-sand') + fl(poly([[78, 52], [83, 52], [98, 102], [63, 102]]), 'f-road') +
+        ln('M-2 52H162M75 52L50 102M86 52L112 102M93 52L162 70') + ln('M78 52L63 102M83 52L98 102', 'thin') + ln('M80.5 57v3M80.5 66v5M80.5 79v7M80.5 93v9', 'dash'),
+      palm(124, 61, 16, -2) + palm(140, 65, 18, 3) + palm(154, 69, 14, -2) + fl('M120 88Q132 92 146 87L144 85H122Z', 'f-roof') + ln('M120 88Q132 92 146 87L144 85H122Z') + ln('M126 96q6 -2 12 0M136 80q5 -2 10 0', 'thin') + ln(birds(40, 30, 1) + birds(54, 36, 0.7), 'thin')],
+    /* Ottinene: a laterite hilltop above the place where the river meets the sea. */
+    hilltop: ph => [sky(ph, ph === 'golden' || ph === 'dusk' ? [60, 34] : null) + ln(birds(110, 22, 1.1) + birds(124, 28, 0.8), 'thin'),
+      fl(rect(-2, 40, 164, 24), 'f-sea') + ln('M-2 40H162') + ln(waves(10, 150, 46, 14, 2, 7), 'thin') +
+        fl('M-2 64Q50 58 92 62T162 60V102H-2Z', 'f-leaf') + fl('M-2 64Q50 58 92 62T162 60V64Q120 66 92 66T-2 68Z', 'f-sand') + ln('M-2 64Q50 58 92 62T162 60') +
+        fl('M84 63Q98 72 118 74T162 86V98Q136 88 112 82T88 66Z', 'f-river') + ln('M84 63Q98 72 118 74T162 86M88 66Q90 70 112 82T162 98') + mangrove(132, 74, 0.4) + mangrove(150, 80, 0.36),
+      (() => { const hill = 'M-2 102V82Q18 72 40 76Q56 79 64 102Z'; return fl(hill, 'f-roof') + ln(hill) + ln(hatch(6, 44, 86, 100, 7, 3), 'thin'); })() +
+        ln('M10 80V72M24 77V69M38 78V70M8 72.5Q24 68 40 70.5') + person(48, 82, 0.95) + grass(54, 62, 100)],
+    /* Byndoor: black rocks with the surf breaking white over them. */
+    rockbeach: ph => [sky(ph),
+      sea(56) + (() => { const s = 'M58 72Q50 60 56 50Q60 58 63 54Q62 44 70 42Q71 52 75 50Q80 46 86 48Q79 56 82 66Z'; return fl(s, 'f-paper') + ln(s, 'thin') + ln('M60 50l-3 -5M74 40l1 -5M88 46l4 -3', 'thin'); })(),
+      (() => { const a = poly([[8, 90], [12, 76], [22, 67], [34, 64], [44, 70], [52, 68], [60, 76], [64, 90]]), b = poly([[54, 90], [60, 79], [70, 74], [80, 78], [88, 90]]), c = poly([[100, 90], [104, 80], [114, 73], [124, 75], [133, 82], [138, 90]]);
+        return fl(a + b + c, 'f-soft') + ln(a) + ln(b) + ln(c) + ln('M22 67L27 82M44 70L40 86M70 74L67 88M114 73L118 88M124 75L127 86', 'thin'); })() + sand(92, 3) + ln('M92 70q5 -3 10 0M140 72q5 -3 10 0', 'thin') + ln(birds(112, 32, 1) + birds(126, 38, 0.7), 'thin')],
     walk: ph => [sky(ph), house(6, 74, 30, 22) + house(112, 74, 40, 24) + floor(74), lampPost(56, 74, 30, night(ph)) + person(84, 90, 0.9) + ln('M70 96l3 -2M78 98l3 -2', 'thin')],
     falls: ph => [sky(ph, [130, 18]) + tree(20, 46, 9) + tree(148, 44, 9) + tree(118, 40, 7),
       fl('M34 74L40 40Q46 30 58 30L70 26H92L104 30Q116 30 122 40L128 74Z', 'f-soft') + ln('M34 74L40 40Q46 30 58 30L70 26M92 26L104 30Q116 30 122 40L128 74') + ln('M46 44q6 -3 12 0M44 56q7 -3 14 0M106 44q6 -3 12 0M108 58q7 -3 14 0M50 66h10M104 68h12', 'thin') +
@@ -317,13 +352,14 @@ const VG = (() => {
     falls: [36, 18, 84], nap: [12, 24, 76], sleep: [12, 24, 76], beach: [22, 26, 80], lighthouse: [40, 2, 96], seawalk: [0, 30, 72], dinnersea: [46, 42, 62], beachbag: [22, 28, 76], harbour: [20, 24, 90], jetty: [6, 26, 84],
     boatsea: [24, 30, 76], basalt: [30, 14, 96], parasail: [36, 8, 92], swim: [40, 26, 80], shower: [50, 22, 72], kayak: [36, 30, 72], bridge: [20, 12, 96], beachpalms: [14, 12, 96], delta: [10, 30, 90], dress: [16, 8, 76],
     lounge: [38, 22, 74], phonetrain: [36, 18, 64], phonemap: [36, 18, 64], pack: [26, 28, 92], valley: [20, 20, 90], estuary: [14, 30, 80], surf: [32, 30, 70], stationudp: [30, 28, 96], stationmng: [30, 28, 96], stationbgk: [30, 28, 96],
-    train: [52, 30, 90], rivertrain: [50, 22, 90], chai: [44, 40, 70], parcel: [30, 18, 84], berth: [4, 12, 96] };
-  const CARD = { parasail: 4, lighthouse: 6, carstreet: 10, temple: 18, falls: 18, dress: 10, beachpalms: 16, bridge: 18, basalt: 16, dorm: 16, berth: 18 };
+    train: [52, 30, 90], rivertrain: [50, 22, 90], chai: [44, 40, 70], parcel: [30, 18, 84], berth: [4, 12, 96],
+    scooter: [38, 24, 78], twowaters: [30, 26, 76], hilltop: [0, 22, 100], rockbeach: [10, 30, 72] };
+  const CARD = { parasail: 4, lighthouse: 6, carstreet: 10, temple: 18, falls: 18, dress: 10, beachpalms: 16, bridge: 18, basalt: 16, dorm: 16, berth: 18, scooter: 30, twowaters: 30, hilltop: 30, rockbeach: 26 };
   const NIGHT_ONLY = { lounge: 1 };
   const INDOOR = { dorm: 1, breakfast: 1, meals: 1, gadbad: 1, nap: 1, sleep: 1, beachbag: 1, dress: 1, phonetrain: 1, phonemap: 1, pack: 1, parcel: 1, berth: 1 };
 
   /* ---------- which picture a stop gets ---------- */
-  const BY_KIND = { temple: 'temple', culture: 'carstreet', coast: 'beach', nature: 'falls', adventure: 'kayak', explore: 'beach', photo: 'beach', boat: 'boatsea', food: 'meals', night: 'lounge', move: 'auto', bus: 'bus', train: 'train', prep: 'pack' };
+  const BY_KIND = { temple: 'temple', culture: 'carstreet', coast: 'beach', nature: 'falls', adventure: 'kayak', explore: 'beach', photo: 'beach', boat: 'boatsea', food: 'meals', night: 'lounge', move: 'auto', ride: 'scooter', bus: 'bus', train: 'train', prep: 'pack' };
   function keyFor(it) {
     if (!it || it.info) return null;
     const pick = TRIP.PICS && TRIP.PICS[it.id];

@@ -1,10 +1,11 @@
 /* Udupi Coast Trip: trip data, reference part. All times are IST. */
 'use strict';
 window.TRIP = { DAYS: [] };
-TRIP.WX = `Forecast as of 5 Oct: showers and thunderstorms likely across Udupi until about 11 Oct, mostly in the afternoon and evening. 24–31 °C and humid. That is why the sea activities sit in the mornings.`;
+TRIP.WX = `Forecast as of 5 Oct: showers and thunderstorms likely across Udupi until about 11 Oct, mostly in the afternoon and evening. 24–31 °C and humid. Watch the sky over the Ghats on the long rides, and use each day’s Plan B if it turns dark.`;
 
 TRIP.KIT = [
   {cat:`Documents and money`, items:[[`k1`,`Aadhaar or other photo ID, plus a photo of it on your phone`],[`k2`,`College ID card (₹150 student ticket at Hasta Shilpa)`],[`k3`,`Tickets saved offline: VRL, 12133, 17378`],[`k4`,`₹4,000 in cash, mostly ₹100s with a few ₹500s, plus ₹500 kept separately`],[`k5`,`Debit card as a backup to UPI`]]},
+  {cat:`Scooter`, items:[[`k38`,`Driving licence for two-wheelers, on you for every ride`],[`k39`,`Rental papers and the shop’s phone number`],[`k40`,`Helmet that fits, strapped for every ride`],[`k41`,`Phone mount, or a zip pocket for the phone`]]},
   {cat:`Temple`, items:[[`k6`,`Formal trousers`],[`k7`,`Collared shirt that comes off quickly`],[`k8`,`Slip-on sandals (temples and Hasta Shilpa)`]]},
   {cat:`Sea and water`, items:[[`k9`,`Swim shorts`],[`k10`,`Quick-dry towel`],[`k11`,`Waterproof phone pouch with a lanyard`],[`k12`,`Zip-lock bags for wet clothes`],[`k13`,`Sunscreen SPF 50 and lip balm`],[`k37`,`Sandals with grip for the falls and the rocks`],[`k14`,`Cap and sunglasses`],[`k35`,`Rash guard or fitted quick-dry T-shirt, if you surf on Friday`]]},
   {cat:`Night out`, items:[[`k36`,`Smart-casual shirt, trousers or clean jeans, closed shoes`]]},
@@ -24,17 +25,21 @@ TRIP.PLACES = [
   [`Udupi railway station`,`Indrali, 3 km east, for 12133`,`Udupi Railway Station`],
   [`Mangaluru Junction`,`Padil, for 17378`,`Mangaluru Junction Railway Station`]
 ];
-TRIP.FIELDS = [[`dormName`,`Dorm name`],[`dormPhone`,`Dorm phone`],[`dormAddr`,`Dorm address or landmark`],[`vrlPnr`,`VRL ticket or PNR`],[`vrlBus`,`VRL bus number and driver phone`],[`t1Pnr`,`12133 PNR`],[`t1Seat`,`12133 coach and berth`],[`t2Pnr`,`17378 PNR`],[`t2Seat`,`17378 coach and berth`],[`homeName`,`Emergency contact name`],[`homePhone`,`Emergency contact phone`]];
+TRIP.FIELDS = [[`dormName`,`Dorm name`],[`dormPhone`,`Dorm phone`],[`dormAddr`,`Dorm address or landmark`],[`scootShop`,`Scooter rental shop and phone`],[`scootPlate`,`Scooter number plate`],[`vrlPnr`,`VRL ticket or PNR`],[`vrlBus`,`VRL bus number and driver phone`],[`t1Pnr`,`12133 PNR`],[`t1Seat`,`12133 coach and berth`],[`t2Pnr`,`17378 PNR`],[`t2Seat`,`17378 coach and berth`],[`homeName`,`Emergency contact name`],[`homePhone`,`Emergency contact phone`]];
 TRIP.T12133 = [[`Udupi`,`13:20`,`13:22`,1],[`Surathkal`,`14:20`,`14:22`],[`Mangaluru Jn`,`15:40`,`—`,1]];
 TRIP.T17378 = [[`Mangaluru Central`,`—`,`16:45`],[`Mangaluru Jn`,`16:57`,`17:00`,1],[`Bantwal`,`17:30`,`17:32`],[`Subrahmanya Road`,`18:50`,`19:00`],[`Sakleshpur`,`21:20`,`21:30`],[`Hassan`,`22:20`,`22:30`],[`Arsikere`,`23:20`,`23:25`],[`Davangere`,`01:48`,`01:50`],[`Hubballi`,`04:40`,`04:50`],[`Gadag`,`06:25`,`06:30`],[`Badami`,`07:29`,`07:30`],[`Guledagudda Road`,`07:44`,`07:45`],[`Bagalkot`,`07:58`,`08:00`,1]];
-TRIP.FARES = [[`CPC Plaza → Car Street`,`Walk, 10 min`],[`CPC → Manipal`,`₹110–150`],[`CPC → Arbi Falls`,`₹150–200`],[`Manipal → CPC late at night`,`₹120–180`],[`CPC → Malpe`,`₹120–150`],[`CPC → Kemmannu`,`₹200–240`],[`CPC → Mattu`,`₹230–280`],[`CPC → Kaup`,`₹280–350`],[`Kaup → Malpe`,`₹300–400`],[`Kodi Bengre → CPC`,`₹300–350`],[`CPC → Udupi station`,`₹70–90`],[`Udupi → Mulki, express bus`,`About ₹50`],[`Mulki → Mangaluru Jn by cab`,`₹900–1,200`],[`Udupi → Mangaluru Jn by cab`,`₹1,300–1,800`]];
+TRIP.FARES = [[`Petrol in Udupi, 7 Oct`,`About ₹110 a litre`],[`Wed north run, about 150 km`,`About 3.5 L, ₹350–400`],[`Thu or Fri rides, about 60 km`,`About 1.5 L, ₹150–200`],[`Two-wheeler parking at beaches`,`₹10–20`],[`CPC → Manipal, Rapido (Thu night)`,`₹110–150`],[`Manipal → CPC late at night`,`₹120–180`],[`CPC → Udupi station, auto`,`₹70–90`],[`Udupi → Mangaluru Jn by cab`,`₹1,300–1,800`]];
 
 /* The Kaavi picture each stop shows (see js/vignettes.js); stops not listed get one by their kind. */
 TRIP.PICS = {
   tu1: `pack`, tu2: `phonemap`, tu3: `phonemap`, tu4: `pack`, tu5: `phonemap`, tu6: `phonemap`, tu12: `surf`,
-  we1: `bus`, we2: `town`, we3: `dorm`, we9: `breakfast`, we36: `dress`, we29: `falls`, we25: `gadbad`, we21: `lighthouse`, we22: `lighthouse`, we40: `seawalk`, we41: `dinnersea`,
-  th1: `beachbag`, th2: `breakfast`, th5: `harbour`, th6: `jetty`, th8: `basalt`, th10: `parasail`, th11: `swim`, th12: `shower`, th19: `bridge`, tb3: `beachpalms`, tb6: `bridge`, th21: `delta`, th23: `dress`, th27: `phonetrain`,
-  fr1: `pack`, fr3: `phonetrain`, fr5: `valley`, fr7: `breakfast`, fr9: `estuary`, fs8: `phonemap`, fs1: `pack`, fs4: `surf`, fs6: `bus`, fs7: `stationmng`, fr14: `phonetrain`, fr17: `stationudp`, fr20: `stationmng`, fr21: `stationmng`, fr22: `chai`, fr24: `rivertrain`, fr25: `train`, fr27: `parcel`, fr30: `berth`,
+  we1: `bus`, we2: `town`, we3: `dorm`, we9: `breakfast`, we36: `dress`, we29: `falls`, we25: `gadbad`,
+  wa2: `twowaters`, wa4: `hilltop`, wa5: `rockbeach`, wa7: `boatsea`, wb3: `estuary`, we21: `lighthouse`, we22: `lighthouse`, we40: `seawalk`, we41: `dinnersea`,
+  th1: `beachbag`, th41: `valley`, th2: `breakfast`, th5: `harbour`, th6: `jetty`, th8: `basalt`, th10: `parasail`, th11: `swim`, th12: `shower`, th44: `beachpalms`, th46: `twowaters`, th19: `bridge`,
+  tb3: `beachpalms`, tb6: `bridge`, tb9: `town`, th21: `delta`, th23: `dress`, th27: `phonetrain`, th33: `pack`,
+  fs8: `phonemap`, fa1: `pack`, fa3: `chai`, fs4: `surf`, fa4: `shower`, fa5: `breakfast`, fa7: `swim`, fa9: `lighthouse`,
+  fb10: `pack`, fb12: `lighthouse`, fb14: `breakfast`, fb15: `swim`, fb17: `estuary`,
+  fr31: `scooter`, fr14: `phonetrain`, fr15: `pack`, fr17: `stationudp`, fr20: `stationmng`, fr21: `stationmng`, fr22: `chai`, fr24: `rivertrain`, fr25: `train`, fr27: `parcel`, fr30: `berth`,
   sa3: `berth`, sa6: `stationbgk`
 };
 
@@ -46,25 +51,26 @@ TRIP.SUN = {
   '2026-10-10': { rise: `06:21`, set: `18:13` }
 };
 TRIP.RULES = [
-  `St Mary’s on Thursday: not on a boat by 10:30, switch Thursday to Plan B. Friday retry, on Plan A only: board by 09:45 and leave Malpe by 11:30.`,
-  `12133 on Friday: decide at 12:00 and again at 13:15 using the ETA rules on that stop.`,
-  `Surf on Friday only with a confirmed booking, and confirm again at 05:30. Plan A is the backup; on Plan B, leave Mulki by 14:00.`,
-  `Back at the dorm by about 22:00 each night: book the ride home by 21:30.`,
-  `Swim only between the flags at Malpe. Paddle only at Kaup, Padukere, the Delta and Mattu.`,
+  `Scooter: helmet on and strapped, licence and rental papers with you, every ride.`,
+  `No alcohol on a day you ride. Thursday night is Rapido both ways, and the scooter stays at the dorm.`,
+  `Off NH66 by dark: leave Byndoor by 16:30 on Wednesday. Keep left at 50–60 km/h and let buses and trucks pass.`,
+  `Lightning or a downpour: pull in under a solid roof, a petrol station or a shop, never a tree.`,
+  `Phone on a mount or zipped away while riding; stop to check the map.`,
+  `St Mary’s on Thursday: not on a boat by 10:30, switch Thursday to Plan B.`,
+  `Surf on Friday: confirm the time with the school on Thursday evening and again at 05:15. Leave Udupi 75 minutes before it starts.`,
+  `Scooter back with a full tank by about 11:35 on Friday; 12133 decision at 11:50 and again at 13:15.`,
+  `Swim only between the flags at Malpe and Padubidri. Paddle only everywhere else.`,
   `Water rides and the parasail: life jacket on, price agreed first, and only when the operators are running.`,
   `Hear thunder: get off the water, the rocks and the lighthouse.`,
-  `At Arbi Falls, Kemmannu, the Delta and Mattu, keep the driver’s number or have him wait.`,
-  `Arbi Falls: feet in only, no swimming, and slow on the wet rocks.`,
   `Night out: bars serve alcohol only to guests 21 and over, so carry photo ID.`,
   `Temples: formal trousers, shirt off near the sanctum if asked, no photos there.`
 ];
 TRIP.SAVERS = [
-  `Student ID at Hasta Shilpa: save ₹150.`,
-  `Quote the Rapido Auto price on long legs: save ₹300–500 across the trip.`,
-  `NH66 bus from Udupi to Kaup instead of an auto: about ₹30 instead of ₹300.`,
-  `Two water rides instead of three: save ₹200–800.`,
+  `Fill up at highway pumps, not from roadside bottles: cheaper and cleaner fuel.`,
+  `Two water rides instead of three at Malpe: save ₹200–800.`,
   `A 30-minute self-paddle instead of a guided trail: save ₹400–600.`,
-  `Friday’s surf plan by bus instead of cabs: save about ₹1,500.`
+  `Quote the Rapido price before you book on Thursday night: save ₹50–100 each way.`,
+  `Student ID at Hasta Shilpa on Thursday’s Plan B: save ₹150.`
 ];
 TRIP.SOURCES = [
   [`Train 12133 timetable (ixigo)`, `https://www.ixigo.com/trains/12133`],
@@ -74,6 +80,13 @@ TRIP.SOURCES = [
   [`Chariot season break (Deccan Chronicle)`, `https://www.deccanchronicle.com/nation/udupi-sri-krishna-maths-rathotsava-season-concludes-1959674`],
   [`Konkan monsoon timetable to 20 Oct (Metrovaartha)`, `https://english.metrovaartha.com/news/national/konkan-railway-gears-up-for-monsoon-2026`],
   [`Parasailing at Malpe (Karnataka Tourism)`, `https://karnatakatourism.org/experiences/parasailing-at-malpe-beach`],
+  [`Trasi–Maravanthe beach (Udupi Tourism)`, `https://udupitourism.com/explore/beach/trasi-maravanthe-beach`],
+  [`Kshitija Nesaradhama, Ottinene (Udupi Tourism)`, `https://udupitourism.com/explore/nature-and-wildlife/kshitija-nesaradhama-ottinene`],
+  [`Things to do in Byndoor (Thrilling Travel)`, `https://thrillingtravel.in/things-to-do-in-byndoor-udupi-karnataka.html`],
+  [`Beaches of Udupi district (eNidhi)`, `https://www.enidhi.net/2020/07/best-top-beaches-in-udupi-district-karnataka-complete-details.html`],
+  [`Blue Flag beach, Padubidri (Udupi Tourism)`, `https://udupitourism.com/explore/beach/blue-flag-beach-padubidri`],
+  [`Petrol price in Udupi (BankBazaar)`, `https://www.bankbazaar.com/fuel/petrol-price-udupi.html`],
+  [`Surfing at Mantra Surf Club (eNidhi)`, `https://www.enidhi.net/2021/10/surfing-at-mulki-mantra-surf-club.html`],
   [`Mantra Surf Club: Discover Surfing`, `https://surfingindia.net/discover-surfing/`],
   [`Mantra Surf Club: season and FAQ`, `https://surfingindia.net/faq/`],
   [`Sasihithlu beach (Karnataka Tourism)`, `https://karnatakatourism.org/attractions/sasihithlu-beach-mangaluru`],

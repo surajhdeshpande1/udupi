@@ -1,6 +1,6 @@
 /* Udupi Coast Trip app, part 1: time, icons, state, plan. Everything runs on IST. */
 'use strict';
-const APP_V = 'udupi-kaavi-7';
+const APP_V = 'udupi-kaavi-8';
 const DAYS = TRIP.DAYS;
 const DAY = Object.fromEntries(DAYS.map(d => [d.id, d]));
 const TABS = ['today', 'days', 'kit', 'sos'];
@@ -36,6 +36,7 @@ const P = {
   boat: '<path d="M3 15.5h18l-2.6 4.5H5.6z"/><path d="M12 15.5V4l6 8.5h-6"/>',
   leaf: '<path d="M4.5 19.5C4.5 11 10.5 4.5 19.5 4.5c0 9-6.5 15-15 15z"/><path d="M4.5 19.5 14 10"/>',
   auto: '<path d="M4 17v-6a5.5 5.5 0 0 1 5.5-5.5H14l4.5 5.5h1a1 1 0 0 1 1 1v5"/><path d="M4 12.5h16.5"/><circle cx="7.5" cy="17.5" r="2"/><circle cx="17.5" cy="17.5" r="2"/><path d="M9.5 17.5h6"/>',
+  scooter: '<circle cx="17.8" cy="16.6" r="2.3"/><path d="M4.3 16.6a2.3 2.3 0 0 0 4.6 0"/><path d="M3 16.6v-1.4a3.6 3.6 0 0 1 3.6-3.6h3.2v5h3.4a5.6 5.6 0 0 1 4.6-5.5V6.4A1.9 1.9 0 0 0 15.9 4.5H14.6"/><path d="M5 8.8h4.2"/>',
   bus: '<rect x="4.5" y="3" width="15" height="14.5" rx="3"/><path d="M4.5 10.5h15"/><path d="M8 20.5v-3M16 20.5v-3"/><circle cx="8.3" cy="14" r=".9"/><circle cx="15.7" cy="14" r=".9"/>',
   train: '<rect x="5.5" y="3" width="13" height="14" rx="4"/><path d="M5.5 10h13"/><path d="M9 21l1.8-4M15 21l-1.8-4"/><circle cx="9.2" cy="13.5" r=".9"/><circle cx="14.8" cy="13.5" r=".9"/>',
   night: '<path d="M10 3.5l1.6 4.4 4.4 1.6-4.4 1.6L10 15.5l-1.6-4.4L4 9.5l4.4-1.6z"/><path d="M17.5 13.5l.9 2.1 2.1.9-2.1.9-.9 2.1-.9-2.1-2.1-.9 2.1-.9z"/>',
@@ -78,13 +79,14 @@ const KINDS = {
   food: { g: 'food', label: 'Food', icon: 'leaf' },
   night: { g: 'night', label: 'Night out', icon: 'night' },
   move: { g: 'ink', label: 'Auto or walk', icon: 'auto' },
+  ride: { g: 'ink', label: 'Scooter ride', icon: 'scooter' },
   bus: { g: 'ink', label: 'Bus', icon: 'bus' },
   train: { g: 'ink', label: 'Train', icon: 'train' },
   rest: { g: 'ink', label: 'Rest', icon: 'moon' },
   prep: { g: 'ink', label: 'Prep', icon: 'list' },
   stop: { g: 'ink', label: 'On the way', icon: '' }
 };
-const CUSTOM_KINDS = ['temple', 'culture', 'coast', 'nature', 'adventure', 'explore', 'photo', 'food', 'night', 'move', 'rest', 'prep'];
+const CUSTOM_KINDS = ['temple', 'culture', 'coast', 'nature', 'adventure', 'explore', 'photo', 'food', 'night', 'ride', 'move', 'rest', 'prep'];
 const MOOD_KEYS = ART.MOODS.map(m => m[0]);
 
 /* ---------- state: stays on this phone, and every value is checked on the way in ---------- */

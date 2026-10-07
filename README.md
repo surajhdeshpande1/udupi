@@ -60,7 +60,7 @@ npx playwright install chromium
 npx playwright test
 ```
 
-34 browser tests on a phone-sized Chromium cover ticking, sheets, skipping, editing and adding stops, Plan B on Thursday and Friday, the night-out stops, the shot guide, the first-run tour, the help sheet, day highlights, a picture on every stop, the tab bar motion, days, kit, bookings, backup and restore, reset, the journal, day stamps, loading data saved by the previous version, the intro, security headers, the install manifest, offline use, and layout at 320, 390 and 820 px with no console errors or CSP violations. GitHub Actions runs them on every push to `main`.
+35 browser tests on a phone-sized Chromium cover ticking, sheets, skipping, editing and adding stops, Plan B on Wednesday, Thursday and Friday, the scooter rides, the night-out stops, the shot guide, the first-run tour, the help sheet, day highlights, a picture on every stop, the tab bar motion, days, kit, bookings, backup and restore, reset, the journal, day stamps, loading data saved by the previous version, the intro, security headers, the install manifest, offline use, and layout at 320, 390 and 820 px with no console errors or CSP violations. GitHub Actions runs them on every push to `main`.
 
 ## Editing the trip
 

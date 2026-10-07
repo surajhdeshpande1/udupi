@@ -86,7 +86,7 @@ function setPaid(id, raw, rerender) {
 }
 
 /* ---------- help: what every circle, colour and tap means ---------- */
-const LEGEND = ['temple', 'culture', 'coast', 'nature', 'adventure', 'explore', 'boat', 'photo', 'food', 'night', 'move', 'bus', 'train', 'rest'];
+const LEGEND = ['temple', 'culture', 'coast', 'nature', 'adventure', 'explore', 'boat', 'photo', 'food', 'night', 'ride', 'move', 'bus', 'train', 'rest'];
 const lgNode = (g, icon, extra) => '<span class="lg-node ' + g + (extra ? ' ' + extra : '') + '" aria-hidden="true"><span class="dot">' + ico(icon) + '</span></span>';
 function helpSheet() {
   const mark = (art, k, v) => '<li>' + art + '<span><b>' + k + '</b>' + v + '</span></li>';
